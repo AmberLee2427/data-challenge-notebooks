@@ -1,3 +1,9 @@
+<div align="center">
+    <a href="https://github.com/reges-pit">
+        <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
+    </a>
+</div>
+
 # Roman Microlensing Data Challenge Notebooks
 
 This repository provides a set of Jupyter notebooks that support the **Roman Microlensing Data Challenge**, an exercise organised by the Roman Galactic Exoplanet Survey – Project Infrastructure Team (RGES‑PIT). The goal of the challenge is to familiarise researchers with the data volume and characteristics expected from the Roman Galactic Bulge Time Domain Survey. The notebooks collect instructions, examples and open‑source tools for analysing simulated microlensing light‑curves and identifying false positives.
