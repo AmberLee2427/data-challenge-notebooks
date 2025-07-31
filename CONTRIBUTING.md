@@ -26,7 +26,7 @@ First, check the tool table in the tutorial to see if your tool is already liste
 
 Use the following template structure for your tool section:
 
-```markdown
+````markdown
 ## <font face="Helvetica" size="6"> X. Tool Name </font>
 
 <hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
@@ -77,7 +77,7 @@ import tool_name
 ### <font face="Helvetica" size="5"> X.5 Performance and Best Practices </font>
 
 Discussion of performance considerations, best practices, and tips for efficient usage.
-```
+````
 
 #### <font face="Helvetica" size="4"> Step 3: Include Required Elements </font>
 
@@ -180,7 +180,7 @@ When submitting a pull request:
 
 #### <font face="Helvetica" size="4"> Example Pull Request Description </font>
 
-```
+````
 ## Add VBMicrolensing Section
 
 This PR adds a comprehensive section for VBMicrolensing, including:
@@ -202,7 +202,7 @@ This PR adds a comprehensive section for VBMicrolensing, including:
 - Updated tool table to mark VBMicrolensing as covered
 
 Closes #123
-```
+````
 
 ### <font face="Helvetica" size="5"> 8. Tool-Specific Guidelines </font>
 
