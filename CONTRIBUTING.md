@@ -1,24 +1,18 @@
 <div align="center">
-  <a href="https://github.com/AmberLee2427/microlens-submit">
-    <img src="../_static/rges-pit_logo.png" alt="logo" width="300"/>
+  <a href="https://github.com/rges-pit/data-challenge-notebooks">
+    <img src="rges-pit_logo.png" alt="logo" width="300"/>
   </a>
 </div>
 
 # <font face="Helvetica" size="7"> Contributing to the Microlensing Analysis Tutorial </font>
 
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
-
 Thank you for your interest in contributing to the microlensing analysis tutorial! This document provides guidelines for adding new tool sections, improving existing content, and maintaining the quality of the tutorial.
 
 ## <font face="Helvetica" size="6"> Overview </font>
 
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
-
 The microlensing analysis tutorial (`analysis_tutorial_colab.txt`) is designed to showcase various open-source microlensing tools and provide working examples for the community. Our goal is to create a comprehensive resource that helps users understand and implement different microlensing analysis techniques.
 
 ## <font face="Helvetica" size="6"> How to Contribute </font>
-
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
 
 ### <font face="Helvetica" size="5"> 1. Adding a New Tool Section </font>
 
@@ -126,7 +120,7 @@ If you'd like to improve an existing section:
 - **Educational value** - Explain what each step does
 - **Realistic data** - Use appropriate test data or synthetic data
 
-#### <font face="Helvetica" size="4"> Jupyter Notebook Format </font>
+#### <font face="Helvetica" size="4"> Colab's Jupyter Notebook Format </font>
 
 - Use `#@title` for cell titles
 - Include markdown explanations
@@ -178,12 +172,11 @@ Before submitting your contribution:
 
 When submitting a pull request:
 
-#### <font face="Helvetica" size="4"> Required Information </font>
+#### <font face="Helvetica" size="4"> Requested Information </font>
 
 - **Clear title** - Describe what you're adding/improving
 - **Detailed description** - Explain the changes and motivation
 - **Testing notes** - What you tested and how
-- **Screenshots** - If adding visualizations
 
 #### <font face="Helvetica" size="4"> Example Pull Request Description </font>
 
@@ -273,8 +266,6 @@ Closes #123
 
 ## <font face="Helvetica" size="6"> Getting Help </font>
 
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
-
 If you need help with your contribution:
 
 1. **Check existing issues** - See if your question has been answered
@@ -283,8 +274,6 @@ If you need help with your contribution:
 4. **Contact maintainers** - Reach out directly if needed
 
 ## <font face="Helvetica" size="6"> Recognition </font>
-
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
 
 Contributors will be recognized in several ways:
 
@@ -295,13 +284,10 @@ Contributors will be recognized in several ways:
 
 ## <font face="Helvetica" size="6"> Code of Conduct </font>
 
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
-
 This project follows the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/). Please be respectful and inclusive in all interactions.
 
 ## <font face="Helvetica" size="6"> License </font>
 
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
 
 By contributing to this tutorial, you agree that your contributions will be licensed under the same license as the project.
 
