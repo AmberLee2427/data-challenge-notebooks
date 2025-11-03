@@ -1,4 +1,4 @@
-Session B: 12:30 - 1:30 pm
+Session B: 11:00 - 12:30 pm
 
 In this session you will...
   - be introduced to microlensing
