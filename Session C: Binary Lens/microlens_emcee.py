@@ -9,7 +9,7 @@ import numpy as np
 import emcee
 import corner
 import matplotlib.pyplot as plt
-from multiprocessing import Pool
+from multiprocess import Pool
 from scipy.optimize import lsq_linear
 import VBMicrolensing as vbm
 
