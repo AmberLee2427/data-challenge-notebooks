@@ -8,6 +8,8 @@
 
 [//]: # (This file needs editing to be data-challenge participant facing first and contributer facing second. Also it's wildly out of date.)
 
+[//]: # (We need a getting started section for environment set up outside of the Nexus, etc. )
+
 This repository provides a set of Jupyter notebooks that support the [**Roman Microlensing Data Challenge**](https://rges-pit.org/outreach/), a competition organised by the [Roman Galactic Exoplanet Survey - Project Infrastructure Team (RGES-PIT)](https://rges-pit.org/). The goal of the challenge is to familiarise researchers with the data volume and characteristics expected from the Roman Galactic Bulge Time Domain Survey and encourage new talent to the field of microlensing. The notebooks collect instructions, examples and open-source tools for analysing simulated microlensing lightcurves and identifying false positives. [Contributions](https://github.com/rges-pit/data-challenge-notebooks/blob/main/CONTRIBUTING.md) to the [`Microlensing_Analysis_Tools_colab.ipynb`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/Microlensing_Analysis_Tools_colab.ipynb) notebook <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/Microlensing_Analysis_Tools_colab.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> (or in the form of additional instructional resources or [comments](https://github.com/rges-pit/data-challenge-notebooks/discussions), where a notebook is not appropriate or is intractable) are welcome. 
 
 ## Motivation
