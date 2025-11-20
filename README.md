@@ -44,6 +44,25 @@ Researchers developing or maintaining open-source microlensing software are enco
 
 Before submitting a pull request, please check whether an existing issue or discussion covers your contribution. Contributions should adhere to standard open-source etiquette: explain the purpose of your changes, cite relevant literature where appropriate, and ensure that your code is licensed permissively. See the [contributing guidelines](https://github.com/rges-pit/data-challenge-notebooks/blob/main/CONTRIBUTING.md) for more details. **All contributions to this repository must be pushed before the end of 2025.**
 
+## Syncing Notebooks to Roman Research Nexus
+
+The `nexus_microlensing_data_challenge_workflow.ipynb` notebook is maintained in this repository but also needs to be available in the [Roman Research Nexus (RRN) notebooks repository](https://github.com/spacetelescope/roman_notebooks). To sync the notebook between repositories, use the provided sync script:
+
+```bash
+# Dry run to see what would be copied
+python sync_to_nexus.py --dry-run
+
+# Actually sync the notebook
+python sync_to_nexus.py
+```
+
+The script will:
+- Copy the notebook to the appropriate location in the `roman_notebooks` repository
+- Validate that relative paths in the notebook are correct for the RRN structure
+- Copy any associated `requirements.txt` file if present
+
+**Note:** The script assumes `roman_notebooks` is a sibling directory to `data-challenge-notebooks`. After syncing, you'll need to manually commit and push changes in the `roman_notebooks` repository and create a PR.
+
 ## Notes on Notebooks and Data
 
 -   You can - the [`Microlensing_Analysis_Tools_colab.ipynb`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/Microlensing_Analysis_Tools_colab.ipynb) notebook just by clicking this button:         <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/Microlensing_Analysis_Tools_colab.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="- In Colab"/></a>
