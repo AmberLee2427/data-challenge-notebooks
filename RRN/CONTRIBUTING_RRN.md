@@ -1,6 +1,6 @@
 # How to contribute spacetelescope notebooks
 
-> *This document is a copy of the* (`CONTRIBUTING.md`](https://github.com/rges-pit/roman_notebooks/edit/main/contributing/CONTRIBUTING.md) *document from [spacetelescope's RRN notebook repo](https://github.com/spacetelescope/roman_notebooks)*
+> *This document is a copy of the* [`CONTRIBUTING.md`](https://github.com/spacetelescope/roman_notebooks/blob/main/contributing/CONTRIBUTING.md) *document from [spacetelescope's RRN notebook repo](https://github.com/spacetelescope/roman_notebooks)*
 
 Contributions are welcome from both inside and outside the institute.
 

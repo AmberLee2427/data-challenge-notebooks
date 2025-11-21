@@ -1,0 +1,41 @@
+name: Publish Workshop Pages
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  build-pages:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Rebuild site markdown
+        run: python scripts/page_transformer.py
+
+      - name: Rebuild Nexus notebooks
+        run: python scripts/notebook_transformer.py
+
+      - name: Commit updated pages
+        run: |
+          if git status --porcelain | grep -q .
+          then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add --all
+            git commit -m "chore: refresh workshop site pages [skip ci]"
+            git push
+          else
+            echo "No changes to publish."
+
