@@ -15,8 +15,8 @@
 - [x] make root `README.md` more participant aware
 
 ## AAS
-- [ ] Colab links for environment failure backup
-- [ ] Sync AAS Workshop website content with this repo as the canonical source
+- [x] Colab links for environment failure backup
+- [x] Sync AAS Workshop website content with this repo as the canonical source
 - [x] Detailed sesion READMEs
 
 ## Nexus
@@ -26,6 +26,6 @@
 - [ ] submit notebooks PR in time for review
 - [ ] ask STScI about review timelines
 - [ ] ask STScI about notebook series instead of standalone per folder
-- [ ] edit the tools notebook to match the Colab/RRN freindly style
+- [-] edit the tools notebook to match the Colab/RRN freindly style
 - [ ] add Citations sections in all notebooks
 - [ ] PAT upload to `rges-pit/roman_notebooks`
