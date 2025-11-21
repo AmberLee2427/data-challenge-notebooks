@@ -14,7 +14,7 @@ notebooks:
       - "Data challenge teams"
       - "AAS workshop attendees"
     colab_support: "not_applicable"
-    nexus_support: "ready"
+    nexus_support: "true"
     website_render: "full_embed"
     rrn_target: "content/notebooks/microlensing_data_challenge/a_rmdc26_workflow.ipynb"
     notes: >
@@ -31,7 +31,7 @@ notebooks:
       - "Self-paced learners"
       - "Data challenge teams"
     colab_support: "needs_bootstrap"
-    nexus_support: "under_evaluation"
+    nexus_support: "true"
     website_render: "full_embed"
     rrn_target: "content/notebooks/microlensing_data_challenge/b_single_lens.ipynb"
     rrn_transforms:
@@ -53,7 +53,7 @@ notebooks:
       - "Data challenge teams"
       - "Self-paced learners"
     colab_support: "needs_bootstrap"
-    nexus_support: "stretch_goal"
+    nexus_support: "true"
     website_render: "full_embed"
     rrn_target: "content/notebooks/microlensing_data_challenge/c_binary_lens.ipynb"
     rrn_transforms:
@@ -75,7 +75,7 @@ notebooks:
       - "Self-paced learners"
       - "Roman Research Nexus participants"
     colab_support: "ready"
-    nexus_support: "needs_review"
+    nexus_support: "true"
     website_render: "full_embed"
     rrn_target: "content/notebooks/microlensing_data_challenge/x_microlensing_tools.ipynb"
     rrn_transforms:
@@ -96,7 +96,7 @@ notebooks:
       - "Data challenge teams"
       - "Self-paced learners"
     colab_support: "needs_bootstrap"
-    nexus_support: "unlikely"
+    nexus_support: "false"
     website_render: "preexisting_content"
     rrn_target: "content/notebooks/microlensing_data_challenge/x_gould_loeb.ipynb"
     notes: >

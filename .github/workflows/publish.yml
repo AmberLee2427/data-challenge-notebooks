@@ -36,6 +36,15 @@ jobs:
       - name: Rebuild Nexus notebooks
         run: python scripts/notebook_transformer.py
 
+      - name: Export RRN notebooks
+        run: python scripts/export_rrn_to_repo.py --dest RRN/export
+
+      - name: Upload RRN export
+        uses: actions/upload-artifact@v4
+        with:
+          name: rrn-export
+          path: RRN/export/
+
       - name: Commit updated pages
         run: |
           if git status --porcelain | grep -q .
@@ -90,3 +99,43 @@ jobs:
           draft: true
           add-paths: |
             docs/_pages/*.md
+  rrn-draft-pr:
+    needs: build-pages
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Download RRN export
+        uses: actions/download-artifact@v4
+        with:
+          name: rrn-export
+          path: rrn-export
+
+      - name: Check out roman_notebooks upstream
+        uses: actions/checkout@v4
+        with:
+          repository: spacetelescope/roman_notebooks
+          token: ${{ secrets.SITE_SYNC_PAT }}
+          path: rrn
+
+      - name: Update RRN notebooks
+        run: |
+          rsync -av rrn-export/content/notebooks/microlensing_data_challenge/ rrn/content/notebooks/microlensing_data_challenge/
+
+      - name: Open/update draft PR to roman_notebooks
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.SITE_SYNC_PAT }}
+          path: rrn
+          branch: chore/rrn-data-challenge-sync
+          base: main
+          push-to-fork: rges-pit/roman_notebooks
+          title: "Draft: Sync RRN data-challenge notebooks"
+          body: |
+            Automated export of workshop notebooks and environment file into `roman_notebooks`.
+          commit-message: "chore: sync RRN data-challenge notebooks"
+          draft: true
+          add-paths: |
+            content/notebooks/microlensing_data_challenge/*
