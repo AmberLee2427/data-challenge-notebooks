@@ -82,6 +82,7 @@ jobs:
           path: site
           branch: chore/data-challenge-sync
           base: main
+          push-to-fork: rges-pit/rges-pit.github.io-dc-copy
           title: "Draft: Sync data-challenge notebooks"
           body: |
             Automated sync of generated workshop documentation from `data-challenge-notebooks`.
