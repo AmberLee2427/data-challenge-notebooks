@@ -41,4 +41,4 @@ jobs:
             git push
           else
             echo "No changes to publish."
-
+          fi
