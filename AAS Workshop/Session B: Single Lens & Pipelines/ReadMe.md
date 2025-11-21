@@ -1,10 +1,17 @@
+<! START PREAMBLE
 ---
 permalink: /data-challenge/aas-workshop/2-single-lenses/
 title: "Single Lenses and Pipelines"
 sidebar:
   nav: "workshop"
 ---
-<!-- END PREAMBLE -->
+END PREAMBLE -->
+
+<div align="center">
+    <a href="https://github.com/reges-pit">
+        <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
+    </a>
+</div>
 
 # Session B: Single Lenses & Pipelines
 > *11:00 am – 12:30 pm*

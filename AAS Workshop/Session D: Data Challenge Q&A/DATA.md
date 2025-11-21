@@ -1,10 +1,11 @@
+<!-- START PREAMBLE
 ---
 permalink: /data-challenge/data/
 title: "RMDC2026 Data"
 sidebar:
   nav: "docs"
 ---
-<!-- END PREAMBLE -->
+END PREAMBLE -->
 
 <div align="center">
     <a href="https://github.com/reges-pit">
@@ -13,7 +14,6 @@ sidebar:
 </div>
 
 # Roman Microlensing Data Challenge 2026 (RMDC26) - Data
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
 
 <!-- BEGIN WEB CONTENT -->
 

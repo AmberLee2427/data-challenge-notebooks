@@ -1,3 +1,11 @@
+<div align="center">
+    <a href="https://github.com/reges-pit">
+        <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
+    </a>
+</div>
+
+# AAS Workshop Content
+
 ## Running These Notebooks
 
 The notebooks in this repo can all be run on Colab sessions (except `/Users/malpas.1/Code/data-challenge-notebooks/AAS Workshop/Session A: Nexus/a_rmdc26_workflow.ipynb`, which is exclusive design for a Nexus environment) and this is a recommended fallback, if you encounter environment difficulties **and** Nexus account difficulties during the workshop. 

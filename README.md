@@ -5,7 +5,6 @@
 </div>
 
 # Roman Microlensing Data Challenge 2026 Notebooks
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
 
 This repository provides a set of Jupyter notebooks that support the [**Roman Microlensing Data Challenge 2026**](https://rges-pit.org/outreach/), a competition organised by the [Roman Galactic Exoplanet Survey – Project Infrastructure Team (RGES-PIT)](https://rges-pit.org/). The goal of the challenge is to familiarise researchers with the data volume and characteristics expected from the Roman Galactic Bulge Time Domain Survey, advance existing data analysis and computing practices, and encourage new talent to the field of microlensing.
 

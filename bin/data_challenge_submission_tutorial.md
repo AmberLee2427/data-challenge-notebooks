@@ -4,6 +4,7 @@ title: "Submission Command Line Tool Tutorial"
 sidebar:
   nav: "workshop"
 ---
+<!-- END PREAMBLE -->
 
 > Getting Started with [`microlens-submit`](https://microlens-submit.readthedocs.io/en/latest/tutorial.html){:target="_blank"}
 

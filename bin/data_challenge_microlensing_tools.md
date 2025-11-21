@@ -4,6 +4,7 @@ title: "Introduction to Microlensing Tools"
 sidebar:
   nav: "workshop"
 ---
+<!-- END PREAMBLE -->
 
 <div style="margin: 1em 0;">
   <iframe src="https://nbviewer.org/github/rges-pit/data-challenge-notebooks/blob/main/Extras/Microlensing_Tools.ipynb" 
