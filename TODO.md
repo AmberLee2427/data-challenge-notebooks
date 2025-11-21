@@ -7,10 +7,11 @@
 # To Do
 
 ## Repository Management
-- [ ] structure as a submodule for `rges-pit.github.io`/a standalone repo for data challenge participants
+- [ ] workflow auto PRs to `rges-pit.github.io`
 - [x] workflow restyling and copying scripts to make notebooks sync accross sources
 - [ ] make repo constributing guide mimic RRN style guide, so as to minimize nexus post-processing
 - [ ] Zenodo link and citations
+  - [x] Request OAuth Permission
 - [x] `CITATIONS.cff`
 - [x] make root `README.md` more participant aware
 
