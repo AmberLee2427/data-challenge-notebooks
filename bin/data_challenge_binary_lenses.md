@@ -6,24 +6,9 @@ sidebar:
 ---
 <!-- END PREAMBLE -->
 
-# Session C: Binary Lenses
-> *1:30 pm – 3:00 pm* 
-
-<!-- BEGIN SESSION C OVERVIEW -->
-
-We will begin this session with a more complicated binary-lens model and exercises to demonstrate the challenges of binary-lens fitting and common approaches to addressing them. We will fit that same event using three different methods:
-
-1. Start a fit from an uninformed guess
-2. Start with a grid search 
-3. Start from an informed guess
-
-Some of these methods are computationally expensive, so we will parallelize our efforts and discuss common challenges in microlensing binary-lens modeling, e.g., degeneracies, stochastic likelihood space, and higher-order effects.
-
-<!-- END SESSION C OVERVIEW -->
-
 <!-- BEGIN WEB CONTENT -->
 
-This session will follow along with this [notebook](https://rges-pit.org/data-challenge/aas-workshop/notebooks/binary/) on binary lens modelling:
+This session will follow along with this [notebook]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/binary/) on binary lens modelling:
 
 <!-- Download and Github buttons -->
 <div style="display: flex; gap: 10px; margin: 1em 0; align-items: center; flex-wrap: wrap;">

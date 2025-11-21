@@ -127,12 +127,9 @@ dmypy.json
 # profiling
 profileresults/
 
-# Text files
-*.txt
-*.md
-*.rst
-
 # Configuration files
 *.yml
-AGENTS.md  # local AI agent notes
+# local AI agent notes
+AGENTS.md 
+SYNC_PLAN.md 
 

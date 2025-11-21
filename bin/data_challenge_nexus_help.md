@@ -6,30 +6,6 @@ sidebar:
 ---
 <!-- END PREAMBLE -->
 
-# Session A: Nexus
-> *9:00 am - 10:30 am*
-
-<!-- BEGIN SESSION A OVERVIEW -->
-
-In this session you will learn how to access the Nexus, create Nexus accounts, activate kernels, install packages, acess data, create your submission and get other technical help.
-
-In this session we will be covering:
-
-* Creating Nexus accounts
-* How to access the Nexus
-* Nexus notebook content:
-    * Creating Teams
-    * Microlensing open source software
-    * Accessing data and creating data challenge submissions
-* Installing packages and other technical help
-* Using the Nexus with VSCode
-
-For discussion, information, troubleshooting, and updates about the Nexus, see the `#nexus` channel and the channel canvas.
-
-<!-- END SESSION A OVERVIEW -->
-
-[//]: # (Just a thought, If we have a jupyter kernel open can we run a notebook that's local but access the nexus buckets etc? How does that work?)
-
 <!-- BEGIN WEB CONTENT -->
 
 <!-- Login, sign up, and help buttons -->
@@ -293,7 +269,7 @@ The Nexus JupyterLab session comes preloaded with useful pages and notebooks. Th
 | The notebooks in this directory are read-only, but the file system itself is not, so the reference notebooks can execute. You should not create and save notebooks in this directory. It is regularly replaced with the contents of its source repository, and any changes you make here will be lost. |
 
 Relevant to this Data Challenge are 3 notebooks:
-  * [Introduction to microlensing open source software](https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools) (`reference/content/notebooks/microlensing_tools/microlensing_tools.ipynb`).
+  * [Introduction to microlensing open source software]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/microlensing_tools) (`reference/content/notebooks/microlensing_tools/microlensing_tools.ipynb`).
   
     <div style="display: flex; gap: 10px; margin: 1em 0; align-items: center;">
       <!-- View on GitHub button -->
@@ -316,7 +292,7 @@ Relevant to this Data Challenge are 3 notebooks:
         Download
       </a>
       <!-- Open on RGES-PIT Website -->
-      <a href="https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools/"
+      <a href="{{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/microlensing_tools/"
           style="background-color: #a859e4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
         Open
       </a>
@@ -357,7 +333,7 @@ Relevant to this Data Challenge are 3 notebooks:
       </a>
     </div>
 
-  * [Data challenge workflow and creating data challenge submissions](https://rges-pit.org/data-challenge/aas-workshop/notebooks/workflow/) (`microlens-submit`) (`reference/content/notebooks/rmdc2025_workflow/rmdc2025_workflow.ipynb`).
+  * [Data challenge workflow and creating data challenge submissions]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/workflow/) (`microlens-submit`) (`reference/content/notebooks/rmdc2025_workflow/rmdc2025_workflow.ipynb`).
 
     <div style="display: flex; gap: 10px; margin: 1em 0; align-items: center;">
       <!-- View on GitHub button -->
@@ -380,13 +356,13 @@ Relevant to this Data Challenge are 3 notebooks:
         Download
       </a>
       <!-- Open on RGES-PIT Website -->
-      <a href="https://rges-pit.org/data-challenge/aas-workshop/notebooks/workflow/"
+      <a href="{{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/workflow/"
           style="background-color: #a859e4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
         Open
       </a>
     </div>
 
-  * [Alternate workflow with the submission command line tool, for non-Python users.](https://rges-pit.org/data-challenge/aas-workshop/notebooks/submission-tutorial/)
+  * [Alternate workflow with the submission command line tool, for non-Python users.]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/submission-tutorial/)
 
     <div style="display: flex; gap: 10px; margin: 1em 0; align-items: center;">
       <a href="https://microlens-submit.readthedocs.io/en/latest/tutorial.html" target="_blank"
@@ -408,7 +384,7 @@ Relevant to this Data Challenge are 3 notebooks:
         View Docs
       </a>
       <!-- Open on RGES-PIT Website -->
-      <a href="https://rges-pit.org/data-challenge/aas-workshop/notebooks/submission-tutorial/"
+      <a href="{{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/submission-tutorial/"
           style="background-color: #a859e4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
         Open
       </a>

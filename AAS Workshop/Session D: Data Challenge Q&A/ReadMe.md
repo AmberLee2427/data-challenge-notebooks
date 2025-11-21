@@ -1,5 +1,13 @@
+---
+permalink: /data-challenge/aas-workshop/4-info/
+title: "Information Session and Q&A"
+sidebar:
+  nav: "workshop"
+---
+<!-- END PREAMBLE -->
+
 # Session D: Q&A
-> *3:30 pm - end pm*
+> *3:30 pm – end*
 
 In this session there will be a Q&A. 
 
