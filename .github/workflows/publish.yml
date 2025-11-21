@@ -73,7 +73,7 @@ jobs:
       - name: Update site pages
         run: |
           mkdir -p site/docs/_pages
-          cp site-bundle/bin/*.md site/docs/_pages/
+          find site-bundle -name "*.md" -exec cp {} site/docs/_pages/ \;
 
       - name: Open/update draft PR
         uses: peter-evans/create-pull-request@v6
