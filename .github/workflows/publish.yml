@@ -27,6 +27,12 @@ jobs:
       - name: Rebuild site markdown
         run: python scripts/page_transformer.py
 
+      - name: Upload site bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-bundle
+          path: bin/
+
       - name: Rebuild Nexus notebooks
         run: python scripts/notebook_transformer.py
 
@@ -42,3 +48,44 @@ jobs:
           else
             echo "No changes to publish."
           fi
+
+  site-draft-pr:
+    needs: build-pages
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Download site bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: site-bundle
+          path: site-bundle
+
+      - name: Check out site repository
+        uses: actions/checkout@v4
+        with:
+          repository: rges-pit/rges-pit.github.io
+          token: ${{ secrets.SITE_SYNC_PAT }}
+          path: site
+
+      - name: Update site pages
+        run: |
+          mkdir -p site/docs/_pages
+          cp site-bundle/bin/*.md site/docs/_pages/
+
+      - name: Open/update draft PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.SITE_SYNC_PAT }}
+          path: site
+          branch: chore/data-challenge-sync
+          base: main
+          title: "Draft: Sync data-challenge notebooks"
+          body: |
+            Automated sync of generated workshop documentation from `data-challenge-notebooks`.
+          commit-message: "chore: sync data-challenge workshop pages"
+          draft: true
+          add-paths: |
+            docs/_pages/*.md
