@@ -99,6 +99,7 @@ jobs:
           draft: true
           add-paths: |
             docs/_pages/*.md
+            
   rrn-draft-pr:
     needs: build-pages
     if: github.event.pull_request.merged == true
@@ -122,7 +123,7 @@ jobs:
 
       - name: Update RRN notebooks
         run: |
-          rsync -av rrn-export/content/notebooks/microlensing_data_challenge/ rrn/content/notebooks/microlensing_data_challenge/
+          rsync -av rrn-export/notebooks/microlensing_data_challenge/ rrn/notebooks/microlensing_data_challenge/
 
       - name: Open/update draft PR to roman_notebooks
         uses: peter-evans/create-pull-request@v6
