@@ -58,7 +58,7 @@ The notebooks (and related environment files) included in this repo are:
 
 ## Contributing
 
-These notebooks collect instructions, examples, and open-source tools for analysing simulated microlensing light curves and identifying false positives. Contributions to existing resources—such as [`Extras/Microlensing_Tools.ipynb`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/Extras/Microlensing_Tools.ipynb)—or in the form of new instructional resources (or [discussions](https://github.com/rges-pit/data-challenge-notebooks/discussions) when a notebook is not appropriate) are encouraged. You can also submit a suggestion on the RGES-PIT website or raise a GitHub issue on any relevant `rges-pit` repository.
+These notebooks collect instructions, examples, and open-source tools for analysing simulated microlensing light curves and identifying false positives. Contributions to existing resources—such as [`Extras/Microlensing_Tools.ipynb`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/Extras/Microlensing_Tools.ipynb)—or in the form of new instructional resources (or [discussions](https://github.com/rges-pit/data-challenge-notebooks/discussions) when a notebook is not appropriate) are encouraged. You can also [submit a suggestion](https://rges-pit.org/submit/) on the RGES-PIT website or raise a GitHub issue on any relevant `rges-pit` repository.
 
 ### Why Contribute?
 
@@ -76,7 +76,7 @@ These notebooks collect instructions, examples, and open-source tools for analys
 
 Researchers developing or maintaining open-source microlensing software are encouraged to contribute in one of the following ways:
 
-1. **Add your package to the tool index** – If your code is missing from the table of microlensing packages, please submit a pull request that updates [`Extras/Microlensing_Tools.ipynb`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/Extras/Microlensing_Tools.ipynb), make a submission on the RGES-PIT website, or start a [discussion](https://github.com/rges-pit/data-challenge-notebooks/discussions) asking us to add it for you.
+1. **Add your package to the tool index** – If your code is missing from the table of microlensing packages, please submit a pull request that updates [`Extras/Microlensing_Tools.ipynb`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/Extras/Microlensing_Tools.ipynb), make a [submission](https://rges-pit.org/submit/) on the RGES-PIT website, or start a [discussion](https://github.com/rges-pit/data-challenge-notebooks/discussions) asking us to add it for you.
 
 2. **Provide a usage example** – Create a section demonstrating how to use your package on the provided light curves. Highlight unique capabilities (e.g., handling binary sources, parallax, or astrometric data). Code examples should be reproducible and include installation instructions.
 
