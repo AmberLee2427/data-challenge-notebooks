@@ -1,21 +1,11 @@
-## Roman Research Nexus Copies
+<div align="center">
+    <a href="https://github.com/reges-pit">
+        <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
+    </a>
+</div>
 
-Notebooks in this directory are managed by GitHub workflow. 
+## Roman Research Nexus Notebook Copies
 
-## Included Notebooks:
+Notebooks in this directory are managed by GitHub workflow `.github/workflows/publish.yml`. 
 
-* [RRN/roman_microlensing_data_challenge_workflow.ipynb](roman_microlensing_data_challenge_workflow.ipynb)
-* ...
-
-## Canonical Version:
-
-* [RRN/roman_microlensing_data_challenge_workflow.ipynb](roman_microlensing_data_challenge_workflow.ipynb)
-* ...
-
-## Auxiliary Inclusions:
-
-* ...
-
-## Editing Instruction
-
-Edit "Auxilary Inclusion" and "Canonical Version", never the "Included Version; Included Version will be replaced during workflow runs unless they are also the Canonical Version. If that doesn't make sense, don't touch it. 
+See notebooks_manifest for caconical source file: `source_path:`.

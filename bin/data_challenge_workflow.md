@@ -4,6 +4,7 @@ title: "Data challenge - Nexus Workflow"
 sidebar:
   nav: "workshop"
 ---
+<!-- END PREAMBLE -->
 
 <div style="margin: 1em 0;">
   <iframe src="https://nbviewer.org/github/rges-pit/data-challenge-notebooks/blob/main/AAS_Workshop/Session_A:_Nexus/a_rmdc26_workflow.ipynb" 

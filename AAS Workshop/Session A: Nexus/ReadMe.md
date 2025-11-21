@@ -1,10 +1,17 @@
+<! START PREAMBLE
 ---
 permalink: /data-challenge/aas-workshop/1-nexus/
 title: "Introduction to the Roman Research Nexus (The Nexus)"
 sidebar:
   nav: "workshop"
 ---
-<!-- END PREAMBLE -->
+END PREAMBLE -->
+
+<div align="center">
+    <a href="https://github.com/reges-pit">
+        <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
+    </a>
+</div>
 
 # Session A: Nexus
 > *9:00 am - 10:30 am*

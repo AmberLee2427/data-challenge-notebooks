@@ -4,6 +4,7 @@ title: "Single Lens Pipeline"
 sidebar:
   nav: "workshop"
 ---
+<!-- END PREAMBLE -->
 
 <div style="margin: 1em 0;">
   <iframe src="https://nbviewer.org/github/rges-pit/data-challenge-notebooks/blob/main/AAS_Workshop/Session_B:Single_Lens&_Pipelines/Single_Lens_Pipeline.ipynb.ipynb" 

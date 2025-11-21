@@ -5,7 +5,6 @@
 </div>
 
 # To Do
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
 
 ## Repository Management
 - [ ] structure as a submodule for `rges-pit.github.io`/a standalone repo for data challenge participants

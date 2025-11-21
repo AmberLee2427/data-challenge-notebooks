@@ -1,10 +1,17 @@
+<!-- START PREAMBLE
 ---
 permalink: /data-challenge/aas-workshop/4-info/
 title: "Information Session and Q&A"
 sidebar:
   nav: "workshop"
 ---
-<!-- END PREAMBLE -->
+END PREAMBLE -->
+
+<div align="center">
+    <a href="https://github.com/reges-pit">
+        <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
+    </a>
+</div>
 
 # Session D: Q&A
 > *3:30 pm – end*

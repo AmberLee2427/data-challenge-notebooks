@@ -1,3 +1,4 @@
+<!-- START PREAMBLE
 ---
 permalink: /data-challenge/
 title: "Roman Microlensing Data Challenge 2026 (RMDC26)"
@@ -5,7 +6,7 @@ sidebar:
     nav: "docs"
 description: "Roman Microlensing Data Challenge 2026 (RMDC26): overview, datasets, ground rules, key dates, submission tooling, and AAS 247 workshop details."
 ---
-<!-- END PREAMBLE -->
+END PREAMBLE -->
 
 <div align="center">
     <a href="https://github.com/reges-pit">
@@ -14,7 +15,6 @@ description: "Roman Microlensing Data Challenge 2026 (RMDC26): overview, dataset
 </div>
 
 # Roman Microlensing Data Challenge 2026 (RMDC26)
-<hr style="border: 1.5pt solid #a859e4; width: 100%; margin-top: -10px;">
 
 <!-- BEGIN WEB CONTENT -->
 
