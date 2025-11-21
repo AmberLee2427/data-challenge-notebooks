@@ -92,6 +92,7 @@ jobs:
           branch: chore/data-challenge-sync
           base: main
           push-to-fork: rges-pit/rges-pit.github.io-dc-copy
+          push-to-fork-token: ${{ secrets.SITE_SYNC_PAT }}
           title: "Draft: Sync data-challenge notebooks"
           body: |
             Automated sync of generated workshop documentation from `data-challenge-notebooks`.
@@ -99,7 +100,7 @@ jobs:
           draft: true
           add-paths: |
             docs/_pages/*.md
-            
+
   rrn-draft-pr:
     needs: build-pages
     if: github.event.pull_request.merged == true
