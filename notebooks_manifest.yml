@@ -1,0 +1,107 @@
+version: 2026-11-20
+description: >
+  Canonical list of notebooks in data-challenge-notebooks with intended audiences,
+  distribution targets, and transformation requirements for syncing to the website
+  and Roman Research Nexus.
+
+notebooks:
+  - id: session-a-roman-workflow
+    title: "Roman Microlensing Data Challenge Workflow"
+    source_path: "AAS Workshop/Session A: Nexus/Nexus_Workflow.ipynb"
+    session: "RRN workflow"
+    audiences:
+      - "Roman Research Nexus participants"
+      - "Data challenge teams"
+      - "AAS workshop attendees"
+    colab_support: "not_applicable"
+    nexus_support: "ready"
+    website_render: "full_embed"
+    rrn_target: "content/notebooks/microlensing_data_challenge/a_rmdc26_workflow.ipynb"
+    notes: >
+      Nexus-only notebook; depends on rmdc26 S3 buckets and rges-pit-dc kernel.
+      Needs explicit instructions at the end for cloning data-challenge-notebooks
+      when users require the full workshop set locally.
+
+  - id: session-b-single-lens
+    title: "Session B: Single Lens & Pipelines"
+    source_path: "AAS Workshop/Session B: Single Lens & Pipelines/Single_Lens_Pipeline.ipynb"
+    session: "AAS Session B"
+    audiences:
+      - "AAS workshop attendees"
+      - "Self-paced learners"
+      - "Data challenge teams"
+    colab_support: "needs_bootstrap"
+    nexus_support: "under_evaluation"
+    website_render: "full_embed"
+    rrn_target: "content/notebooks/microlensing_data_challenge/b_single_lens.ipynb"
+    rrn_transforms:
+      - clear_outputs
+      - record_metadata
+      - remove_colab_only
+      - replace_purple_hr
+      - warn_required_sections
+    notes: >
+      Requires cleanup for Colab (wget data + pip install block). For Nexus,
+      must verify dependencies are available in rges-pit-dc.
+
+  - id: session-c-binary-lens
+    title: "Session C: Binary Lens Modeling"
+    source_path: "AAS Workshop/Session C: Binary Lens/Fitting_Binary_Lenses.ipynb"
+    session: "AAS Session C"
+    audiences:
+      - "AAS workshop attendees"
+      - "Data challenge teams"
+      - "Self-paced learners"
+    colab_support: "needs_bootstrap"
+    nexus_support: "stretch_goal"
+    website_render: "full_embed"
+    rrn_target: "content/notebooks/microlensing_data_challenge/c_binary_lens.ipynb"
+    rrn_transforms:
+      - clear_outputs
+      - record_metadata
+      - remove_colab_only
+      - replace_purple_hr
+      - warn_required_sections
+    notes: >
+      Heavy compute + custom dependencies (`microlens_emcee`, local data files).
+      Likely better to keep Nexus-out; append instructions for cloning repo if not ported.
+
+  - id: extras-microlensing-tools
+    title: "Microlensing Analysis Tools Index"
+    source_path: "Extras/Microlensing_Tools.ipynb"
+    session: "Extras"
+    audiences:
+      - "Data challenge teams"
+      - "Self-paced learners"
+      - "Roman Research Nexus participants"
+    colab_support: "ready"
+    nexus_support: "needs_review"
+    website_render: "full_embed"
+    rrn_target: "content/notebooks/microlensing_data_challenge/x_microlensing_tools.ipynb"
+    rrn_transforms:
+      - clear_outputs
+      - record_metadata
+      - remove_colab_only
+      - replace_purple_hr
+      - warn_required_sections
+    notes: >
+      Already structured as a Colab resource; ensure references to the minicourse are removed
+      and style matches CONTRIBUTING.md. For Nexus, may only need documentation (few dependencies).
+
+  - id: extras-day4-gould-loeb
+    title: "Gould & Loeb Planetary Event"
+    source_path: "Extras/Gould_Loeb_Planetary_Event.ipynb"
+    session: "Extras"
+    audiences:
+      - "Data challenge teams"
+      - "Self-paced learners"
+    colab_support: "needs_bootstrap"
+    nexus_support: "unlikely"
+    website_render: "preexisting_content"
+    rrn_target: "content/notebooks/microlensing_data_challenge/x_gould_loeb.ipynb"
+    notes: >
+      Legacy notebook referencing previous minicourse materials; requires re-contextualization
+      and likely stays local-only. Without significant changes, it isn't likely to be useful 
+      to embed on the website as a data-challenge resource. Provide clone instructions via the 
+      workflow notebook.
+

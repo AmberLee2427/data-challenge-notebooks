@@ -128,7 +128,6 @@ dmypy.json
 profileresults/
 
 # Configuration files
-*.yml
 # local AI agent notes
 AGENTS.md 
 SYNC_PLAN.md 
