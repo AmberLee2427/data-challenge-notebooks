@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List
@@ -60,6 +61,7 @@ class NotebookTransformer:
             transforms = entry.get("rrn_transforms") or [
                 "clear_outputs",
                 "record_metadata",
+                "warn_required_sections",
             ]
             for transform in transforms:
                 self._apply_transform(transform, notebook_data, entry)
@@ -99,6 +101,12 @@ class NotebookTransformer:
             self._clear_outputs(notebook)
         elif transform == "record_metadata":
             self._record_metadata(notebook, entry)
+        elif transform == "replace_purple_hr":
+            self._replace_purple_hr(notebook)
+        elif transform == "remove_colab_only":
+            self._remove_cells_with_tag(notebook, "colab-only")
+        elif transform == "warn_required_sections":
+            self._warn_required_sections(notebook, entry)
         else:
             raise ValueError(f"Unknown transform '{transform}'")
 
@@ -119,6 +127,71 @@ class NotebookTransformer:
         sync_meta["website_render"] = entry.get("website_render")
         sync_meta["nexus_support"] = entry.get("nexus_support")
 
+    @staticmethod
+    def _replace_purple_hr(notebook: Dict[str, Any]) -> None:
+        pattern = re.compile(r"<hr[^>]*a859e4[^>]*>", re.IGNORECASE)
+        for cell in notebook.get("cells", []):
+            if cell.get("cell_type") != "markdown":
+                continue
+            source = cell.get("source")
+            if isinstance(source, list):
+                new_lines = []
+                for line in source:
+                    if isinstance(line, str):
+                        new_lines.append(pattern.sub("***", line))
+                    else:
+                        new_lines.append(line)
+                cell["source"] = new_lines
+            elif isinstance(source, str):
+                cell["source"] = pattern.sub("***", source)
+
+    @staticmethod
+    def _remove_cells_with_tag(notebook: Dict[str, Any], tag: str) -> None:
+        filtered = []
+        for cell in notebook.get("cells", []):
+            tags = set(cell.get("metadata", {}).get("tags", []))
+            if tag in tags:
+                continue
+            filtered.append(cell)
+        notebook["cells"] = filtered
+
+    _REQUIRED_SECTION_KEYWORDS: Dict[str, List[str]] = {
+        "Learning Goals": ["learning goal"],
+        "Introduction": ["introduction"],
+        "Exercises": ["exercise"],
+        "Additional Resources": ["additional resource"],
+        "About this Notebook": ["about this notebook"],
+    }
+
+    def _warn_required_sections(
+        self, notebook: Dict[str, Any], entry: Dict[str, Any]
+    ) -> None:
+        headings: List[str] = []
+        for cell in notebook.get("cells", []):
+            if cell.get("cell_type") != "markdown":
+                continue
+            text = "".join(cell.get("source", []))
+            for line in text.splitlines():
+                stripped = line.strip().lower()
+                if stripped.startswith("#"):
+                    headings.append(stripped)
+
+        missing: List[str] = []
+        for label, keywords in self._REQUIRED_SECTION_KEYWORDS.items():
+            matched = False
+            for heading in headings:
+                if any(keyword in heading for keyword in keywords):
+                    matched = True
+                    break
+            if not matched:
+                missing.append(label)
+
+        if missing:
+            notebook_id = entry.get("id", "unknown")
+            print(
+                f"[warn] {notebook_id}: missing sections -> {', '.join(missing)}",
+                file=sys.stderr,
+            )
 
 def parse_args(argv: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
