@@ -21,6 +21,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install transformer deps
+        run: pip install pyyaml
+
       - name: Rebuild site markdown
         run: python scripts/page_transformer.py
 
