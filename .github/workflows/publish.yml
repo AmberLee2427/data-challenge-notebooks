@@ -94,7 +94,7 @@ jobs:
         run: |
           response=$(curl -s -H "Authorization: Bearer $TOKEN" \
             -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/rges-pit/rges-pit.github.io/pulls?head=rges-pit:chore/data-challenge-sync&state=open")
+            "https://api.github.com/repos/rges-pit/rges-pit.github.io/pulls?head=rges-pit.github.io-dc-copy:chore/data-challenge-sync&state=open")
           count=$(echo "$response" | jq '. | length')
           if [ "$count" -gt 0 ]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
