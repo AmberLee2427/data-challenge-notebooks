@@ -47,8 +47,7 @@ jobs:
 
       - name: Commit updated pages
         run: |
-          if git status --porcelain | grep -q .
-          then
+          if git status --porcelain | grep -q .; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add --all
@@ -87,38 +86,45 @@ jobs:
           mkdir -p site/docs/_pages
           find site-bundle -name "*.md" -exec cp {} site/docs/_pages/ \;
 
-      - name: Check existing site PR
-        id: check_site_pr
+      - name: Push changes and update PR
         env:
-          TOKEN: ${{ secrets.SITE_SYNC_PAT }}
+          GH_TOKEN: ${{ secrets.SITE_SYNC_PAT }}
+        working-directory: site
         run: |
-          response=$(curl -s -H "Authorization: Bearer $TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/rges-pit/rges-pit.github.io/pulls?head=rges-pit:chore/data-challenge-sync&state=open")
-          echo "Response: $response"
-          count=$(echo "$response" | jq '. | length')
-          if [ "$count" -gt 0 ]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
+          # Configure Git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Open/update draft PR
-        if: steps.check_site_pr.outputs.exists != 'true'
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.SITE_SYNC_PAT }}
-          path: site
-          branch: chore/data-challenge-sync
-          base: main
-          push-to-fork: rges-pit/rges-pit.github.io-dc-copy
-          title: "Draft: Sync data-challenge notebooks"
-          body: |
-            Automated sync of generated workshop documentation from `data-challenge-notebooks`.
-          commit-message: "chore: sync data-challenge workshop pages"
-          draft: true
-          add-paths: |
-            docs/_pages/*.md
+          # Create branch
+          git checkout -b chore/data-challenge-sync
+
+          # Stage and Commit
+          git add docs/_pages/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: sync data-challenge workshop pages"
+
+          # Push to Fork
+          git remote add fork https://x-access-token:${GH_TOKEN}@github.com/rges-pit/rges-pit.github.io-dc-copy.git
+          git push -f fork chore/data-challenge-sync
+
+          # Create PR if not exists
+          EXISTING_PR=$(gh pr list --repo rges-pit/rges-pit.github.io --head chore/data-challenge-sync --json url --jq '.[0].url')
+
+          if [ -z "$EXISTING_PR" ]; then
+            echo "Creating new PR..."
+            gh pr create \
+              --repo rges-pit/rges-pit.github.io \
+              --head rges-pit:chore/data-challenge-sync \
+              --base main \
+              --title "Draft: Sync data-challenge notebooks" \
+              --body "Automated sync of generated workshop documentation from \`data-challenge-notebooks\`." \
+              --draft
+          else
+            echo "PR already exists: $EXISTING_PR"
+          fi
 
   rrn-draft-pr:
     needs: build-pages
@@ -148,34 +154,42 @@ jobs:
         run: |
           rsync -av rrn-export/notebooks/microlensing_data_challenge/ rrn/notebooks/microlensing_data_challenge/
 
-      - name: Check existing RRN PR
-        id: check_rrn_pr
+      - name: Push changes and update PR
         env:
-          TOKEN: ${{ secrets.SITE_SYNC_PAT }}
+          GH_TOKEN: ${{ secrets.SITE_SYNC_PAT }}
+        working-directory: rrn
         run: |
-          response=$(curl -s -H "Authorization: Bearer $TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/spacetelescope/roman_notebooks/pulls?head=rges-pit:chore/rrn-data-challenge-sync&state=open")
-          count=$(echo "$response" | jq '. | length')
-          if [ "$count" -gt 0 ]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
+          # Configure Git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Open/update draft PR to roman_notebooks
-        if: steps.check_rrn_pr.outputs.exists != 'true'
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.SITE_SYNC_PAT }}
-          path: rrn
-          branch: chore/rrn-data-challenge-sync
-          base: main
-          push-to-fork: rges-pit/roman_notebooks
-          title: "Draft: Sync RRN data-challenge notebooks"
-          body: |
-            Automated export of workshop notebooks and environment file into `roman_notebooks`.
-          commit-message: "chore: sync RRN data-challenge notebooks"
-          draft: true
-          add-paths: |
-            notebooks/microlensing_data_challenge/*
+          # Create branch
+          git checkout -b chore/rrn-data-challenge-sync
+
+          # Stage and Commit
+          git add notebooks/microlensing_data_challenge/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: sync RRN data-challenge notebooks"
+
+          # Push to Fork
+          git remote add fork https://x-access-token:${GH_TOKEN}@github.com/rges-pit/roman_notebooks.git
+          git push -f fork chore/rrn-data-challenge-sync
+
+          # Create PR if not exists
+          EXISTING_PR=$(gh pr list --repo spacetelescope/roman_notebooks --head chore/rrn-data-challenge-sync --json url --jq '.[0].url')
+
+          if [ -z "$EXISTING_PR" ]; then
+            echo "Creating new PR..."
+            gh pr create \
+              --repo spacetelescope/roman_notebooks \
+              --head rges-pit:chore/rrn-data-challenge-sync \
+              --base main \
+              --title "Draft: Sync RRN data-challenge notebooks" \
+              --body "Automated export of workshop notebooks and environment file into \`roman_notebooks\`." \
+              --draft
+          else
+            echo "PR already exists: $EXISTING_PR"
+          fi
