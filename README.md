@@ -10,6 +10,10 @@ This repository provides a set of Jupyter notebooks that support the [**Roman Mi
 
 If you are a data challenge participant, your primary resources live in the `AAS Workshop/` and `Extras/` directories. Each directory ships with `README.md` context plus Colab buttons where a remote runtime is supported.
 
+## Data Challenge Sign Up
+
+[![qrcode_sign_ip_form.png](qrcode_sign_up_form.png)](https://forms.gle/reQCDN6S27V7QFEx9)
+
 ## Repository Contents
 
 The contents of this repository feed multiple destinations:
