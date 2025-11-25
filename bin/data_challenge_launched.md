@@ -90,6 +90,7 @@ conda install microlens-submit
 
 The `microlens-submit` documentation includes [detailed specifications](https://microlens-submit.readthedocs.io/en/latest/submission_manual.html){:target="_blank"} for how to create a submission. **Strict adherence to the submission criteria is required**, as much of the evaluation process is automated.
 
+
 ### Evaluation
 
 The evaluation panel will assess each team’s entry on the following criteria:
@@ -125,4 +126,9 @@ You can find a copy of the evaluation rubric [here]({{ site.url }}{{ site.baseur
 * Message us on the [`#general`](https://rmdc2026.slack.com/archives/C096QG09P5F){:target="_blank"} channel on the RMDC2026 Slack workspace.
 
 <!-- END WEB CONTENT -->
+
+
+
+
+
 <!-- COPY TO: "bin/data_challenge_launched.md" -->
