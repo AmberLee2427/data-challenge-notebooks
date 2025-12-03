@@ -114,3 +114,34 @@ The workflow will:
 
 The notebooks in this repository were originally authored by Amber Malpas, Arjun Murlidhar, Katie Vandorou, Katarzyna Kruszyńska, and Ali Crisp, and rely heavily on the work of the package creators. They are provided by the RGES-PIT to encourage community engagement in preparation for the Roman Galactic Bulge Time Domain Survey. If you adapt or build upon these notebooks, please acknowledge the original authors and the RGES-PIT. For researchers using these materials in publications or teaching, a citation to the relevant Roman mission papers and to the tools you use is recommended.
 
+<!-- APA Citation Start -->>
+```apa
+Malpas, A., Murlidhar, A., Vandorou, K., Kruszyńska, K., & Crisp, A. (2025). Roman Microlensing Data Challenge 2026 Notebooks (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.17806271
+```
+<!-- APA Citation End -->>
+
+<!-- BibTeX Citation Start -->>
+```bibtex
+@software{malpas_2025_17806271,
+  author       = {Malpas, Amber and
+                  Murlidhar, Arjun and
+                  Vandorou, Katie and
+                  Kruszyńska, Katarzyna and
+                  Crisp, Ali},
+  title        = {Roman Microlensing Data Challenge 2026 Notebooks},
+  month        = dec,
+  year         = 2025,
+  publisher    = {Zenodo},
+  version      = {v0.1.0},
+  doi          = {10.5281/zenodo.17806271},
+  url          = {https://doi.org/10.5281/zenodo.17806271},
+  swhid        = {swh:1:dir:944eee044fd33e3f1c375c2287de9f0bd4351bda
+                   ;origin=https://doi.org/10.5281/zenodo.17806270;vi
+                   sit=swh:1:snp:46d2545c1ca9fb19d83be68a053e33953bf2
+                   1e06;anchor=swh:1:rel:fd53e0f8d52ea95bb26e9c133c7b
+                   4974eda8a6a9;path=rges-pit-data-challenge-
+                   notebooks-9097c1b
+                  },
+}
+```
+<!-- BibTeX Citation Start -->>
