@@ -7,5 +7,6 @@ sidebar:
 <!-- END PREAMBLE -->
 
 <!-- BEGIN WEB CONTENT -->
+> This page will contain additional info from the Q&A session of the AAS 247 Workshop, once complete.
 <!-- END WEB CONTENT -->
 <!-- COPY TO: "bin/data_challenge_info.md" -->
