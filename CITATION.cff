@@ -1,8 +1,17 @@
-The notebooks in this repository were originally authored by Amber Malpas, 
-Arjun Murlidhar, Katie Vandorou, Katarzyna Kruszyńska, and Ali Crisp, but 
-rely heavily on the resources provided by the package creators. They are 
-provided by the RGES-PIT to encourage community engagement in preparation 
-for the Roman Galactic Bulge Time Domain Survey. If you adapt or build upon 
-these notebooks, please acknowledge the original authors and the RGES-PIT. 
-For researchers using these materials in publications or teaching, a citation 
-to the relevant Roman mission papers and to the tools you use is recommended.
+cff-version: 1.2.0
+message: "If you use these notebooks, please cite the Roman Microlensing Data Challenge 2026 materials."
+title: "Roman Microlensing Data Challenge 2026 Notebooks"
+version: 0.0.1
+date-released: 2025-12-03
+authors:
+  - family-names: Malpas
+    given-names: Amber
+  - family-names: Murlidhar
+    given-names: Arjun
+  - family-names: Vandorou
+    given-names: Katie
+  - family-names: Kruszyńska
+    given-names: Katarzyna
+  - family-names: Crisp
+    given-names: Ali
+repository-code: https://github.com/rges-pit/data-challenge-notebooks
