@@ -6,16 +6,16 @@
 
 # AAS Workshop Content
 
-The Roman Microlensing Data Challenge 2026 (RMDC26) AAS Workshop is a hands-on, full-day session designed to get participants—from newcomers to seasoned microlensers—set up and productive with the Roman Research Nexus and the core open-source tools used in the Roman Microlensing Data Challenge. We’ll walk through Nexus access and environment setup, introduce essential microlensing concepts and modeling workflows, explore single- and binary-lens fitting (including grid searches and practical strategies for degeneracies and higher-order effects), and show how to organize, validate, and package results for submission using microlens-submit.
+ The Roman Microlensing Data Challenge 2026 (RMDC26) AAS Workshop is a hands-on, full-day session designed to get participants—from newcomers to seasoned microlensing researchers—set up and productive with the Roman Research Nexus and the core open-source tools used in the Roman Microlensing Data Challenge. We’ll walk through Nexus access and environment setup, introduce essential microlensing concepts and modeling workflows, explore single- and binary-lens fitting (including grid searches and practical strategies for degeneracies and higher-order effects), and show how to organize, validate, and package results for submission using microlens-submit.
 
-This page has been created as a persistent resources to assist you with use of the AAS Workshop content and data challenge troubleshooting, outside of the actual workshop context. Our intention is that those who were not able to attend the workshop will be able to refer to this content and receive that same guidance, in a different format.
+This page is a persistent resource to assist you with the AAS Workshop content and RMDC26 troubleshooting, outside of the actual workshop context. Our intention is that those who were not able to attend the workshop will be able to refer to this content and receive the same guidance in a different format.
 
 
 ## Contents
 
 * [Session Outlines](#session-outlines) - what is covered in each session of the workshop.
-* [Notebooks](#notebooks) - list of learning resource and reference matarial notebooks created to assist particupants with the data challenge.
-    - [Running These Notebooks](#running-these-notebooks) - general incstructions on the various ways to run the data challenge notebooks.
+* [Notebooks](#notebooks) - list of learning resource and reference material notebooks created to assist participants with the data challenge.
+    - [Running These Notebooks](#running-these-notebooks) - general instructions on the various ways to run the data challenge notebooks.
 * [Windows WSL for Problem Environment Construction](#windows-wsl-for-problematic-environment-construction)
 * [Additional Resources](#additional-resources) - local environment troubleshooting resources
 * [Quick Reference Commands](#quick-reference-commands)
@@ -40,11 +40,11 @@ This page has been created as a persistent resources to assist you with use of t
 
 * Microlensing basics and terminology with Dr. Scott Gaudi
 * Mini modeling challenge - single lens fitting, priors, parallelization, L2 observer, anomaly detection
-* Resources and alternate data access
+* Resources and alternative data access
 
 ### [3. Binary Lenses](https://rges-pit.org/data-challenge/aas-workshop/3-binary-lenses/)
 
-> 1:30 am – 3:00 pm
+> 1:30 pm – 3:00 pm
 
 * Binary-lens modeling and fitting strategies
 * Methods: uninformed guess, grid search, informed guess
@@ -66,7 +66,7 @@ This page has been created as a persistent resources to assist you with use of t
 
     <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20B:%20Single%20Lens%20%26%20Pipelines/Single_Lens_Pipeline.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-- [`AAS Workshop/Session C: Binary Lens/Fitting_Binary_Lenses.ipynb`](AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb) – a binary-lens modelling notebook that demonstrates multiple fitting strategies and exercise blocks.
+ - [`AAS Workshop/Session C: Binary Lens/Fitting_Binary_Lenses.ipynb`](AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb) – a binary-lens modeling notebook that demonstrates multiple fitting strategies and exercise blocks.
 
     <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
@@ -85,7 +85,7 @@ This page has been created as a persistent resources to assist you with use of t
 
 The notebooks in this repo can all be run on Colab sessions (except `/Users/malpas.1/Code/data-challenge-notebooks/AAS Workshop/Session A: Nexus/a_rmdc26_workflow.ipynb`, which is exclusively designed for a Nexus environment) and this is our recommended fallback option if you encounter environment difficulties **and/or** Nexus account difficulties during the workshop.  
 
-If you instead choose to run the notebooks locallay, you will need to first set up the environment.
+If you instead choose to run the notebooks locally, you will need to first set up the environment.
 
 1. **Download an Environment File**
 
@@ -124,7 +124,7 @@ conda config --set channel_priority strict
 pip install -r requirements.txt
 ```
 
-This will add the dependencies to you base environment. 
+This will add the dependencies to your base environment.
 
 **Option 2: Install via conda-forge**
 ```bash
@@ -152,7 +152,7 @@ jupyter notebook
 from a parent folder to your locally saved version of this notebook and navigating to the notebook in your browser. You may need to select `rges-pit-dc` as your kernel before running the notebook.
 
 **Option 2: Local Runtime**
-Alternatly, you can create a local "Runtime" for your Colab notebook by following [these instructions](https://research.google.com/colaboratory/local-runtimes.html).
+Alternatively, you can create a local "Runtime" for your Colab notebook by following [these instructions](https://research.google.com/colaboratory/local-runtimes.html).
 ```bash
 jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --port=8888 --no-browser
 ```
@@ -162,7 +162,7 @@ jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' 
 
 ## Windows WSL for Problematic Environment Construction
 
-If you are running a Windows machine, you may find that you are having issues running some of the packages in these notebook. These coomon, usually known, issues. You can create a more stable environment by usinf WSL (Windows Subsystem for Linux. 
+If you are running a Windows machine, you may find that you are having issues running some of the packages in these notebooks. These are common, usually known, issues. You can create a more stable environment by using WSL (Windows Subsystem for Linux). 
 
 ### Prerequisites
 - Windows 10 version 2004 or higher (Build 19041 or higher), or Windows 11
@@ -621,10 +621,10 @@ Malpas, A. (2025). microlens-submit. Zenodo. https://doi.org/10.5281/zenodo.1745
 }
 ```
 
-If you use our data-challenge notebooks in your project, please cite:
+If you use our notebooks in your project, please cite:
 
 ```
-Malpas, A. (2025) et al. data-challenge-notebooks. Zenodo. https://doi.org/10.5281/zenodo.
+Malpas, A. (2025) et al. Roman Microlensing Data Challenge 2026 Notebooks. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXXX
 ```
 
 **BibTeX:**
@@ -641,6 +641,7 @@ Malpas, A. (2025) et al. data-challenge-notebooks. Zenodo. https://doi.org/10.52
 }
 ```
 
+
 ## Support
 
 If you encounter issues during setup or while working on the challenge, please:
@@ -649,6 +650,6 @@ If you encounter issues during setup or while working on the challenge, please:
 3. Consult the [microlens-submit documentation](https://microlens-submit.readthedocs.io/en/latest/)
 4. Open an issue on the relevant challenge repository.
 5. Contact the challenge organizers through the challenge Slack workspace.
-6. Ask for help ananymously through the [RGES-PIT website](https://rges-pit.org/data-challenge/help/)
+6. Ask for help anonymously through the [RGES-PIT website](https://rges-pit.org/data-challenge/help/)
 
-Good luck with the Microlensing Data Challenge!
+Good luck with the Roman Microlensing Data Challenge 2026!

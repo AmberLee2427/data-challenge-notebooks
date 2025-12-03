@@ -18,7 +18,7 @@ END PREAMBLE -->
 
 <!-- BEGIN SESSION A OVERVIEW -->
 
-In this session you will learn how to access the Nexus, create Nexus accounts, activate kernels, install packages, acess data, create your submission and get other technical help.
+In this session you will learn how to access the Nexus, create Nexus accounts, activate kernels, install packages, access data, create your submission and get other technical help.
 
 In this session we will be covering:
 
@@ -152,7 +152,7 @@ You might decide to open more than one server at a time or simply create a more 
 
 Type in a name for your new server (e.g. "test-server") and select the smaller blue button `Add new server`.
 
-That’s it. You should be greeted with a “Welcome to the Roman Research Nexus!” page in a JupyterLab instance.
+That's it. You should be greeted with a "Welcome to the Roman Research Nexus!" page in a JupyterLab instance.
 
 ## Stopping a server
 
@@ -174,7 +174,7 @@ Team storage can be accessed through `/teams/<your team name>/` (see `teams.md`)
 
 ## Environments
 
-There is robust documentation on creating environments on the Nexus, in `software.md`, which you can reach by clicking the “Installing extra software” link on the welcome page.
+There is robust documentation on creating environments on the Nexus, in `software.md`, which you can reach by clicking the "Installing extra software" link on the welcome page.
 
 **TL;DR**
 Environments are created, listed, activated, exported, and removed using:
@@ -202,7 +202,7 @@ These environments persist between sessions.
 
 ### VS Code (or Cursor)
 
-Here’s a step-by-step guide to using the Nexus with VS Code, through Jupyter notebooks.
+Here's a step-by-step guide to using the Nexus with VS Code, through Jupyter notebooks.
 
 1.  **Log in to the Nexus**  
     See above.
@@ -245,7 +245,7 @@ Here’s a step-by-step guide to using the Nexus with VS Code, through Jupyter n
 
 | Note: |
 | :- |
-| If you are using AI agents in your workflow, ensure you have selected one with notebook editing capabilities. E.g. Claude Sonnet with Github Copilot. |
+| If you are using AI agents in your workflow, ensure you have selected one with notebook editing capabilities. E.g. Claude Sonnet with GitHub Copilot. |
 
 <!-- This is currently not working
 
@@ -272,7 +272,7 @@ jupyter notebook \
     --no-browser
 ```
 
-Here’s the step-by-step guide to using the Nexus with Colab.
+Here's the step-by-step guide to using the Nexus with Colab.
 
 1.  **Follow steps 1-4 in the VSCode instructions**
 
@@ -285,7 +285,7 @@ Here’s the step-by-step guide to using the Nexus with Colab.
 
 3.  **Connect colab to a local Runtime**
 
-    Click on the "Connect" button in the top right corner on an open colab instance, then select "Connect to a local runtime."
+    Click on the "Connect" button in the top right corner on an open Colab instance, then select "Connect to a local runtime."
 
     In the dialog box, enter the URL for your remote JupyterHub instance, referencing the local port you forwarded in the SSH tunnel and including the API token.
 
@@ -296,7 +296,7 @@ Here’s the step-by-step guide to using the Nexus with Colab.
 
 ## Microlensing Data Challenge Tools
 
-The **RGES-PIT Microlensing Data Challenge** uses the `microlens-submit` toolkit - a stateful submission tool that provides version-controlled workflow for managing, validating, and packaging your challenge submissions. The general recommended challenge workflow and modelling guides are the contents of  
+The **RGES-PIT Microlensing Data Challenge** uses the `microlens-submit` toolkit - a stateful submission tool that provides version-controlled workflow for managing, validating, and packaging your challenge submissions. The general recommended challenge workflow and modeling guides are the contents of  
 
 The official challenge repositories and documentation are hosted at:
 
@@ -304,7 +304,7 @@ The official challenge repositories and documentation are hosted at:
 
 *Duplicates of most of these notebooks exist pre-loaded on the Nexus.*
 
-**Submision Tool Repository:** https://github.com/rges-pit/microlens-submit
+**Submission Tool Repository:** https://github.com/rges-pit/microlens-submit
 
 **Submission Documentation and Guides:** https://microlens-submit.readthedocs.io/en/latest/
 
@@ -326,11 +326,11 @@ The Nexus JupyterLab session comes preloaded with useful pages and notebooks. Th
 | :- |
 | The notebooks in this directory are read-only, but the file system itself is not, so the reference notebooks can execute. You should not create and save notebooks in this directory. It is regularly replaced with the contents of its source repository, and any changes you make here will be lost. |
 
-In the notebook directory (`notebooks/micrlensing-data-challenge/`) you will find the aformentioned notebooks and additional environment files ([`env.yaml`](https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/refs/heads/main/env.yml) and [`requirements.txt`](https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/refs/heads/main/requirements.txt)). Included in these environment files are the dependencies for the notebooks and packages we anticipate you may need for the data challenge.
+In the notebook directory (`notebooks/microlensing-data-challenge/`) you will find the aforementioned notebooks and additional environment files ([`env.yaml`](https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/refs/heads/main/env.yml) and [`requirements.txt`](https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/refs/heads/main/requirements.txt)). Included in these environment files are the dependencies for the notebooks and packages we anticipate you may need for the data challenge.
 
 ### Using the Environment Files
 
-You should not need to use the provided environment file; you only need to select the rges-pit-kernel in the Nexus hosted notebook. Should you wish to use then anyway, you can refer to this readme [`README.md`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/AAS_Workshop/README.md) for instructions on how.
+You should not need to use the provided environment file; you only need to select the rges-pit-kernel in the Nexus hosted notebook. Should you wish to use them anyway, you can refer to this readme [`README.md`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/AAS_Workshop/README.md) for instructions on how.
 
 # Nexus Specific Notebooks
 

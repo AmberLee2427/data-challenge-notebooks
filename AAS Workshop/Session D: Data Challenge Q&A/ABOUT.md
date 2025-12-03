@@ -72,11 +72,11 @@ Our official launch will be during AAS 247, where we will host a [workshop](http
 3) One final submission per team.  
 4) Submissions must pass format validation with the submission tool.  
 5) One designated team lead/contact person.  
-6) Communication with experienced microlensers is encouraged.  
+6) Communication with experienced microlensing researchers is encouraged.  
 
 ### Challenge Tiers
 
-RMDC26 will offer two challenge tiers: a beginner tier for those new to microlensing and an experienced tier for veteran microlensers. Anyone can participate in either tier, but the beginner tier is not intended for entire teams with extensive microlensing modeling experience. Teams may make submissions in both tiers.
+RMDC26 will offer two challenge tiers: a beginner tier for those new to microlensing and an experienced tier for veteran microlensing researchers. Anyone can participate in either tier, but the beginner tier is not intended for entire teams with extensive microlensing modeling experience. Teams may make submissions in both tiers.
 
 ### Participant Goals
 

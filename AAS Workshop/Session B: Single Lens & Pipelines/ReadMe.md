@@ -36,7 +36,7 @@ Topics covered:
 <!-- BEGIN WEB CONTENT -->
 ## Introduction to Microlensing
 
-If you attend the AAS Workshop for the RMDC26 then this introduction will be given in person by Dr. Scott Gaudi. If you are not in person for the workshop, you can still follow along with the slides or see the recording on our [minicourses page](https://rges-pit.org/outreach_mini_landing/) for more lecture style content.
+If you attend the AAS Workshop for the RMDC26 then this introduction will be given in person by Dr. Scott Gaudi. If you are not in person for the workshop, you can still follow along with the slides or see the recording on our [minicourses page](https://rges-pit.org/outreach_mini_landing/) for more lecture-style content.
 
 > Note. The slides for this section have not yet been added here. Please refer back later.
 
@@ -119,9 +119,9 @@ function downloadNotebook(url, filename) {
 }
 </script>
 
-You might also consider flicking through this notebook at some point:
+You might also consider browsing through this notebook at some point:
 
-[Introduction to microlensing open source software](https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools) (`notebooks/microlensing_tools/microlensing_tools.ipynb`).
+[Introduction to microlensing open source software](https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools/) (`notebooks/microlensing_tools/microlensing_tools.ipynb`).
   
 <div style="display: flex; gap: 10px; margin: 1em 0; align-items: center;">
   <!-- View on GitHub button -->
