@@ -21,6 +21,11 @@ except ImportError as exc:  # pragma: no cover
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = REPO_ROOT / "notebooks_manifest.yml"
 RRN_BUILD_DIR = REPO_ROOT / "RRN" / "build"
+RRN_FOOTER_PATH = REPO_ROOT / "RRN" / "footer.md"
+FOOTER_PATTERN = re.compile(
+    r"<!-- Footer Start -->.*?<!-- Footer End -->",
+    re.DOTALL,
+)
 
 
 class NotebookTransformer:
@@ -29,6 +34,7 @@ class NotebookTransformer:
     def __init__(self, manifest_path: Path) -> None:
         self.manifest_path = manifest_path
         self.manifest = self._load_manifest(manifest_path)
+        self._rrn_footer_content = self._load_rrn_footer()
 
     def build_rrn(
         self,
@@ -61,6 +67,7 @@ class NotebookTransformer:
             transforms = entry.get("rrn_transforms") or [
                 "clear_outputs",
                 "record_metadata",
+                "insert_rrn_footer",
                 "warn_required_sections",
             ]
             for transform in transforms:
@@ -84,6 +91,19 @@ class NotebookTransformer:
         return data
 
     @staticmethod
+    def _load_rrn_footer() -> str:
+        if not RRN_FOOTER_PATH.exists():
+            raise FileNotFoundError(
+                f"RRN footer template not found: {RRN_FOOTER_PATH}"
+            )
+        text = RRN_FOOTER_PATH.read_text(encoding="utf-8").strip()
+        if "<!-- Footer Start -->" not in text or "<!-- Footer End -->" not in text:
+            raise ValueError(
+                "RRN footer template must include '<!-- Footer Start -->' and '<!-- Footer End -->' markers."
+            )
+        return text
+
+    @staticmethod
     def _load_notebook(path: Path) -> Dict[str, Any]:
         with path.open("r", encoding="utf-8") as stream:
             return json.load(stream)
@@ -105,6 +125,8 @@ class NotebookTransformer:
             self._replace_purple_hr(notebook)
         elif transform == "remove_colab_only":
             self._remove_cells_with_tag(notebook, "colab-only")
+        elif transform == "insert_rrn_footer":
+            self._insert_rrn_footer(notebook)
         elif transform == "warn_required_sections":
             self._warn_required_sections(notebook, entry)
         else:
@@ -154,6 +176,30 @@ class NotebookTransformer:
                 continue
             filtered.append(cell)
         notebook["cells"] = filtered
+
+    def _insert_rrn_footer(self, notebook: Dict[str, Any]) -> None:
+        replacement = self._rrn_footer_content
+        if not replacement:
+            return
+
+        for cell in notebook.get("cells", []):
+            if cell.get("cell_type") != "markdown":
+                continue
+
+            source = cell.get("source", [])
+            if isinstance(source, list):
+                text = "".join(source)
+            else:
+                text = str(source)
+
+            if "<!-- Footer Start -->" not in text:
+                continue
+
+            new_text = FOOTER_PATTERN.sub(replacement, text)
+            if isinstance(source, list):
+                cell["source"] = new_text.splitlines(keepends=True)
+            else:
+                cell["source"] = new_text
 
     _REQUIRED_SECTION_KEYWORDS: Dict[str, List[str]] = {
         "Learning Goals": ["learning goal"],

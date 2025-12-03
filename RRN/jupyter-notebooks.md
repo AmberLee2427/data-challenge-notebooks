@@ -388,10 +388,11 @@ Notebooks should use the standard STScI footer:
 This can be implemented with the following code snippet placed in a cell at the
 bottom of the notebook.
 
+<!-- Footer Start -->
 ```
-<img style="float: right;" src="https://raw.githubusercontent.com/spacetelescope/notebooks/master/assets/stsci_pri_combo_mark_horizonal_white_bkgd.png" alt="Space Telescope Logo" width="200px"/>
-
+<img style="float: right;" src="https://raw.githubusercontent.com/spacetelescope/roman_notebooks/refs/heads/main/stsci_logo2.png" alt="Space Telescope Logo" width="200px"/>
 ```
+<!-- Footer End -->
 
 The [example notebook](../templates/example_notebook.ipynb) implements the
 footer in this way.
