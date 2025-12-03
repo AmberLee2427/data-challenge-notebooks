@@ -52,7 +52,7 @@ The RMDC25 AAS Workshop is a hands-on, full-day session designed to get particip
 
 <!-- BEGIN SESSION A OVERVIEW -->
 
-In this session you will learn how to access the Nexus, create Nexus accounts, activate kernels, install packages, acess data, create your submission and get other technical help.
+In this session you will learn how to access the Nexus, create Nexus accounts, activate kernels, install packages, access data, create your submission and get other technical help.
 
 In this session we will be covering:
 
@@ -76,7 +76,7 @@ For discussion, information, troubleshooting, and updates about the Nexus, see t
 In this session, we will learn about basic microlensing parameterization and terminology and test that knowledge on a mini modeling Data Challenge.
 Topics covered:
 
-* An introduction to microlensing: [part 1]({{ site.url }}{{ site.baseurl }}/_pages/outreach_mini_chapter1.html), [part 2]({{ site.url }}{{ site.baseurl }}/outreach_mini_chapter2.html) mini-lecture by Dr. Scott Gaudi.
+* An introduction to microlensing: [part 1]({{ site.url }}{{ site.baseurl }}/_pages/outreach_mini_chapter1.html), [part 2]({{ site.url }}{{ site.baseurl }}/outreach_mini_chapter2.html)
 * [Helpful microlensing resources]({{ site.url }}{{ site.baseurl }}/resources/) 
     including [alternate data access for those not using the Nexus]({{ site.url }}{{ site.baseurl }}/data-challenge/data/)
 * Hack-session where we will learn about:
@@ -110,7 +110,7 @@ Ask the demonstrators anything you would like to know about microlensing and/or 
 
 They will also provide details on:
 
-* [The RGES-PIT website](https://rges-pit.github.io/) - come here for resources, important links, data challenge info, AAS Workshop content, sign-up, and annonymous help submissions.
+* [The RGES-PIT website](https://rges-pit.github.io/) - come here for resources, important links, data challenge info, AAS Workshop content, sign-up, and anonymous help submissions.
 * [The Slack channel](https://rmdc2026.slack.com){:target="_blank"}
     - canvases with everything you need to know (or where to find it) to participate in the Data Challenge
     - General assistance
