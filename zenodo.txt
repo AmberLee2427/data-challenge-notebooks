@@ -1,0 +1,49 @@
+ If you use **microlens-submit** in your research, please cite:
+
+```
+Malpas, A. (2025). microlens-submit. Zenodo. https://doi.org/10.5281/zenodo.17459752
+```
+
+**BibTeX:**
+```bibtex
+@software{malpas_2025_17468488,
+  author       = {Malpas, Amber},
+  title        = {microlens-submit},
+  month        = oct,
+  year         = 2025,
+  publisher    = {Zenodo},
+  version      = {v0.16.3},
+  doi          = {10.5281/zenodo.17468488},
+  url          = {https://doi.org/10.5281/zenodo.17468488},
+}
+```
+
+If you use our **data-challenge-notebooks** in your project, please cite:
+
+```
+Malpas, A., Murlidhar, A., Vandorou, K., Kruszyńska, K., & Crisp, A. (2025). Roman Microlensing Data Challenge 2026 Notebooks (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.17806271
+```
+
+**BibTeX:**
+@software{malpas_2025_17806271,
+  author       = {Malpas, Amber and
+                  Murlidhar, Arjun and
+                  Vandorou, Katie and
+                  Kruszyńska, Katarzyna and
+                  Crisp, Ali},
+  title        = {Roman Microlensing Data Challenge 2026 Notebooks},
+  month        = dec,
+  year         = 2025,
+  publisher    = {Zenodo},
+  version      = {v0.1.0},
+  doi          = {10.5281/zenodo.17806271},
+  url          = {https://doi.org/10.5281/zenodo.17806271},
+  swhid        = {swh:1:dir:944eee044fd33e3f1c375c2287de9f0bd4351bda
+                   ;origin=https://doi.org/10.5281/zenodo.17806270;vi
+                   sit=swh:1:snp:46d2545c1ca9fb19d83be68a053e33953bf2
+                   1e06;anchor=swh:1:rel:fd53e0f8d52ea95bb26e9c133c7b
+                   4974eda8a6a9;path=rges-pit-data-challenge-
+                   notebooks-9097c1b
+                  },
+}
+```
