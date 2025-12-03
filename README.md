@@ -6,9 +6,13 @@
 
 # Roman Microlensing Data Challenge 2026 Notebooks
 
-This repository provides a set of Jupyter notebooks that support the [**Roman Microlensing Data Challenge 2026**](https://rges-pit.org/outreach/), a competition organised by the [Roman Galactic Exoplanet Survey – Project Infrastructure Team (RGES-PIT)](https://rges-pit.org/). The goal of the challenge is to familiarise researchers with the data volume and characteristics expected from the Roman Galactic Bulge Time Domain Survey, advance existing data analysis and computing practices, and encourage new talent to the field of microlensing.
+This repository provides a set of Jupyter notebooks that support the [**Roman Microlensing Data Challenge 2026**](https://rges-pit.org/outreach/), a competition organized by the [Roman Galactic Exoplanet Survey – Project Infrastructure Team (RGES-PIT)](https://rges-pit.org/). The goal of the challenge is to familiarize researchers with the data volume and characteristics expected from the Roman Galactic Bulge Time Domain Survey, advance existing data analysis and computing practices, and encourage new talent to the field of microlensing.
 
 If you are a data challenge participant, your primary resources live in the `AAS Workshop/` and `Extras/` directories. Each directory ships with `README.md` context plus Colab buttons where a remote runtime is supported.
+
+## Data Challenge Sign Up
+
+[![qrcode_sign_ip_form.png](qrcode_sign_up_form.png)](https://forms.gle/reQCDN6S27V7QFEx9)
 
 ## Repository Contents
 
@@ -35,7 +39,7 @@ The notebooks (and related environment files) included in this repo are:
 
     <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20B:%20Single%20Lens%20%26%20Pipelines/Single_Lens_Pipeline.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-- [`AAS Workshop/Session C: Binary Lens/Fitting_Binary_Lenses.ipynb`](AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb) – a binary-lens modelling notebook that demonstrates multiple fitting strategies and exercise blocks.
+- [`AAS Workshop/Session C: Binary Lens/Fitting_Binary_Lenses.ipynb`](AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb) – a binary-lens modeling notebook that demonstrates multiple fitting strategies and exercise blocks.
 
     <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
@@ -58,13 +62,13 @@ The notebooks (and related environment files) included in this repo are:
 
 ## Contributing
 
-These notebooks collect instructions, examples, and open-source tools for analysing simulated microlensing light curves and identifying false positives. Contributions to existing resources—such as [`Extras/Microlensing_Tools.ipynb`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/Extras/Microlensing_Tools.ipynb)—or in the form of new instructional resources (or [discussions](https://github.com/rges-pit/data-challenge-notebooks/discussions) when a notebook is not appropriate) are encouraged. You can also [submit a suggestion](https://rges-pit.org/submit/) on the RGES-PIT website or raise a GitHub issue on any relevant `rges-pit` repository.
+These notebooks collect instructions, examples, and open-source tools for analyzing simulated microlensing light curves and identifying false positives. Contributions to existing resources—such as [`Extras/Microlensing_Tools.ipynb`](https://github.com/rges-pit/data-challenge-notebooks/blob/main/Extras/Microlensing_Tools.ipynb)—or in the form of new instructional resources (or [discussions](https://github.com/rges-pit/data-challenge-notebooks/discussions) when a notebook is not appropriate) are encouraged. You can also [submit a suggestion](https://rges-pit.org/submit/) on the RGES-PIT website or raise a GitHub issue on any relevant `rges-pit` repository.
 
 ### Why Contribute?
 
 - **Comprehensive Tool Listing** – The notebook contains a table of open-source microlensing codes (e.g., _MulensModel_, _BAGEL_, _VBMicrolensing_, _pyLIMA_). The RGES-PIT explicitly invites contributors to add their own related packages to build a more comprehensive list; to do so, open a discussion or follow the [contributing guidelines](https://github.com/rges-pit/data-challenge-notebooks/blob/main/CONTRIBUTING.md). By contributing, you ensure your tool is visible to participants on the Roman Research Nexus and to the wider microlensing community.
 
-- **Centralised Platform for Open Resources** – Our aim is to create a single entry point for open-source microlensing applications. The tools notebook acts as an index of available codes, with cross-references to external resources and detailed guidance. The data challenge is intended to act as an entry point to the field; adding your resources helps new microlensers compare existing methods quickly. Including your tools positions them as a pillar for future Roman microlensing analysis.
+ - **Centralized Platform for Open Resources** – Our aim is to create a single entry point for open-source microlensing applications. The tools notebook acts as an index of available codes, with cross-references to external resources and detailed guidance. The data challenge is intended to act as an entry point to the field; adding your resources helps new microlensing researchers compare existing methods quickly. Including your tools positions them as a pillar for future Roman microlensing analysis.
 
 - **Expanding the Community** – Providing notebooks or scripts that demonstrate the specific challenges of Roman filters and the L2 orbit will help beginner participants build confidence in different modelling approaches, encouraging diversity in workflows and reducing the barrier to entry.
 

@@ -8,4 +8,4 @@
 
 Notebooks in this directory are managed by GitHub workflow `.github/workflows/publish.yml`. 
 
-See notebooks_manifest for caconical source file: `source_path:`.
+See notebooks_manifest for canonical source file: `source_path:`.

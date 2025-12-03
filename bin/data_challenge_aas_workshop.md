@@ -76,7 +76,7 @@ For discussion, information, troubleshooting, and updates about the Nexus, see t
 In this session, we will learn about basic microlensing parameterization and terminology and test that knowledge on a mini modeling Data Challenge.
 Topics covered:
 
-* An introduction to microlensing: [part 1]({{ site.url }}{{ site.baseurl }}/_pages/outreach_mini_chapter1.html), [part 2]({{ site.url }}{{ site.baseurl }}/outreach_mini_chapter2.html)
+* An introduction to microlensing: [part 1]({{ site.url }}{{ site.baseurl }}/_pages/outreach_mini_chapter1.html), [part 2]({{ site.url }}{{ site.baseurl }}/outreach_mini_chapter2.html) mini-lecture by Dr. Scott Gaudi.
 * [Helpful microlensing resources]({{ site.url }}{{ site.baseurl }}/resources/) 
     including [alternate data access for those not using the Nexus]({{ site.url }}{{ site.baseurl }}/data-challenge/data/)
 * Hack-session where we will learn about:
