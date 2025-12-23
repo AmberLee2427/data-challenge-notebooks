@@ -77,7 +77,7 @@ jobs:
       - name: Check out site repository
         uses: actions/checkout@v4
         with:
-          repository: rges-pit/rges-pit.github.io
+          repository: rges-pit/rges-pit.github.io-dc-copy
           token: ${{ secrets.SITE_SYNC_PAT }}
           path: site
 
@@ -95,8 +95,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Create branch
-          git checkout -b chore/data-challenge-sync
+          # Add upstream and base branch from upstream main
+          git remote add upstream https://github.com/rges-pit/rges-pit.github.io.git
+          git fetch upstream main
+          git checkout -B chore/data-challenge-sync upstream/main
 
           # Stage and Commit
           git add docs/_pages/
@@ -106,12 +108,11 @@ jobs:
           fi
           git commit -m "chore: sync data-challenge workshop pages"
 
-          # Push to Fork
-          git remote add fork https://x-access-token:${GH_TOKEN}@github.com/rges-pit/rges-pit.github.io-dc-copy.git
-          git push -f fork chore/data-challenge-sync
+          # Push branch to fork (dc-copy)
+          git push -f origin chore/data-challenge-sync
 
           # Create PR if not exists
-          EXISTING_PR=$(gh pr list --repo rges-pit/rges-pit.github.io --head chore/data-challenge-sync --json url --jq '.[0].url')
+          EXISTING_PR=$(gh pr list --repo rges-pit/rges-pit.github.io --head rges-pit:chore/data-challenge-sync --json url --jq '.[0].url')
 
           if [ -z "$EXISTING_PR" ]; then
             echo "Creating new PR..."
