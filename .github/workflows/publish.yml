@@ -134,6 +134,7 @@ jobs:
           fi
 
           echo "Creating new PR..."
+          set +e
           CREATE_PR_JSON=$(gh api \
             -H "Accept: application/vnd.github+json" \
             -X POST \
@@ -142,7 +143,15 @@ jobs:
             -f body="$PR_BODY" \
             -f head="$HEAD_REPO_NAME:$HEAD_BRANCH" \
             -f base="$BASE_BRANCH" \
-            -F draft=true)
+            -F draft=true 2>&1)
+          CREATE_STATUS=$?
+          set -e
+
+          if [ $CREATE_STATUS -ne 0 ]; then
+            echo "PR creation failed (exit $CREATE_STATUS). Full response:"
+            echo "$CREATE_PR_JSON"
+            exit 1
+          fi
 
           NEW_PR_URL=$(echo "$CREATE_PR_JSON" | jq -r '.html_url')
           if [ -z "$NEW_PR_URL" ] || [ "$NEW_PR_URL" = "null" ]; then
