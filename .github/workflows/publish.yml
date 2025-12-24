@@ -111,44 +111,40 @@ jobs:
           # Push branch to fork (dc-copy)
           git push -f origin chore/data-challenge-sync
 
-          # Create PR against upstream using GraphQL.
-          # Note: GitHub's schema requires repositoryId (base repo). For cross-repo PRs,
-          # headRefName must be in the form "OWNER:BRANCH".
+          # Create PR against upstream.
+          # Use REST API so we can disambiguate same-owner forks via "<fork-repo>:<branch>".
           BASE_REPO_OWNER="rges-pit"
           BASE_REPO_NAME="rges-pit.github.io"
-          HEAD_REPO_OWNER="rges-pit"
           HEAD_REPO_NAME="rges-pit.github.io-dc-copy"
           HEAD_BRANCH="chore/data-challenge-sync"
           BASE_BRANCH="main"
+          PR_TITLE="Draft: Sync data-challenge notebooks"
+          PR_BODY="Automated sync of generated workshop documentation from \`data-challenge-notebooks\`."
 
-          REPO_JSON=$(gh api graphql \
-            -f query='query($baseOwner:String!,$baseName:String!){repo:repository(owner:$baseOwner,name:$baseName){id pullRequests(states:[OPEN], first:50){nodes{url headRefName headRepository{name owner{login}}}}}}' \
-            -f baseOwner="$BASE_REPO_OWNER" \
-            -f baseName="$BASE_REPO_NAME")
+          # Find an existing open PR from this fork branch.
+          PULLS_JSON=$(gh api \
+            --paginate \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$BASE_REPO_OWNER/$BASE_REPO_NAME/pulls?state=open&per_page=100")
 
-          BASE_REPO_ID=$(echo "$REPO_JSON" | jq -r '.data.repo.id')
-          if [ -z "$BASE_REPO_ID" ] || [ "$BASE_REPO_ID" = "null" ]; then
-            echo "Failed to resolve base repository ID"
-            echo "$REPO_JSON" | jq -r '.'
-            exit 1
-          fi
-
-          EXISTING_PR=$(echo "$REPO_JSON" | jq -r '.data.repo.pullRequests.nodes[] | select(.headRefName=="'"$HEAD_BRANCH"'" and .headRepository.owner.login=="'"$HEAD_REPO_OWNER"'" and .headRepository.name=="'"$HEAD_REPO_NAME"'") | .url' | head -n 1)
+          EXISTING_PR=$(echo "$PULLS_JSON" | jq -r '.[] | select(.head.ref=="'"$HEAD_BRANCH"'" and .head.repo.name=="'"$HEAD_REPO_NAME"'") | .html_url' | head -n 1)
           if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
             echo "PR already exists: $EXISTING_PR"
             exit 0
           fi
 
           echo "Creating new PR..."
-          CREATE_PR_JSON=$(gh api graphql \
-            -f query='mutation($repoId:ID!,$baseRef:String!,$headRef:String!,$title:String!,$body:String!){createPullRequest(input:{repositoryId:$repoId,baseRefName:$baseRef,headRefName:$headRef,title:$title,body:$body,draft:true}){pullRequest{url}}}' \
-            -f repoId="$BASE_REPO_ID" \
-            -f baseRef="$BASE_BRANCH" \
-            -f headRef="$HEAD_REPO_OWNER:$HEAD_BRANCH" \
-            -f title="Draft: Sync data-challenge notebooks" \
-            -f body="Automated sync of generated workshop documentation from \`data-challenge-notebooks\`.")
+          CREATE_PR_JSON=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -X POST \
+            "/repos/$BASE_REPO_OWNER/$BASE_REPO_NAME/pulls" \
+            -f title="$PR_TITLE" \
+            -f body="$PR_BODY" \
+            -f head="$HEAD_REPO_NAME:$HEAD_BRANCH" \
+            -f base="$BASE_BRANCH" \
+            -F draft=true)
 
-          NEW_PR_URL=$(echo "$CREATE_PR_JSON" | jq -r '.data.createPullRequest.pullRequest.url')
+          NEW_PR_URL=$(echo "$CREATE_PR_JSON" | jq -r '.html_url')
           if [ -z "$NEW_PR_URL" ] || [ "$NEW_PR_URL" = "null" ]; then
             echo "PR creation did not return a URL. Full response:"
             echo "$CREATE_PR_JSON" | jq -r '.'
