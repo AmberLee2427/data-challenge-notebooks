@@ -111,8 +111,9 @@ jobs:
           # Push branch to fork (dc-copy)
           git push -f origin chore/data-challenge-sync
 
-          # Create PR against upstream using GraphQL with explicit headRepositoryId.
-          # This avoids ambiguity when the fork and upstream share the same org owner.
+          # Create PR against upstream using GraphQL.
+          # Note: GitHub's schema requires repositoryId (base repo). For cross-repo PRs,
+          # headRefName must be in the form "OWNER:BRANCH".
           BASE_REPO_OWNER="rges-pit"
           BASE_REPO_NAME="rges-pit.github.io"
           HEAD_REPO_OWNER="rges-pit"
@@ -120,36 +121,30 @@ jobs:
           HEAD_BRANCH="chore/data-challenge-sync"
           BASE_BRANCH="main"
 
-          REPO_IDS_JSON=$(gh api graphql -f query='query($baseOwner:String!,$baseName:String!,$headOwner:String!,$headName:String!,$headRef:String!){base:repository(owner:$baseOwner,name:$baseName){id pullRequests(states:[OPEN], first:20, headRefName:$headRef){nodes{url headRepository{name owner{login}}}}} head:repository(owner:$headOwner,name:$headName){id}}' \
+          REPO_JSON=$(gh api graphql \
+            -f query='query($baseOwner:String!,$baseName:String!){repo:repository(owner:$baseOwner,name:$baseName){id pullRequests(states:[OPEN], first:50){nodes{url headRefName headRepository{name owner{login}}}}}}' \
             -f baseOwner="$BASE_REPO_OWNER" \
-            -f baseName="$BASE_REPO_NAME" \
-            -f headOwner="$HEAD_REPO_OWNER" \
-            -f headName="$HEAD_REPO_NAME" \
-            -f headRef="$HEAD_BRANCH")
+            -f baseName="$BASE_REPO_NAME")
 
-          EXISTING_PR=$(echo "$REPO_IDS_JSON" | jq -r '.data.base.pullRequests.nodes[] | select(.headRepository.owner.login=="'"$HEAD_REPO_OWNER"'" and .headRepository.name=="'"$HEAD_REPO_NAME"'") | .url' | head -n 1)
+          BASE_REPO_ID=$(echo "$REPO_JSON" | jq -r '.data.repo.id')
+          if [ -z "$BASE_REPO_ID" ] || [ "$BASE_REPO_ID" = "null" ]; then
+            echo "Failed to resolve base repository ID"
+            echo "$REPO_JSON" | jq -r '.'
+            exit 1
+          fi
 
+          EXISTING_PR=$(echo "$REPO_JSON" | jq -r '.data.repo.pullRequests.nodes[] | select(.headRefName=="'"$HEAD_BRANCH"'" and .headRepository.owner.login=="'"$HEAD_REPO_OWNER"'" and .headRepository.name=="'"$HEAD_REPO_NAME"'") | .url' | head -n 1)
           if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
             echo "PR already exists: $EXISTING_PR"
             exit 0
           fi
 
-          BASE_REPO_ID=$(echo "$REPO_IDS_JSON" | jq -r '.data.base.id')
-          HEAD_REPO_ID=$(echo "$REPO_IDS_JSON" | jq -r '.data.head.id')
-
-          if [ -z "$BASE_REPO_ID" ] || [ "$BASE_REPO_ID" = "null" ] || [ -z "$HEAD_REPO_ID" ] || [ "$HEAD_REPO_ID" = "null" ]; then
-            echo "Failed to resolve base/head repository IDs"
-            echo "$REPO_IDS_JSON" | jq -r '.'
-            exit 1
-          fi
-
           echo "Creating new PR..."
           CREATE_PR_JSON=$(gh api graphql \
-            -f query='mutation($baseRepoId:ID!,$headRepoId:ID!,$baseRef:String!,$headRef:String!,$title:String!,$body:String!,$draft:Boolean!){createPullRequest(input:{baseRepositoryId:$baseRepoId,headRepositoryId:$headRepoId,baseRefName:$baseRef,headRefName:$headRef,title:$title,body:$body,draft:$draft}){pullRequest{url}}}' \
-            -f baseRepoId="$BASE_REPO_ID" \
-            -f headRepoId="$HEAD_REPO_ID" \
+            -f query='mutation($repoId:ID!,$baseRef:String!,$headRef:String!,$title:String!,$body:String!,$draft:Boolean!){createPullRequest(input:{repositoryId:$repoId,baseRefName:$baseRef,headRefName:$headRef,title:$title,body:$body,draft:$draft}){pullRequest{url}}}' \
+            -f repoId="$BASE_REPO_ID" \
             -f baseRef="$BASE_BRANCH" \
-            -f headRef="$HEAD_BRANCH" \
+            -f headRef="$HEAD_REPO_OWNER:$HEAD_BRANCH" \
             -f title="Draft: Sync data-challenge notebooks" \
             -f body="Automated sync of generated workshop documentation from \`data-challenge-notebooks\`." \
             -f draft=true)
