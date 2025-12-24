@@ -141,13 +141,12 @@ jobs:
 
           echo "Creating new PR..."
           CREATE_PR_JSON=$(gh api graphql \
-            -f query='mutation($repoId:ID!,$baseRef:String!,$headRef:String!,$title:String!,$body:String!,$draft:Boolean!){createPullRequest(input:{repositoryId:$repoId,baseRefName:$baseRef,headRefName:$headRef,title:$title,body:$body,draft:$draft}){pullRequest{url}}}' \
+            -f query='mutation($repoId:ID!,$baseRef:String!,$headRef:String!,$title:String!,$body:String!){createPullRequest(input:{repositoryId:$repoId,baseRefName:$baseRef,headRefName:$headRef,title:$title,body:$body,draft:true}){pullRequest{url}}}' \
             -f repoId="$BASE_REPO_ID" \
             -f baseRef="$BASE_BRANCH" \
             -f headRef="$HEAD_REPO_OWNER:$HEAD_BRANCH" \
             -f title="Draft: Sync data-challenge notebooks" \
-            -f body="Automated sync of generated workshop documentation from \`data-challenge-notebooks\`." \
-            -f draft=true)
+            -f body="Automated sync of generated workshop documentation from \`data-challenge-notebooks\`.")
 
           NEW_PR_URL=$(echo "$CREATE_PR_JSON" | jq -r '.data.createPullRequest.pullRequest.url')
           if [ -z "$NEW_PR_URL" ] || [ "$NEW_PR_URL" = "null" ]; then
