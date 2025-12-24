@@ -111,14 +111,14 @@ jobs:
           # Push branch to fork (dc-copy)
           git push -f origin chore/data-challenge-sync
 
-          # Create PR against upstream using fork branch
-          EXISTING_PR=$(gh pr list --repo rges-pit/rges-pit.github.io --head rges-pit:chore/data-challenge-sync --json url --jq '.[0].url')
+          # Create PR against upstream using the fork (current repo) branch
+          EXISTING_PR=$(gh pr list --repo rges-pit/rges-pit.github.io --head chore/data-challenge-sync --json url --jq '.[0].url')
 
           if [ -z "$EXISTING_PR" ]; then
             echo "Creating new PR..."
             gh pr create \
               --repo rges-pit/rges-pit.github.io \
-              --head rges-pit:chore/data-challenge-sync \
+              --head chore/data-challenge-sync \
               --base main \
               --title "Draft: Sync data-challenge notebooks" \
               --body "Automated sync of generated workshop documentation from \`data-challenge-notebooks\`." \
