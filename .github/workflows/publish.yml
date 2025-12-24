@@ -95,7 +95,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add upstream and base branch from upstream main
+          # Use upstream main as base (read-only) and create/update branch on fork
           git remote add upstream https://github.com/rges-pit/rges-pit.github.io.git
           git fetch upstream main
           git checkout -B chore/data-challenge-sync upstream/main
@@ -111,7 +111,7 @@ jobs:
           # Push branch to fork (dc-copy)
           git push -f origin chore/data-challenge-sync
 
-          # Create PR if not exists
+          # Create PR against upstream using fork branch
           EXISTING_PR=$(gh pr list --repo rges-pit/rges-pit.github.io --head rges-pit:chore/data-challenge-sync --json url --jq '.[0].url')
 
           if [ -z "$EXISTING_PR" ]; then
