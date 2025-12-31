@@ -1,12 +1,12 @@
 <div align="center">
-    <a href="https://github.com/reges-pit">
+    <a href="https://github.com/rges-pit">
         <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
     </a>
 </div>
 
 # AAS Workshop Content
 
- The Roman Microlensing Data Challenge 2026 (RMDC26) AAS Workshop is a hands-on, full-day session designed to get participants—from newcomers to seasoned microlensing researchers—set up and productive with the Roman Research Nexus and the core open-source tools used in the Roman Microlensing Data Challenge. We’ll walk through Nexus access and environment setup, introduce essential microlensing concepts and modeling workflows, explore single- and binary-lens fitting (including grid searches and practical strategies for degeneracies and higher-order effects), and show how to organize, validate, and package results for submission using microlens-submit.
+ The Roman Microlensing Data Challenge 2026 (RMDC26) AAS Workshop is a hands-on, full-day session designed to get participants - from newcomers to seasoned microlensing researchers - set up and productive with the Roman Research Nexus and the core open-source tools used in the Roman Microlensing Data Challenge. We’ll walk through Nexus access and environment setup, introduce essential microlensing concepts and modeling workflows, explore single and binary-lens fitting (including grid searches and practical strategies for degeneracies and higher-order effects), and show how to organize, validate, and package results for submission using microlens-submit.
 
 This page is a persistent resource to assist you with the AAS Workshop content and RMDC26 troubleshooting, outside of the actual workshop context. Our intention is that those who were not able to attend the workshop will be able to refer to this content and receive the same guidance in a different format.
 
@@ -34,7 +34,7 @@ This page is a persistent resource to assist you with the AAS Workshop content a
 * Data access, submissions, package installation, VSCode integration
 * Support via Slack and channel canvas
 
-### [2. Single Lenses and Pipelines](https://rges-pit.org/data-challenge/aas-workshop/2-single-lenses/)
+### [B. Single Lenses and Pipelines](https://rges-pit.org/data-challenge/aas-workshop/2-single-lenses/)
 
 > 11:00 am – 12:30 pm
 
@@ -42,7 +42,7 @@ This page is a persistent resource to assist you with the AAS Workshop content a
 * Mini modeling challenge - single lens fitting, priors, parallelization, L2 observer, anomaly detection
 * Resources and alternative data access
 
-### [3. Binary Lenses](https://rges-pit.org/data-challenge/aas-workshop/3-binary-lenses/)
+### [C. Binary Lenses](https://rges-pit.org/data-challenge/aas-workshop/3-binary-lenses/)
 
 > 1:30 pm – 3:00 pm
 
@@ -50,7 +50,7 @@ This page is a persistent resource to assist you with the AAS Workshop content a
 * Methods: uninformed guess, grid search, informed guess
 * Parallelization, degeneracies, stochastic likelihood, higher-order effects
 
-### [4. Information Session and Q&A](https://rges-pit.org/data-challenge/aas-workshop/4-info/)
+### [D. Information Session and Q&A](https://rges-pit.org/data-challenge/aas-workshop/4-info/)
 
 > 3:30 pm – end
 
@@ -83,7 +83,7 @@ This page is a persistent resource to assist you with the AAS Workshop content a
 
 ### Running These Notebooks
 
-The notebooks in this repo can all be run on Colab sessions (except `/Users/malpas.1/Code/data-challenge-notebooks/AAS Workshop/Session A: Nexus/a_rmdc26_workflow.ipynb`, which is exclusively designed for a Nexus environment) and this is our recommended fallback option if you encounter environment difficulties **and/or** Nexus account difficulties during the workshop.  
+The notebooks in this repo can all be run on Colab sessions (except `AAS Workshop/Session A: Nexus/Nexus_Workflow.ipynb`, which is exclusively designed for a Nexus environment) and this is our recommended fallback option if you encounter environment difficulties **and/or** Nexus account difficulties during the workshop.  
 
 If you instead choose to run the notebooks locally, you will need to first set up the environment.
 

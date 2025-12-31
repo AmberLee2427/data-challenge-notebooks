@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="https://github.com/reges-pit">
+    <a href="https://github.com/rges-pit">
         <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
     </a>
 </div>
@@ -9,6 +9,24 @@
 This repository provides a set of Jupyter notebooks that support the [**Roman Microlensing Data Challenge 2026**](https://rges-pit.org/outreach/), a competition organized by the [Roman Galactic Exoplanet Survey – Project Infrastructure Team (RGES-PIT)](https://rges-pit.org/). The goal of the challenge is to familiarize researchers with the data volume and characteristics expected from the Roman Galactic Bulge Time Domain Survey, advance existing data analysis and computing practices, and encourage new talent to the field of microlensing.
 
 If you are a data challenge participant, your primary resources live in the `AAS Workshop/` and `Extras/` directories. Each directory ships with `README.md` context plus Colab buttons where a remote runtime is supported.
+
+## Download Notebooks
+
+**Option 1: Zenodo (Recommended for direct download)**
+
+Download the complete notebook archive directly from Zenodo:
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17806271.svg)](https://doi.org/10.5281/zenodo.17806271)
+
+Direct download: [rges-pit/data-challenge-notebooks-v0.1.0.zip](https://zenodo.org/records/17806271/files/rges-pit/data-challenge-notebooks-v0.1.0.zip?download=1)
+
+**Option 2: Git Clone**
+
+```bash
+git clone https://github.com/rges-pit/data-challenge-notebooks.git
+```
+
+> **Note:** Raw GitHub links may not work correctly for downloading Jupyter notebooks. Use the Zenodo archive or `git clone` for reliable downloads.
 
 ## Data Challenge Sign Up
 
@@ -114,13 +132,13 @@ The workflow will:
 
 The notebooks in this repository were originally authored by Amber Malpas, Arjun Murlidhar, Katie Vandorou, Katarzyna Kruszyńska, and Ali Crisp, and rely heavily on the work of the package creators. They are provided by the RGES-PIT to encourage community engagement in preparation for the Roman Galactic Bulge Time Domain Survey. If you adapt or build upon these notebooks, please acknowledge the original authors and the RGES-PIT. For researchers using these materials in publications or teaching, a citation to the relevant Roman mission papers and to the tools you use is recommended.
 
-<!-- APA Citation Start -->>
+<!-- APA Citation Start -->
 ```apa
 Malpas, A., Murlidhar, A., Vandorou, K., Kruszyńska, K., & Crisp, A. (2025). Roman Microlensing Data Challenge 2026 Notebooks (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.17806271
 ```
-<!-- APA Citation End -->>
+<!-- APA Citation End -->
 
-<!-- BibTeX Citation Start -->>
+<!-- BibTeX Citation Start -->
 ```bibtex
 @software{malpas_2025_17806271,
   author       = {Malpas, Amber and
@@ -144,4 +162,4 @@ Malpas, A., Murlidhar, A., Vandorou, K., Kruszyńska, K., & Crisp, A. (2025). Ro
                   },
 }
 ```
-<!-- BibTeX Citation Start -->>
+<!-- BibTeX Citation End -->

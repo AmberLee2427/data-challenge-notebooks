@@ -8,7 +8,7 @@ sidebar:
 END PREAMBLE -->
 
 <div align="center">
-    <a href="https://github.com/reges-pit">
+    <a href="https://github.com/rges-pit">
         <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
     </a>
 </div>
@@ -67,11 +67,11 @@ At this time, we cannot guarantee prompt responses to any support requests.
 
 ## Creating Nexus accounts
 
-[Creating a MyST account](https://proper.stsci.edu/proper/authentication/auth){:target="_blank"} is required to log in to the Nexus. Click the “Sign Up for MyST” button above to navigate to the sign-up page.
+<a href="https://proper.stsci.edu/proper/authentication/auth" target="_blank">Creating a MyST account</a> is required to log in to the Nexus. Click the "Sign Up for MyST" button above to navigate to the sign-up page.
 
 ## How to access the Nexus
 
-1. Go to the [Nexus login page](https://roman.science.stsci.edu/hub/){:target="_blank"} (see the “Log In to Nexus” button at the top of the page).
+1. Go to the <a href="https://roman.science.stsci.edu/hub/" target="_blank">Nexus login page</a> (see the "Log In to Nexus" button at the top of the page).
 
 2. Sign in with your MyST account.
 
@@ -362,13 +362,13 @@ Relevant notebooks to this session are:
       View Docs
       </a>
 
-      <!-- Download button -->
-      <a href="javascript:void(0)" onclick="downloadNotebook('https://raw.githubusercontent.com/rges-pit/roman_notebooks/main/content/notebooks/data_discovery_and_access/data_discovery_and_access.ipynb', 'data_discovery_and_access.ipynb'); return false;" style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
+      <!-- Download button - Zenodo archive (data-challenge-notebooks) -->
+      <a href="https://zenodo.org/records/17806271/files/rges-pit/data-challenge-notebooks-v0.1.0.zip?download=1" style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;" title="Download all notebooks from Zenodo">
       <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
       <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
       <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
       </svg>
-      Download
+      Download (Zenodo)
       </a>
     </div>
 
@@ -384,13 +384,13 @@ Relevant notebooks to this session are:
       View on GitHub
       </a>
       
-      <!-- Download button with JavaScript -->
-      <a href="javascript:void(0)" onclick="downloadNotebook('https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/main/nexus_microlensing_data_challenge_workflow.ipynb', 'nexus_microlensing_data_challenge_workflow.ipynb'); return false;" style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
+      <!-- Download button - Zenodo archive -->
+      <a href="https://zenodo.org/records/17806271/files/rges-pit/data-challenge-notebooks-v0.1.0.zip?download=1" style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;" title="Download all notebooks from Zenodo">
       <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
       <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
       <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
       </svg>
-      Download
+      Download (Zenodo)
       </a>
       <!-- Open on RGES-PIT Website -->
       <a href="https://rges-pit.org/data-challenge/aas-workshop/notebooks/workflow/" style="background-color: #a859e4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
@@ -424,30 +424,6 @@ Relevant notebooks to this session are:
       Open
       </a>
     </div>
-
-<script>
-function downloadNotebook(url, filename) {
-  fetch(url, { mode: 'cors', redirect: 'follow' })
-    .then(response => {
-      if (!response.ok) throw new Error('Download failed: ' + response.status);
-      return response.blob();
-    })
-    .then(blob => {
-      const link = document.createElement('a');
-      const objectUrl = URL.createObjectURL(blob);
-      link.href = objectUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-    })
-    .catch(() => {
-      // Fallback: open in new tab if direct download is blocked
-      window.open(url, '_blank', 'noopener');
-    });
-}
-</script>
 
 ## FAQ
 

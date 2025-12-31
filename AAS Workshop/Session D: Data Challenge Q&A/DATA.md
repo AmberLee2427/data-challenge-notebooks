@@ -8,7 +8,7 @@ sidebar:
 END PREAMBLE -->
 
 <div align="center">
-    <a href="https://github.com/reges-pit">
+    <a href="https://github.com/rges-pit">
         <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
     </a>
 </div>
@@ -25,11 +25,11 @@ It should be noted that in the simulated data, the inertial frame of reference w
 
 Refer to [this notebook](https://rges-pit.org/data-challenge/aas-workshop/notebooks/workflow/) for examples of how to access the challenge data, on the Nexus.
 
-## [Hugging Face](https://huggingface.co/RGES-PIT){:target="_blank"}
+## <a href="https://huggingface.co/RGES-PIT" target="_blank">Hugging Face</a>
 
-There are two datasets available for download from the Hugging Face Hub: [`Beginner`](https://huggingface.co/RGES-PIT/Beginner){:target="_blank"} and [`Experienced`](https://huggingface.co/RGES-PIT/Experienced){:target="_blank"}. Each includes challenge data for its tier (`challenge.csv`). The [`Experienced`](https://huggingface.co/RGES-PIT/Experienced){:target="_blank"} repository also includes labeled training data for machine-learning purposes (`train.csv`), with roughly an order of magnitude more events than the challenge set (~100,000 events).  
+There are two datasets available for download from the Hugging Face Hub: <a href="https://huggingface.co/RGES-PIT/Beginner" target="_blank">`Beginner`</a> and <a href="https://huggingface.co/RGES-PIT/Experienced" target="_blank">`Experienced`</a>. Each includes challenge data for its tier (`challenge.csv`). The <a href="https://huggingface.co/RGES-PIT/Experienced" target="_blank">`Experienced`</a> repository also includes labeled training data for machine-learning purposes (`train.csv`), with roughly an order of magnitude more events than the challenge set (~100,000 events).  
 
-Below are instructions for downloading the [`Beginner`](https://huggingface.co/RGES-PIT/Beginner){:target="_blank"} dataset. Replace "Beginner" with "Experienced" to download the experienced dataset, which includes more lens arrangements, higher-order effects, and labeled training data. 
+Below are instructions for downloading the <a href="https://huggingface.co/RGES-PIT/Beginner" target="_blank">`Beginner`</a> dataset. Replace "Beginner" with "Experienced" to download the experienced dataset, which includes more lens arrangements, higher-order effects, and labeled training data. 
 
 ### Download Instructions
 

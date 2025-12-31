@@ -6,8 +6,10 @@ sidebar:
 ---
 <!-- END PREAMBLE -->
 
+This notebook demonstrates how to fit binary lens models to gravitational microlensing data. Binary lens systems are more complex than single lens events and require sophisticated fitting techniques to determine parameters like the mass ratio, separation, and source trajectory. The interactive notebook below includes examples of fitting binary lens light curves, exploring parameter spaces, and visualizing magnification patterns.
+
 <div style="margin: 1em 0;">
-  <iframe src="https://nbviewer.org/github/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20C%3A%20Binary%20Lens/Fitting_Binary_Lenses.ipynb" 
+  <iframe src="https://nbviewer.org/github/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb" 
           width="100%" height="600" frameborder="0">
   </iframe>
 </div>
@@ -24,7 +26,7 @@ sidebar:
   
   <!-- Download button with JavaScript -->
   <a href="javascript:void(0)" 
-     onclick="downloadNotebook('https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/main/AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb'); return false;"
+     onclick="downloadNotebook('https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/main/AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb', 'Fitting_Binary_Lenses.ipynb'); return false;"
      style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
     <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
       <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>

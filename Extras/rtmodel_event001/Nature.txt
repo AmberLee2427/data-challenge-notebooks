@@ -1,0 +1,11 @@
+PS: 79.339803
+
+BestPlanetary: N/A
+BestBinary: N/A
+
+Successful: Single-Lens-Single-Source
+----
+Number of alternative models: 1
+
+chisquare   model
+79.339803 PS0064-5.txt
