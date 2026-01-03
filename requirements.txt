@@ -9,8 +9,9 @@ microlens_submit>=0.16.3
 #microlens_utils>=0.8.0
 
 # Microlensing packages
-MulensModel==3.4.0
+MulensModel
 VBMicrolensing==5.3.0
+RTModel
 
 # MCMC and visualization
 emcee==3.1.4
