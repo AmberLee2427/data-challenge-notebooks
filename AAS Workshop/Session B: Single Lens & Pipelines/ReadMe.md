@@ -8,7 +8,7 @@ sidebar:
 END PREAMBLE -->
 
 <div align="center">
-    <a href="https://github.com/reges-pit">
+    <a href="https://github.com/rges-pit">
         <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
     </a>
 </div>
@@ -41,24 +41,6 @@ If you attend the AAS Workshop for the RMDC26 then this introduction will be giv
 > Note. The slides for this section have not yet been added here. Please refer back later.
 
 [//]: # (Scott will give a presentation. We will embed the slides before the January workshop commences.)
-
-## Additional Resources
-
-### Data Challenge
-- [Session D resources](https://rges-pit.org/data-challenge/)
-- [Slack](https://rmdc2026.slack.com){:target="_blank"}
-- [microlens-submit docs](https://microlens-submit.readthedocs.io/en/latest/){:target="_blank"} — workflow for packaging and validating challenge submissions.
-- [Roman Research Nexus](https://roman.ipac.caltech.edu/nexus){:target="_blank"} — information about kernels, data access, and team spaces.
-
-### Alternate Data Access
-- [Hugging Face](https://huggingface.co/RGES-PIT){:target="_blank"}
-
-### General Microlensing
-- [RGES-PIT resource list](https://rges-pit.org/resources/)
-
-### Microlensing Tools
-- [Tool examples notebook](https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools/)
-- [List of open-source tools](https://rges-pit.org/tools/)
 
 ## Mini Data Challenge/Hack Session
 
@@ -155,6 +137,24 @@ You might also consider browsing through this notebook at some point:
     Open
   </a>
 </div>
+
+## Additional Resources
+
+### Data Challenge
+- [Session D resources](https://rges-pit.org/data-challenge/)
+- [Slack](https://rmdc2026.slack.com){:target="_blank"}
+- [microlens-submit docs](https://microlens-submit.readthedocs.io/en/latest/){:target="_blank"} — workflow for packaging and validating challenge submissions.
+- [Roman Research Nexus](https://roman.ipac.caltech.edu/nexus){:target="_blank"} — information about kernels, data access, and team spaces.
+
+### Alternate Data Access
+- [Hugging Face](https://huggingface.co/RGES-PIT){:target="_blank"}
+
+### General Microlensing
+- [RGES-PIT resource list](https://rges-pit.org/resources/)
+
+### Microlensing Tools
+- [Tool examples notebook](https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools/)
+- [List of open-source tools](https://rges-pit.org/tools/)
 
 <!-- END WEB CONTENT -->
 <!-- COPY TO: "bin/data_challenge_single_lenses_and_pipelines.md" -->
