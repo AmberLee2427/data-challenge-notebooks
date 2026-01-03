@@ -9,7 +9,7 @@ description: "Roman Microlensing Data Challenge 2026 (RMDC26): overview, dataset
 END PREAMBLE -->
 
 <div align="center">
-  <a href="https://github.com/rges-pit">
+    <a href="https://github.com/rges-pit">
         <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
     </a>
 </div>
