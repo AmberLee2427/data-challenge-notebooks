@@ -36,11 +36,11 @@ At this time, we cannot guarantee prompt responses to any support requests.
 
 ## Creating Nexus accounts
 
-<a href="https://proper.stsci.edu/proper/authentication/auth" target="_blank">Creating a MyST account</a> is required to log in to the Nexus. Click the "Sign Up for MyST" button above to navigate to the sign-up page.
+[Creating a MyST account](https://proper.stsci.edu/proper/authentication/auth){:target="_blank"} is required to log in to the Nexus. Click the “Sign Up for MyST” button above to navigate to the sign-up page.
 
 ## How to access the Nexus
 
-1. Go to the <a href="https://roman.science.stsci.edu/hub/" target="_blank">Nexus login page</a> (see the "Log In to Nexus" button at the top of the page).
+1. Go to the [Nexus login page](https://roman.science.stsci.edu/hub/){:target="_blank"} (see the “Log In to Nexus” button at the top of the page).
 
 2. Sign in with your MyST account.
 
@@ -341,7 +341,7 @@ Relevant notebooks to this session are:
       </a>
     </div>
 
-  * [Data challenge workflow and creating data challenge submissions](https://rges-pit.org/data-challenge/aas-workshop/notebooks/workflow/) (`microlens-submit`) (`reference/content/notebooks/rmdc2025_workflow/rmdc2025_workflow.ipynb`).
+  * [Data challenge workflow and creating data challenge submissions]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/workflow/) (`microlens-submit`) (`reference/content/notebooks/rmdc2025_workflow/rmdc2025_workflow.ipynb`).
 
     <div style="display: flex; gap: 10px; margin: 1em 0; align-items: center;">
       
@@ -362,12 +362,12 @@ Relevant notebooks to this session are:
       Download
       </a>
       <!-- Open on RGES-PIT Website -->
-      <a href="https://rges-pit.org/data-challenge/aas-workshop/notebooks/workflow/" style="background-color: #a859e4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
+      <a href="{{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/workflow/" style="background-color: #a859e4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
       Open
       </a>
     </div>
 
-  * [Alternate workflow with the submission command line tool, for non-Python users.](https://rges-pit.org/data-challenge/aas-workshop/notebooks/submission-tutorial/)
+  * [Alternate workflow with the submission command line tool, for non-Python users.]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/submission-tutorial/)
 
     <div style="display: flex; gap: 10px; margin: 1em 0; align-items: center;">
       <a href="https://microlens-submit.readthedocs.io/en/latest/tutorial.html" target="_blank" style="background-color: #4078c0; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
@@ -389,7 +389,7 @@ Relevant notebooks to this session are:
       </a>
 
       <!-- Open on RGES-PIT Website -->
-      <a href="https://rges-pit.org/data-challenge/aas-workshop/notebooks/submission-tutorial/" style="background-color: #a859e4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
+      <a href="{{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/notebooks/submission-tutorial/" style="background-color: #a859e4; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
       Open
       </a>
     </div>

@@ -111,7 +111,7 @@ Ask the demonstrators anything you would like to know about microlensing and/or 
 They will also provide details on:
 
 * [The RGES-PIT website](https://rges-pit.github.io/) - come here for resources, important links, data challenge info, AAS Workshop content, sign-up, and anonymous help submissions.
-* <a href="https://rmdc2026.slack.com" target="_blank">The Slack channel</a>
+* [The Slack channel](https://rmdc2026.slack.com){:target="_blank"}
     - canvases with everything you need to know (or where to find it) to participate in the Data Challenge
     - General assistance
     - Private team channels
@@ -120,7 +120,7 @@ They will also provide details on:
 * [Tiers](https://rges-pit.github.io/data-challenge/#challenge-tiers)
 * [Data insights](https://rges-pit.github.io/data-challenge/data)
 * [Submission rules and guidelines](https://rges-pit.github.io/data-challenge/#ground-rules)
-* <a href="https://docs.google.com/spreadsheets/d/1ymVG75DV3CWnTdrn9Tk4VU-4AUrE4NwwT8IpY5RIu2c/edit?usp=sharing" target="_blank">Evaluation process and rubric</a>
+* [Evaluation process and rubric](https://docs.google.com/spreadsheets/d/1ymVG75DV3CWnTdrn9Tk4VU-4AUrE4NwwT8IpY5RIu2c/edit?usp=sharing){:target="_blank"}
 * Publication plans
 * [Important dates](https://rges-pit.github.io/data-challenge/#)
 * [Contact](https://rges-pit.github.io/data-challenge/help)

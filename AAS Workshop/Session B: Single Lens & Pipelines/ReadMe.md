@@ -8,7 +8,7 @@ sidebar:
 END PREAMBLE -->
 
 <div align="center">
-    <a href="https://github.com/rges-pit">
+  <a href="https://github.com/rges-pit">
         <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
     </a>
 </div>
@@ -42,24 +42,6 @@ If you attend the AAS Workshop for the RMDC26 then this introduction will be giv
 
 [//]: # (Scott will give a presentation. We will embed the slides before the January workshop commences.)
 
-## Additional Resources
-
-### Data Challenge
-- <a href="https://rges-pit.org/data-challenge/" target="_blank">Session D resources</a>
-- <a href="https://rmdc2026.slack.com" target="_blank">Slack</a> — workflow for packaging and validating challenge submissions.
-- <a href="https://microlens-submit.readthedocs.io/en/latest/" target="_blank">microlens-submit docs</a> — workflow for packaging and validating challenge submissions.
-- <a href="https://roman.ipac.caltech.edu/nexus" target="_blank">Roman Research Nexus</a> — information about kernels, data access, and team spaces.
-
-### Alternate Data Access
-- <a href="https://huggingface.co/RGES-PIT" target="_blank">Hugging Face</a>
-
-### General Microlensing
-- <a href="https://rges-pit.org/resources/" target="_blank">RGES-PIT resource list</a>
-
-### Microlensing Tools
-- <a href="https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools/" target="_blank">Tool examples notebook</a>
-- <a href="https://rges-pit.org/tools/" target="_blank">List of open-source tools</a>
-
 ## Mini Data Challenge/Hack Session
 
 For the remainder of the session we will be following along with this [notebook](https://rges-pit.org/data-challenge/aas-workshop/notebooks/pipeline/):
@@ -73,15 +55,13 @@ For the remainder of the session we will be following along with this [notebook]
   View on GitHub
   </a>
 
-  <!-- Download button - Zenodo archive -->
-  <a href="https://zenodo.org/records/17806271/files/rges-pit/data-challenge-notebooks-v0.1.0.zip?download=1" 
-     style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;"
-     title="Download all notebooks from Zenodo">
+  <!-- Download button with JavaScript -->
+  <a href="javascript:void(0)" onclick="downloadNotebook('https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/main/AAS%20Workshop/Session%20B:%20Single%20Lens%20%26%20Pipelines/Single_Lens_Pipeline.ipynb', 'Single_Lens_Pipeline.ipynb'); return false;" style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
   <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
   <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
   <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
   </svg>
-  Download (Zenodo)
+  Download
   </a>
 
   <!-- Open in Colab -->
@@ -98,6 +78,29 @@ For the remainder of the session we will be following along with this [notebook]
   </a>
 </div>
 
+<script>
+function downloadNotebook(url, filename) {
+  fetch(url, { mode: 'cors', redirect: 'follow' })
+    .then(response => {
+      if (!response.ok) throw new Error('Download failed: ' + response.status);
+      return response.blob();
+    })
+    .then(blob => {
+      const link = document.createElement('a');
+      const objectUrl = URL.createObjectURL(blob);
+      link.href = objectUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    })
+    .catch(() => {
+      window.open(url, '_blank', 'noopener');
+    });
+}
+</script>
+
 You might also consider browsing through this notebook at some point:
 
 [Introduction to microlensing open source software](https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools/) (`notebooks/microlensing_tools/microlensing_tools.ipynb`).
@@ -112,15 +115,13 @@ You might also consider browsing through this notebook at some point:
     View on GitHub
   </a>
       
-  <!-- Download button - Zenodo archive -->
-  <a href="https://zenodo.org/records/17806271/files/rges-pit/data-challenge-notebooks-v0.1.0.zip?download=1" 
-     style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;"
-     title="Download all notebooks from Zenodo">
+  <!-- Download button with JavaScript -->
+  <a href="javascript:void(0)" onclick="downloadNotebook('https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/main/Extras/Microlensing_Tools.ipynb', 'Microlensing_Tools.ipynb'); return false;" style="background-color: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
     <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
       <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
       <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
     </svg>
-    Download (Zenodo)
+    Download
   </a>
 
   <!-- Open in Colab -->
@@ -136,6 +137,24 @@ You might also consider browsing through this notebook at some point:
     Open
   </a>
 </div>
+
+## Additional Resources
+
+### Data Challenge
+- [Session D resources](https://rges-pit.org/data-challenge/)
+- [Slack](https://rmdc2026.slack.com){:target="_blank"}
+- [microlens-submit docs](https://microlens-submit.readthedocs.io/en/latest/){:target="_blank"} — workflow for packaging and validating challenge submissions.
+- [Roman Research Nexus](https://roman.ipac.caltech.edu/nexus){:target="_blank"} — information about kernels, data access, and team spaces.
+
+### Alternate Data Access
+- [Hugging Face](https://huggingface.co/RGES-PIT){:target="_blank"}
+
+### General Microlensing
+- [RGES-PIT resource list](https://rges-pit.org/resources/)
+
+### Microlensing Tools
+- [Tool examples notebook](https://rges-pit.org/data-challenge/aas-workshop/notebooks/microlensing_tools/)
+- [List of open-source tools](https://rges-pit.org/tools/)
 
 <!-- END WEB CONTENT -->
 <!-- COPY TO: "bin/data_challenge_single_lenses_and_pipelines.md" -->
