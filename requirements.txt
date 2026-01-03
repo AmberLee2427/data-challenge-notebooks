@@ -12,6 +12,7 @@ microlens_submit>=0.16.3
 MulensModel
 VBMicrolensing==5.3.0
 RTModel
+BAGLE
 
 # MCMC and visualization
 emcee==3.1.4
