@@ -135,3 +135,11 @@ profileresults/
 # local AI agent notes
 AGENTS.md 
 SYNC_PLAN.md 
+
+# Generated notebook outputs (non-figures)
+Extras/pyLIMA_fit.json
+Extras/pyLIMA_fit_MCMC_chains*.npz
+
+# RTModel demo output directory (created at runtime)
+rtmodel_event001/
+Extras/rtmodel_event001/

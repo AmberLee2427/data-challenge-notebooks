@@ -6,7 +6,7 @@
 
 # AAS Workshop Content
 
- The Roman Microlensing Data Challenge 2026 (RMDC26) AAS Workshop is a hands-on, full-day session designed to get participants—from newcomers to seasoned microlensing researchers—set up and productive with the Roman Research Nexus and the core open-source tools used in the Roman Microlensing Data Challenge. We’ll walk through Nexus access and environment setup, introduce essential microlensing concepts and modeling workflows, explore single- and binary-lens fitting (including grid searches and practical strategies for degeneracies and higher-order effects), and show how to organize, validate, and package results for submission using microlens-submit.
+ The Roman Microlensing Data Challenge 2026 (RMDC26) AAS Workshop is a hands-on, full-day session designed to get participants, from newcomers to seasoned microlensing researchers, set up and productive with the Roman Research Nexus and the core open-source tools used in the Roman Microlensing Data Challenge. We’ll walk through Nexus access and environment setup, introduce essential microlensing concepts and modeling workflows, explore single- and binary-lens fitting (including grid searches and practical strategies for degeneracies and higher-order effects), and show how to organize, validate, and package results for submission using microlens-submit.
 
 This page is a persistent resource to assist you with the AAS Workshop content and RMDC26 troubleshooting, outside of the actual workshop context. Our intention is that those who were not able to attend the workshop will be able to refer to this content and receive the same guidance in a different format.
 
