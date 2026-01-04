@@ -1,0 +1,48 @@
+name: Rebuild Generated Artifacts
+
+on:
+  push:
+    branches:
+      - main
+      - "Meet-Vyas-Dev/main"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install transformer deps
+        run: pip install pyyaml
+
+      - name: Rebuild site markdown (bin/)
+        run: python scripts/page_transformer.py
+
+      - name: Rebuild RRN notebooks (RRN/build/)
+        run: python scripts/notebook_transformer.py --force
+
+      - name: Commit regenerated artifacts
+        run: |
+          if git status --porcelain bin RRN/build | grep -q .; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add bin RRN/build
+            git commit -m "chore: rebuild generated artifacts"
+            git push
+          else
+            echo "No generated changes to commit."
+          fi
