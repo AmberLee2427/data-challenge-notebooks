@@ -16,7 +16,7 @@ END PREAMBLE -->
 # Session D: Q&A
 > *3:30 pm – end*
 
-In this session there will be a Q&A. 
+In this session, there will be a Q&A.
 
 <!-- BEGIN SESSION D OVERVIEW -->
 
