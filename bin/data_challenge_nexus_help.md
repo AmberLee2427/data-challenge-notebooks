@@ -168,7 +168,7 @@ kernel-delete <environment-name>
 These environments persist between sessions while a conda environment may not. Alternatively, <python-version> may be replaced with a path to a YAML file, for conda-like environment creation. Using the provided yaml for this workshop, you can create a kernel with all the package you need for running workshop notebook content:
 
 ```bash
-kernel-create rges-pit-dc env.yml "rges-pit-dc"  # This may take a while to solve the environment, download and install the packages.
+kernel-create rges-pit-dc env.yml "rges-pit-dc"  # This may take a while to solve the environment, download and install the packages. We will have an image available in the future to avoid this tedious process. 
 ```
 
 You can download the yaml here or clone the data-challenge-notebooks repo, with the yaml and all the rges-pit provided assistive notebooks to help you with this challenge:
