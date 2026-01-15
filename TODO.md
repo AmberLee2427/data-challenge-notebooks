@@ -35,7 +35,7 @@
    - they are downloaded in cells
 - [-] if using shared modules, create a top-level shared dir + symlink into each notebook dir that imports it
 - [x] update automation: publish/update the Nexus repo from `RRN/export_submodule/` (no PRs to `roman_notebooks`)
-- [ ] send STScI the repo URL + chosen regex list + any notes on expected execution order
+- [x] send STScI the repo URL + chosen regex list + any notes on expected execution order
 
 ## Nexus
 - [x] check data import
@@ -69,4 +69,5 @@
 - [ ] remove mention of workshop sign-up
 - [ ] update with real data links
 - [x] change PR from fork to PR from branch
+- [ ] add source-file comments in to website artifacts
 - [ ] delete website fork (dc-copy)

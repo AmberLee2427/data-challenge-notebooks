@@ -28,13 +28,21 @@ jobs:
         with:
           environment-file: env.yml
           environment-name: rges-pit-dc
-          cache-environment: true
+          cache-environment: false
+          cache-downloads: true
 
       - name: Install runner + transformer deps
         shell: bash -l {0}
         run: |
           python -m pip install --upgrade pip
           python -m pip install pyyaml nbclient nbformat
+
+      - name: Debug environment (versions)
+        shell: bash -l {0}
+        run: |
+          python -V
+          python -c "import sys; print(sys.executable)"
+          python -m pip --version
 
       - name: Rebuild Nexus-ready notebooks (RRN/build)
         shell: bash -l {0}
