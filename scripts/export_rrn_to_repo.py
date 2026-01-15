@@ -75,6 +75,8 @@ def export_rrn_notebooks(
     # for requirements.txt placement).
     notebook_dirs: set[Path] = set()
     for entry in notebooks:
+        if not entry.get("nexus_support", False):
+            continue
         target = entry.get("rrn_target")
         nb_id = entry.get("id")
         if not nb_id or not target:
@@ -89,6 +91,8 @@ def export_rrn_notebooks(
                 shutil.rmtree(nb_dir)
 
     for entry in notebooks:
+        if not entry.get("nexus_support", False):
+            continue
         nb_id = entry.get("id")
         target = entry.get("rrn_target")
         if not nb_id or not target:
