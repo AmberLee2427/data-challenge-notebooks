@@ -56,9 +56,6 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
       - name: Download site bundle
         uses: actions/download-artifact@v4
         with:
@@ -68,7 +65,7 @@ jobs:
       - name: Check out site repository
         uses: actions/checkout@v4
         with:
-          repository: rges-pit/rges-pit.github.io-dc-copy
+          repository: rges-pit/rges-pit.github.io
           token: ${{ secrets.SITE_SYNC_PAT }}
           path: site
 
@@ -86,11 +83,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Use upstream main as base (read-only) and create/update branch on fork
-          git remote add upstream https://github.com/rges-pit/rges-pit.github.io.git
-          git fetch upstream main
-          SYNC_BRANCH="chore/data-challenge-sync-dc-copy"
-          git checkout -B "$SYNC_BRANCH" upstream/main
+          # Create/update a branch on the upstream repo
+          git fetch origin main
+          SYNC_BRANCH="chore/data-challenge-sync"
+          git checkout -B "$SYNC_BRANCH" origin/main
 
           # Stage and Commit
           git add docs/_pages/
@@ -100,59 +96,30 @@ jobs:
           fi
           git commit -m "chore: sync data-challenge workshop pages"
 
-          # Push branch to fork (dc-copy)
+          # Push branch to upstream
           git push -f origin "$SYNC_BRANCH"
 
-          # Create PR against upstream.
-          # Use REST API so we can disambiguate same-owner forks via "<fork-repo>:<branch>".
-          BASE_REPO_OWNER="rges-pit"
-          BASE_REPO_NAME="rges-pit.github.io"
-          HEAD_REPO_OWNER="rges-pit"
-          HEAD_REPO_NAME="rges-pit.github.io-dc-copy"
+          # Create PR against upstream (same repo)
+          BASE_REPO="rges-pit/rges-pit.github.io"
           HEAD_BRANCH="$SYNC_BRANCH"
           BASE_BRANCH="main"
           PR_TITLE="Draft: Sync data-challenge notebooks"
           PR_BODY="Automated sync of generated workshop documentation from \`data-challenge-notebooks\`."
 
-          # Find an existing open PR from this fork branch.
-          PULLS_JSON=$(gh api \
-            --paginate \
-            -H "Accept: application/vnd.github+json" \
-            "/repos/$BASE_REPO_OWNER/$BASE_REPO_NAME/pulls?state=open&per_page=100")
-
-          EXISTING_PR=$(echo "$PULLS_JSON" | jq -r '.[] | select(.head.ref=="'"$HEAD_BRANCH"'" and .head.repo.name=="'"$HEAD_REPO_NAME"'") | .html_url' | head -n 1)
-          if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
+          EXISTING_PR=$(gh pr list --repo "$BASE_REPO" --head "$HEAD_BRANCH" --state open --json url --jq '.[0].url')
+          if [ -n "$EXISTING_PR" ]; then
             echo "PR already exists: $EXISTING_PR"
             exit 0
           fi
 
           echo "Creating new PR..."
-          set +e
-          CREATE_PR_JSON=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -X POST \
-            "/repos/$BASE_REPO_OWNER/$BASE_REPO_NAME/pulls" \
-            -f title="$PR_TITLE" \
-            -f body="$PR_BODY" \
-            -f head="$HEAD_REPO_OWNER:$HEAD_BRANCH" \
-            -f base="$BASE_BRANCH" \
-            -F draft=true 2>&1)
-          CREATE_STATUS=$?
-          set -e
-
-          if [ $CREATE_STATUS -ne 0 ]; then
-            echo "PR creation failed (exit $CREATE_STATUS). Full response:"
-            echo "$CREATE_PR_JSON"
-            exit 1
-          fi
-
-          NEW_PR_URL=$(echo "$CREATE_PR_JSON" | jq -r '.html_url')
-          if [ -z "$NEW_PR_URL" ] || [ "$NEW_PR_URL" = "null" ]; then
-            echo "PR creation did not return a URL. Full response:"
-            echo "$CREATE_PR_JSON" | jq -r '.'
-            exit 1
-          fi
-          echo "Created PR: $NEW_PR_URL"
+          gh pr create \
+            --repo "$BASE_REPO" \
+            --head "$HEAD_BRANCH" \
+            --base "$BASE_BRANCH" \
+            --title "$PR_TITLE" \
+            --body "$PR_BODY" \
+            --draft
 
   nexus-publish:
     needs: build-pages
