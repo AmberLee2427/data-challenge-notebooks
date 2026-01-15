@@ -36,15 +36,6 @@ jobs:
       - name: Rebuild Nexus notebooks
         run: python scripts/notebook_transformer.py
 
-      - name: Export RRN notebooks
-        run: python scripts/export_rrn_to_repo.py --dest RRN/export
-
-      - name: Upload RRN export
-        uses: actions/upload-artifact@v4
-        with:
-          name: rrn-export
-          path: RRN/export/
-
       - name: Commit updated pages
         run: |
           if git status --porcelain | grep -q .; then
@@ -163,70 +154,55 @@ jobs:
           fi
           echo "Created PR: $NEW_PR_URL"
 
-  rrn-draft-pr:
+  nexus-publish:
     needs: build-pages
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
     steps:
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Download RRN export
-        uses: actions/download-artifact@v4
-        with:
-          name: rrn-export
-          path: rrn-export
-
-      - name: Check out roman_notebooks upstream
+      - name: Check out repository
         uses: actions/checkout@v4
         with:
-          repository: spacetelescope/roman_notebooks
           token: ${{ secrets.SITE_SYNC_PAT }}
-          path: rrn
+          submodules: true
 
-      - name: Update RRN notebooks
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install transformer deps
+        run: pip install pyyaml
+
+      - name: Rebuild Nexus notebooks
+        run: python scripts/notebook_transformer.py --force
+
+      - name: Export notebooks into Nexus repo working tree
         run: |
-          rsync -av rrn-export/notebooks/microlensing_data_challenge/ rrn/notebooks/microlensing_data_challenge/
+          python scripts/export_rrn_to_repo.py \
+            --dest RRN/export_submodule \
+            --clean \
+            --env-source env.yml \
+            --env-target-name environment.yml \
+            --no-requirements
 
-      - name: Push changes and update PR
+      - name: Commit and push Nexus repo updates
+        working-directory: RRN/export_submodule
         env:
           GH_TOKEN: ${{ secrets.SITE_SYNC_PAT }}
-        working-directory: rrn
         run: |
-          # Configure Git
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Create branch
-          git checkout -b chore/rrn-data-challenge-sync
+          # Treat this as an artifact-only target: overwrite main.
+          git checkout -B main
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/rges-pit/nexus-notebooks.git"
 
-          # Stage and Commit
-          git add notebooks/microlensing_data_challenge/
+          git add --all
           if git diff --staged --quiet; then
-            echo "No changes to commit."
+            echo "No Nexus changes to commit."
             exit 0
           fi
-          git commit -m "chore: sync RRN data-challenge notebooks"
-
-          # Push to Fork
-          git remote add fork https://x-access-token:${GH_TOKEN}@github.com/rges-pit/roman_notebooks.git
-          git push -f fork chore/rrn-data-challenge-sync
-
-          # Create PR if not exists
-          EXISTING_PR=$(gh pr list --repo spacetelescope/roman_notebooks --head chore/rrn-data-challenge-sync --json url --jq '.[0].url')
-
-          if [ -z "$EXISTING_PR" ]; then
-            echo "Creating new PR..."
-            gh pr create \
-              --repo spacetelescope/roman_notebooks \
-              --head rges-pit:chore/rrn-data-challenge-sync \
-              --base main \
-              --title "Draft: Sync RRN data-challenge notebooks" \
-              --body "Automated export of workshop notebooks and environment file into \`roman_notebooks\`." \
-              --draft
-          else
-            echo "PR already exists: $EXISTING_PR"
-          fi
+          git commit -m "chore: sync Nexus notebooks"
+          git push -f origin main

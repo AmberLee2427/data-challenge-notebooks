@@ -16,7 +16,7 @@ notebooks:
     colab_support: "not_applicable"
     nexus_support: true
     website_render: "full_embed"
-    rrn_target: "notebooks/microlensing_data_challenge/a_rmdc26_workflow.ipynb"
+    rrn_target: "notebooks/a_rmdc26_workflow.ipynb"
     notes: >
       Nexus-only notebook; depends on rmdc26 S3 buckets and rges-pit-dc kernel.
       Needs explicit instructions at the end for cloning data-challenge-notebooks
@@ -33,7 +33,7 @@ notebooks:
     colab_support: "needs_bootstrap"
     nexus_support: true
     website_render: "full_embed"
-    rrn_target: "notebooks/microlensing_data_challenge/b_single_lens.ipynb"
+    rrn_target: "notebooks/b_single_lens.ipynb"
     rrn_transforms:
       - clear_outputs
       - record_metadata
@@ -55,7 +55,7 @@ notebooks:
     colab_support: "needs_bootstrap"
     nexus_support: true
     website_render: "full_embed"
-    rrn_target: "notebooks/microlensing_data_challenge/c_binary_lens.ipynb"
+    rrn_target: "notebooks/c_binary_lens.ipynb"
     rrn_transforms:
       - clear_outputs
       - record_metadata
@@ -77,7 +77,7 @@ notebooks:
     colab_support: "ready"
     nexus_support: true
     website_render: "full_embed"
-    rrn_target: "notebooks/microlensing_data_challenge/x_microlensing_tools.ipynb"
+    rrn_target: "notebooks/x_microlensing_tools.ipynb"
     rrn_transforms:
       - clear_outputs
       - record_metadata
@@ -98,7 +98,7 @@ notebooks:
     colab_support: "needs_bootstrap"
     nexus_support: false
     website_render: "preexisting_content"
-    rrn_target: "notebooks/microlensing_data_challenge/x_gould_loeb.ipynb"
+    rrn_target: "notebooks/x_gould_loeb.ipynb"
     notes: >
       Legacy notebook referencing previous minicourse materials; requires re-contextualization
       and likely stays local-only. Without significant changes, it isn't likely to be useful 

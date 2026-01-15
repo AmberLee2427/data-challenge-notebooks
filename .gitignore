@@ -143,3 +143,6 @@ Extras/pyLIMA_fit_MCMC_chains*.npz
 # RTModel demo output directory (created at runtime)
 rtmodel_event001/
 Extras/rtmodel_event001/
+
+# local files
+microlensing_data_challenge1.pdf

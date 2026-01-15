@@ -1,0 +1,4 @@
+[submodule "RRN/export_submodule"]
+	path = RRN/export_submodule
+	url = https://github.com/rges-pit/nexus-notebooks.git
+	branch = main
