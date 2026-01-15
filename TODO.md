@@ -17,6 +17,7 @@
 - [x] citations automations
 - [x] `CITATIONS.cff`
 - [x] make root `README.md` more participant aware
+- [ ] fix microlens-submit feedstock and move 0.16.4 back to being a conda dependency
 
 ## AAS
 - [x] Colab links for environment failure backup
