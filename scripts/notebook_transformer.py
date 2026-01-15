@@ -50,7 +50,7 @@ class NotebookTransformer:
             notebook_id = entry["id"]
             if include_ids and notebook_id not in include_ids:
                 continue
-            if entry.get("nexus_support", "unlikely") == "unlikely":
+            if not entry.get("nexus_support", False):
                 continue
 
             source_path = REPO_ROOT / entry["source_path"]
