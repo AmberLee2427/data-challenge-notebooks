@@ -28,11 +28,13 @@
   - `reges-pit/nexus-notebooks`
 - [ ] add global `refdata_dependencies.yaml` (match `spacetelescope/roman_notebooks` format)
 - [ ] decide notebook discovery regexes (paths/substrings STScI wrangler should scan)
-- [ ] organize notebooks in directories where each dir has its own `requirements.txt`
-- [ ] add optional top-level `environment.yml` (mamba spec for non-pip / low-level deps only)
-- [ ] move any per-notebook helper `.py` into the same notebook directories
-- [ ] if using shared modules, create a top-level shared dir + symlink into each notebook dir that imports it
-- [ ] update automation: publish/update the Nexus repo from `RRN/export/` (no PRs to `roman_notebooks`)
+  - `notebooks/*.ipynb`
+- [-] organize notebooks in directories where each dir has its own `requirements.txt`
+- [x] add optional top-level `environment.yml` (mamba spec for non-pip / low-level deps only)
+- [-] move any per-notebook helper `.py` into the same notebook directories
+   - they are downloaded in cells
+- [-] if using shared modules, create a top-level shared dir + symlink into each notebook dir that imports it
+- [x] update automation: publish/update the Nexus repo from `RRN/export_submodule/` (no PRs to `roman_notebooks`)
 - [ ] send STScI the repo URL + chosen regex list + any notes on expected execution order
 
 ## Nexus
@@ -44,6 +46,8 @@
 - [-] edit the tools notebook to match the Colab/RRN freindly style
 - [ ] add Citations sections in all notebooks (is this already done?)
 - [ ] delete the `roman_notebooks` PR + fork
+- [ ] test that the notebooks run using the provided yaml
+- [ ] tag long cells to avoid in quick tests
 
 ## Microlensing Tools Notebook
 - [ ] table formatting
@@ -60,3 +64,9 @@
 - [ ] test run
 - [ ] check data import functions
 - [ ] Add to nexus export list
+
+## Website
+- [ ] remove mention of workshop sign-up
+- [ ] update with real data links
+- [x] change PR from fork to PR from branch
+- [ ] delete website fork (dc-copy)

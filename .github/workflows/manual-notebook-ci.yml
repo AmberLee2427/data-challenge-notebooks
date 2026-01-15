@@ -1,0 +1,58 @@
+name: Manual Notebook CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "Execution profile"
+        required: true
+        default: "fast"
+        type: choice
+        options:
+          - fast
+          - full
+
+jobs:
+  execute-notebooks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Setup micromamba
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: env.yml
+          environment-name: rges-pit-dc
+          cache-environment: true
+
+      - name: Install runner + transformer deps
+        shell: bash -l {0}
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml nbclient nbformat
+
+      - name: Rebuild Nexus-ready notebooks (RRN/build)
+        shell: bash -l {0}
+        run: |
+          rm -rf RRN/build
+          python scripts/notebook_transformer.py --force
+
+      - name: Execute notebooks
+        shell: bash -l {0}
+        run: |
+          SKIP_TAGS=""
+          if [ "${{ inputs.profile }}" = "fast" ]; then
+            SKIP_TAGS="slow,ci-skip"
+          else
+            SKIP_TAGS="ci-skip"
+          fi
+
+          python scripts/execute_notebooks_ci.py \
+            --glob "RRN/build/*.ipynb" \
+            --skip-tags "$SKIP_TAGS" \
+            --timeout 1800
