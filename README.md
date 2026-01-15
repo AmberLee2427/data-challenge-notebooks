@@ -92,13 +92,14 @@ Before submitting a pull request, please check whether an existing issue or disc
 
 ## Syncing Notebooks to the Roman Research Nexus
 
-Syncing notebooks from canonical sources in this repo with the STScI `roman_notebooks` repository is an automated process handled by GitHub Actions when a pull request is merged.
+Syncing Nexus-ready notebook artifacts is an automated process handled by GitHub Actions when a pull request is merged.
 
 The workflow will:
-- Copy the notebook to the appropriate location in the `roman_notebooks` repository.
-- Validate that relative paths in the notebook are correct for the RRN structure.
-- Correct style and contents to satisfy Nexus-specific requirements.
-- Copy any associated `requirements.txt` or `env.yml` files.
+- Rebuild Nexus-ready notebook artifacts into `RRN/build/` using `scripts/notebook_transformer.py` and `notebooks_manifest.yml`.
+- Export those artifacts into the dedicated `rges-pit/nexus-notebooks` repository via the `RRN/export_submodule/` submodule.
+- Force-push the artifact branch (`main`) because the destination repository is treated as export-only.
+
+For a manual, on-demand execution check of the build artifacts, see `RRN/README.md` (Manual Notebook CI).
 
 ## Notes on Using and Contributing from Colab
 
