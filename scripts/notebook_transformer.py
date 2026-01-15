@@ -67,6 +67,7 @@ class NotebookTransformer:
             transforms = entry.get("rrn_transforms") or [
                 "clear_outputs",
                 "record_metadata",
+                "tag_ci_skip_nexus_only",
                 "insert_rrn_footer",
                 "warn_required_sections",
             ]
@@ -125,6 +126,8 @@ class NotebookTransformer:
             self._replace_purple_hr(notebook)
         elif transform == "remove_colab_only":
             self._remove_cells_with_tag(notebook, "colab-only")
+        elif transform == "tag_ci_skip_nexus_only":
+            self._tag_ci_skip_nexus_only(notebook)
         elif transform == "insert_rrn_footer":
             self._insert_rrn_footer(notebook)
         elif transform == "warn_required_sections":
@@ -176,6 +179,39 @@ class NotebookTransformer:
                 continue
             filtered.append(cell)
         notebook["cells"] = filtered
+
+    @staticmethod
+    def _tag_ci_skip_nexus_only(notebook: Dict[str, Any]) -> None:
+        """Tag Nexus-only cells so generic CI execution can skip them.
+
+        Some Nexus environments provide custom magics (e.g. `%source kernel-activate ...`).
+        Those magics are not available in a standard Jupyter kernel, so CI should skip
+        these cells while leaving them in the notebook for real Nexus/RRN runs.
+        """
+
+        nexus_only_pattern = re.compile(r"(?m)^\s*#\s*NEXUS-ONLY\b")
+        source_magic_pattern = re.compile(r"(?m)^\s*%source\b")
+
+        for cell in notebook.get("cells", []):
+            if cell.get("cell_type") != "code":
+                continue
+
+            source = cell.get("source", [])
+            if isinstance(source, list):
+                text = "".join(str(line) for line in source)
+            else:
+                text = str(source)
+
+            if not (nexus_only_pattern.search(text) or source_magic_pattern.search(text)):
+                continue
+
+            meta = cell.setdefault("metadata", {})
+            tags = meta.get("tags")
+            if not isinstance(tags, list):
+                tags = []
+            if "ci-skip" not in tags:
+                tags.append("ci-skip")
+            meta["tags"] = tags
 
     def _insert_rrn_footer(self, notebook: Dict[str, Any]) -> None:
         replacement = self._rrn_footer_content
