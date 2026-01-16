@@ -152,7 +152,9 @@ jobs:
             --clean \
             --env-source env.yml \
             --env-target-name environment.yml \
-            --no-requirements
+            --no-requirements \
+            --copy-ci-runner \
+            --ci-runner-source scripts/execute_notebooks_ci.py
 
       - name: Commit and push Nexus repo updates
         working-directory: RRN/export_submodule

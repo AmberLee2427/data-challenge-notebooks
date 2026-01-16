@@ -23,67 +23,52 @@ jobs:
           fetch-depth: 0
           submodules: true
 
-      - name: Setup micromamba
-        uses: mamba-org/setup-micromamba@v2
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          environment-file: env.yml
-          environment-name: rges-pit-dc
-          cache-environment: false
-          cache-downloads: true
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
 
-      - name: Install runner + transformer deps
-        shell: bash -l {0}
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
           python -m pip install pyyaml nbclient nbformat
 
-      - name: Debug environment (versions)
-        shell: bash -l {0}
+      - name: Rebuild CI notebooks (RRN/ci_build)
         run: |
-          python -V
-          python -c "import sys; print(sys.executable)"
-          python -m pip --version
+          rm -rf RRN/ci_build
+          python scripts/notebook_transformer.py --target ci --force
 
-      - name: Rebuild Nexus-ready notebooks (RRN/build)
-        shell: bash -l {0}
-        run: |
-          rm -rf RRN/build
-          python scripts/notebook_transformer.py --force
-
-      - name: Verify CI skip tags (NEXUS-ONLY)
-        shell: bash -l {0}
+      - name: Verify CI notebooks contain no Nexus-only magics
         run: |
           python - <<'PY'
           import glob
           import json
           import sys
 
-          def cell_text(cell):
-              src = cell.get('source', '')
-              return ''.join(src) if isinstance(src, list) else str(src)
-
           bad = []
-          for path in sorted(glob.glob('RRN/build/*.ipynb')):
+          for path in sorted(glob.glob('RRN/ci_build/*.ipynb')):
               nb = json.loads(open(path, 'r', encoding='utf-8').read())
               for idx, cell in enumerate(nb.get('cells', []), start=1):
                   if cell.get('cell_type') != 'code':
                       continue
-                  text = cell_text(cell)
-                  if ('NEXUS-ONLY' in text) or ('%source' in text):
-                      tags = cell.get('metadata', {}).get('tags', []) or []
-                      if 'ci-skip' not in tags:
-                          bad.append((path, idx, tags))
+                  src = cell.get('source', '')
+                  text = ''.join(src) if isinstance(src, list) else str(src)
+                  if '%source' in text or 'kernel-activate' in text:
+                      bad.append((path, idx))
+
           if bad:
-              for path, idx, tags in bad:
-                  print(f"[ci] missing ci-skip tag: {path} cell {idx} tags={tags}")
+              for path, idx in bad:
+                  print(f"[ci] Nexus-only content still present: {path} cell {idx}")
               sys.exit(1)
-          print('[ci] verified: all Nexus-only cells include ci-skip')
+          print('[ci] verified: no Nexus-only magics in CI notebooks')
           PY
 
       - name: Execute notebooks
-        shell: bash -l {0}
         run: |
-          # Always skip CI-only and Nexus-only cells.
           SKIP_TAGS="ci-skip"
           if [ "${{ inputs.profile }}" = "fast" ]; then
             SKIP_TAGS="${SKIP_TAGS},slow"
@@ -92,6 +77,6 @@ jobs:
           echo "[ci] using skip tags: ${SKIP_TAGS}"
 
           python scripts/execute_notebooks_ci.py \
-            --glob "RRN/build/*.ipynb" \
+            --glob "RRN/ci_build/*.ipynb" \
             --skip-tags "$SKIP_TAGS" \
             --timeout 1800
