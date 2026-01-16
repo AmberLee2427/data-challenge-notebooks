@@ -67,10 +67,14 @@ class NotebookTransformer:
             transforms = entry.get("rrn_transforms") or [
                 "clear_outputs",
                 "record_metadata",
-                "tag_ci_skip_nexus_only",
                 "insert_rrn_footer",
                 "warn_required_sections",
             ]
+
+            if "tag_ci_skip_nexus_only" not in transforms:
+                # Always tag Nexus-only env activation cells so CI can skip them.
+                # Keep this behavior independent of per-notebook rrn_transforms.
+                transforms = ["tag_ci_skip_nexus_only", *transforms]
             for transform in transforms:
                 self._apply_transform(transform, notebook_data, entry)
 

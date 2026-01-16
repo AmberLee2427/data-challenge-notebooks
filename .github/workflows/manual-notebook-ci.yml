@@ -50,15 +50,46 @@ jobs:
           rm -rf RRN/build
           python scripts/notebook_transformer.py --force
 
+      - name: Verify CI skip tags (NEXUS-ONLY)
+        shell: bash -l {0}
+        run: |
+          python - <<'PY'
+          import glob
+          import json
+          import sys
+
+          def cell_text(cell):
+              src = cell.get('source', '')
+              return ''.join(src) if isinstance(src, list) else str(src)
+
+          bad = []
+          for path in sorted(glob.glob('RRN/build/*.ipynb')):
+              nb = json.loads(open(path, 'r', encoding='utf-8').read())
+              for idx, cell in enumerate(nb.get('cells', []), start=1):
+                  if cell.get('cell_type') != 'code':
+                      continue
+                  text = cell_text(cell)
+                  if ('NEXUS-ONLY' in text) or ('%source' in text):
+                      tags = cell.get('metadata', {}).get('tags', []) or []
+                      if 'ci-skip' not in tags:
+                          bad.append((path, idx, tags))
+          if bad:
+              for path, idx, tags in bad:
+                  print(f"[ci] missing ci-skip tag: {path} cell {idx} tags={tags}")
+              sys.exit(1)
+          print('[ci] verified: all Nexus-only cells include ci-skip')
+          PY
+
       - name: Execute notebooks
         shell: bash -l {0}
         run: |
-          SKIP_TAGS=""
+          # Always skip CI-only and Nexus-only cells.
+          SKIP_TAGS="ci-skip"
           if [ "${{ inputs.profile }}" = "fast" ]; then
-            SKIP_TAGS="slow,ci-skip"
-          else
-            SKIP_TAGS="ci-skip"
+            SKIP_TAGS="${SKIP_TAGS},slow"
           fi
+
+          echo "[ci] using skip tags: ${SKIP_TAGS}"
 
           python scripts/execute_notebooks_ci.py \
             --glob "RRN/build/*.ipynb" \
