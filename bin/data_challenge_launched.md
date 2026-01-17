@@ -15,11 +15,6 @@ description: "Roman Microlensing Data Challenge 2026 (RMDC26): overview, dataset
     <a href="{{ site.url }}{{ site.baseurl }}/data-challenge/sign-up/" style="background-color: #a859e4; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; transition: background-color 0.2s;">RMDC26 Sign Up</a>
     <div style="margin-top: 0.5em; color: #555;">Now open</div>
   </div>
-  <!-- Registration button -->
-  <div style="text-align: center; margin: 2em 0;">
-    <a href="https://aas.org/meetings/aas247/registration" target="_blank" style="background-color: #a859e4; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; transition: background-color 0.2s;">Workshop Sign Up</a>
-    <div style="margin-top: 0.5em; color: #555;">Now open</div>
-  </div>
 </div>
 
 RMDC26 is a community challenge to model simulated Roman microlensing data ahead of the mission’s Galactic Bulge Time Domain Survey. The goal is to broaden participation, standardize best practices, and spur innovation in microlensing modeling and tooling.
@@ -50,7 +45,7 @@ Our official launch will be during AAS 247, where we will host a [workshop]({{ s
 
 - [Data]({{ site.url }}{{ site.baseurl }}/data-challenge/data/)
 - [Nexus]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/1-nexus/)
-- [AAS 247 Workshop]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/) (*workshop sign-up is now open*)
+- [AAS 247 Workshop]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/)
 - [Sign up]({{ site.url }}{{ site.baseurl }}/data-challenge/sign-up/) (*RMDC26 sign‑up is now open*)
 - [Help form]({{ site.url }}{{ site.baseurl }}/data-challenge/help/)
 
