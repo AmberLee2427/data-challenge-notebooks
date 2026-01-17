@@ -12,10 +12,13 @@ import argparse
 import re
 from pathlib import Path
 from typing import Iterable, List, Optional, Tuple
+from urllib.parse import quote
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 AAS_WORKSHOP_SUMMARY = REPO_ROOT / "bin/data_challenge_aas_workshop.md"
 SITE_BASE = "https://rges-pit.org"
+SOURCE_REPO = "rges-pit/data-challenge-bnotebooks"
+SOURCE_BASE_URL = f"https://github.com/{SOURCE_REPO}/blob/main"
 
 PREAMBLE_PATTERN = re.compile(r"(?s)^---.*?<!-- END PREAMBLE -->")
 WEB_PATTERN = re.compile(
@@ -60,6 +63,22 @@ def _apply_site_template(text: str) -> str:
     return text.replace(SITE_BASE, "{{ site.url }}{{ site.baseurl }}")
 
 
+def _source_url(path: Path) -> str:
+    rel_path = path.resolve().relative_to(REPO_ROOT).as_posix()
+    return f"{SOURCE_BASE_URL}/{quote(rel_path, safe='/')}"
+
+
+def _source_comment(path: Path, section: Optional[str] = None) -> str:
+    label = f" ({section})" if section else ""
+    return f"<!-- SOURCE{label}: {_source_url(path)} -->"
+
+
+def _insert_comment_after(block: str, marker: str, comment: str) -> str:
+    if marker not in block or comment in block:
+        return block
+    return block.replace(marker, f"{marker}\n{comment}", 1)
+
+
 def _extract_section(pattern: re.Pattern[str], text: str) -> Optional[str]:
     match = pattern.search(text)
     return match.group(0) if match else None
@@ -84,8 +103,16 @@ def _process_source(path: Path) -> None:
 
     target_text = _read_text(target_path)
     if preamble:
+        preamble = _insert_comment_after(
+            preamble, "<!-- END PREAMBLE -->", _source_comment(path, "preamble")
+        )
         target_text = _replace_pattern(target_text, PREAMBLE_PATTERN, preamble)
     if web_block:
+        web_block = _insert_comment_after(
+            web_block,
+            "<!-- BEGIN WEB CONTENT -->",
+            _source_comment(path, "web content"),
+        )
         target_text = _replace_pattern(target_text, WEB_PATTERN, web_block)
     target_text = _apply_site_template(target_text)
     _write_text(target_path, target_text)
@@ -95,6 +122,11 @@ def _process_source(path: Path) -> None:
         for label, block in session_blocks:
             begin = f"<!-- BEGIN SESSION {label} OVERVIEW -->"
             end = f"<!-- END SESSION {label} OVERVIEW -->"
+            block = _insert_comment_after(
+                block,
+                begin,
+                _source_comment(path, f"session {label} overview"),
+            )
             summary_text = _replace_tagged_block(summary_text, begin, end, block)
         summary_text = _apply_site_template(summary_text)
         _write_text(AAS_WORKSHOP_SUMMARY, summary_text)

@@ -40,6 +40,7 @@ The RMDC25 AAS Workshop is a hands-on, full-day session designed to get particip
 ### [A. Introduction to the Nexus]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/1-nexus/)
 
 <!-- BEGIN SESSION A OVERVIEW -->
+<!-- SOURCE (session A overview): https://github.com/rges-pit/data-challenge-bnotebooks/blob/main/AAS%20Workshop/Session%20A%3A%20Nexus/ReadMe.md -->
 
 In this session, you will learn how to access the Nexus, create Nexus accounts, activate kernels, install packages, access data, create your submission, and get other technical help.
 
@@ -61,6 +62,7 @@ For discussion, information, troubleshooting, and updates about the Nexus, see t
 ### [2. Single Lenses and Pipelines]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/2-single-lenses/)
 
 <!-- BEGIN SESSION B OVERVIEW -->
+<!-- SOURCE (session B overview): https://github.com/rges-pit/data-challenge-bnotebooks/blob/main/AAS%20Workshop/Session%20B%3A%20Single%20Lens%20%26%20Pipelines/ReadMe.md -->
 
 In this session, we will learn about basic microlensing parameterization and terminology and test that knowledge on a mini modeling Data Challenge.
 Topics covered:
@@ -80,6 +82,7 @@ Topics covered:
 ### [3. Binary Lenses]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/3-binary-lenses/)
 
 <!-- BEGIN SESSION C OVERVIEW -->
+<!-- SOURCE (session C overview): https://github.com/rges-pit/data-challenge-bnotebooks/blob/main/AAS%20Workshop/Session%20C%3A%20Binary%20Lens/ReadMe.md -->
 
 We will use this session to explore a more complicated, binary-lens model and exercises to demonstrate the challenges of binary-lens fitting and common approaches to addressing them. We will fit that same event using three different methods:
 
@@ -94,6 +97,7 @@ Some of these methods are computationally expensive, so we will parallelize our 
 ### [4. Information Session and Q&A]({{ site.url }}{{ site.baseurl }}/data-challenge/aas-workshop/4-info/)
 
 <!-- BEGIN SESSION D OVERVIEW -->
+<!-- SOURCE (session D overview): https://github.com/rges-pit/data-challenge-bnotebooks/blob/main/AAS%20Workshop/Session%20D%3A%20Data%20Challenge%20Q%26A/ReadMe.md -->
 
 Ask the demonstrators anything you would like to know about microlensing and/or the Data Challenge.
 
