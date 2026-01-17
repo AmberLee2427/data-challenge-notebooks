@@ -99,7 +99,9 @@ The workflow will:
 - Export those artifacts into the dedicated `rges-pit/nexus-notebooks` repository via the `RRN/export_submodule/` submodule.
 - Force-push the artifact branch (`main`) because the destination repository is treated as export-only.
 
-For a manual, on-demand execution check of the build artifacts, see `RRN/README.md` (Manual Notebook CI).
+For a manual, on-demand execution check, see `RRN/README.md`:
+- **Portable CI execution** runs `RRN/ci_build/` (standard kernel)
+- **Nexus execution** runs the exported notebooks on the Nexus itself
 
 ## Notes on Using and Contributing from Colab
 

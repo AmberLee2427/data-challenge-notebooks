@@ -21,6 +21,7 @@ except ImportError as exc:  # pragma: no cover
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = REPO_ROOT / "notebooks_manifest.yml"
 RRN_BUILD_DIR = REPO_ROOT / "RRN" / "build"
+CI_BUILD_DIR = REPO_ROOT / "RRN" / "ci_build"
 RRN_FOOTER_PATH = REPO_ROOT / "RRN" / "footer.md"
 FOOTER_PATTERN = re.compile(
     r"<!-- Footer Start -->.*?<!-- Footer End -->",
@@ -70,6 +71,65 @@ class NotebookTransformer:
                 "insert_rrn_footer",
                 "warn_required_sections",
             ]
+
+            if "tag_ci_skip_nexus_only" not in transforms:
+                # Always tag Nexus-only env activation cells so CI can skip them.
+                # Keep this behavior independent of per-notebook rrn_transforms.
+                transforms = ["tag_ci_skip_nexus_only", *transforms]
+            for transform in transforms:
+                self._apply_transform(transform, notebook_data, entry)
+
+            self._write_notebook(dest_path, notebook_data)
+            written.append(dest_path)
+
+        return written
+
+    def build_ci(
+        self,
+        include_ids: Iterable[str] | None = None,
+        force: bool = False,
+    ) -> List[Path]:
+        """Create CI-executable notebook copies under RRN/ci_build.
+
+        This target is meant to be runnable on GitHub Actions (standard Jupyter
+        kernel) and therefore removes Nexus-only activation cells such as
+        `%source kernel-activate ...`.
+        """
+
+        include_ids = set(include_ids) if include_ids else None
+        CI_BUILD_DIR.mkdir(parents=True, exist_ok=True)
+
+        written: List[Path] = []
+        for entry in self.manifest.get("notebooks", []):
+            notebook_id = entry["id"]
+            if include_ids and notebook_id not in include_ids:
+                continue
+
+            # CI should only execute notebooks intended to run outside Nexus.
+            # Default rule: skip notebooks explicitly marked as not applicable to Colab.
+            if entry.get("ci_support") is False:
+                continue
+            if entry.get("colab_support") == "not_applicable":
+                continue
+
+            source_path = REPO_ROOT / entry["source_path"]
+            if not source_path.exists():
+                raise FileNotFoundError(f"Source notebook not found: {source_path}")
+
+            dest_path = CI_BUILD_DIR / f"{notebook_id}.ipynb"
+            if dest_path.exists() and not force:
+                if dest_path.stat().st_mtime > source_path.stat().st_mtime:
+                    continue
+
+            notebook_data = self._load_notebook(source_path)
+            transforms = entry.get("ci_transforms") or [
+                "clear_outputs",
+                "record_metadata",
+                "replace_purple_hr",
+                "remove_nexus_only_cells",
+                "warn_required_sections",
+            ]
+
             for transform in transforms:
                 self._apply_transform(transform, notebook_data, entry)
 
@@ -125,6 +185,10 @@ class NotebookTransformer:
             self._replace_purple_hr(notebook)
         elif transform == "remove_colab_only":
             self._remove_cells_with_tag(notebook, "colab-only")
+        elif transform == "tag_ci_skip_nexus_only":
+            self._tag_ci_skip_nexus_only(notebook)
+        elif transform == "remove_nexus_only_cells":
+            self._remove_nexus_only_cells(notebook)
         elif transform == "insert_rrn_footer":
             self._insert_rrn_footer(notebook)
         elif transform == "warn_required_sections":
@@ -175,6 +239,71 @@ class NotebookTransformer:
             if tag in tags:
                 continue
             filtered.append(cell)
+        notebook["cells"] = filtered
+
+    @staticmethod
+    def _tag_ci_skip_nexus_only(notebook: Dict[str, Any]) -> None:
+        """Tag Nexus-only cells so generic CI execution can skip them.
+
+        Some Nexus environments provide custom magics (e.g. `%source kernel-activate ...`).
+        Those magics are not available in a standard Jupyter kernel, so CI should skip
+        these cells while leaving them in the notebook for real Nexus/RRN runs.
+        """
+
+        nexus_only_pattern = re.compile(r"(?m)^\s*#\s*NEXUS-ONLY\b")
+        source_magic_pattern = re.compile(r"(?m)^\s*%source\b")
+
+        for cell in notebook.get("cells", []):
+            if cell.get("cell_type") != "code":
+                continue
+
+            source = cell.get("source", [])
+            if isinstance(source, list):
+                text = "".join(str(line) for line in source)
+            else:
+                text = str(source)
+
+            if not (nexus_only_pattern.search(text) or source_magic_pattern.search(text)):
+                continue
+
+            meta = cell.setdefault("metadata", {})
+            tags = meta.get("tags")
+            if not isinstance(tags, list):
+                tags = []
+            if "ci-skip" not in tags:
+                tags.append("ci-skip")
+            meta["tags"] = tags
+
+    @staticmethod
+    def _remove_nexus_only_cells(notebook: Dict[str, Any]) -> None:
+        """Remove Nexus-only cells so the notebook is runnable in vanilla Jupyter."""
+
+        nexus_only_pattern = re.compile(r"(?m)^\s*#\s*NEXUS-ONLY\b")
+        source_magic_pattern = re.compile(r"(?m)^\s*%source\b")
+        kernel_activate_pattern = re.compile(r"kernel-activate\b")
+
+        filtered = []
+        for cell in notebook.get("cells", []):
+            if cell.get("cell_type") != "code":
+                filtered.append(cell)
+                continue
+
+            meta = cell.get("metadata", {}) or {}
+            tags = set(meta.get("tags", []) or [])
+            if "nexus-only" in tags:
+                continue
+
+            source = cell.get("source", [])
+            if isinstance(source, list):
+                text = "".join(str(line) for line in source)
+            else:
+                text = str(source)
+
+            if nexus_only_pattern.search(text) or source_magic_pattern.search(text) or kernel_activate_pattern.search(text):
+                continue
+
+            filtered.append(cell)
+
         notebook["cells"] = filtered
 
     def _insert_rrn_footer(self, notebook: Dict[str, Any]) -> None:
@@ -251,7 +380,7 @@ def parse_args(argv: List[str]) -> argparse.Namespace:
     )
     parser.add_argument(
         "--target",
-        choices=["rrn"],
+        choices=["rrn", "ci"],
         default="rrn",
         help="Output target to build (currently only 'rrn' is supported).",
     )
@@ -280,6 +409,14 @@ def main(argv: List[str] | None = None) -> int:
                 print(f"  - {path.relative_to(REPO_ROOT)}")
         else:
             print("RRN notebooks already up-to-date.")
+    elif args.target == "ci":
+        written = transformer.build_ci(include_ids=args.only, force=args.force)
+        if written:
+            print("Updated CI notebooks:")
+            for path in written:
+                print(f"  - {path.relative_to(REPO_ROOT)}")
+        else:
+            print("CI notebooks already up-to-date.")
     else:  # pragma: no cover
         raise ValueError(f"Unsupported target {args.target}")
 
