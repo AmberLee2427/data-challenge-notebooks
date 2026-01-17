@@ -67,7 +67,7 @@
 - [ ] Add to nexus export list
 
 ## Website
-- [ ] remove mention of workshop sign-up
+- [x] remove mention of workshop sign-up
 - [ ] update with real data links
 - [x] change PR from fork to PR from branch
 - [ ] add source-file comments in to website artifacts
