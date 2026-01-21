@@ -17,7 +17,7 @@ from urllib.parse import quote
 REPO_ROOT = Path(__file__).resolve().parents[1]
 AAS_WORKSHOP_SUMMARY = REPO_ROOT / "bin/data_challenge_aas_workshop.md"
 SITE_BASE = "https://rges-pit.org"
-SOURCE_REPO = "rges-pit/data-challenge-bnotebooks"
+SOURCE_REPO = "rges-pit/data-challenge-notebooks"
 SOURCE_BASE_URL = f"https://github.com/{SOURCE_REPO}/blob/main"
 
 PREAMBLE_PATTERN = re.compile(r"(?s)^---.*?<!-- END PREAMBLE -->")
@@ -76,6 +76,9 @@ def _source_comment(path: Path, section: Optional[str] = None) -> str:
 def _insert_comment_after(block: str, marker: str, comment: str) -> str:
     if marker not in block or comment in block:
         return block
+    source_pattern = re.compile(re.escape(marker) + r"\n<!-- SOURCE.*?-->")
+    if source_pattern.search(block):
+        return source_pattern.sub(f"{marker}\n{comment}", block, count=1)
     return block.replace(marker, f"{marker}\n{comment}", 1)
 
 

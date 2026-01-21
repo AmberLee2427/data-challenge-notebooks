@@ -8,7 +8,7 @@ description: "Roman Microlensing Data Challenge 2026 (RMDC26): overview, dataset
 <!-- END PREAMBLE -->
 
 <!-- BEGIN WEB CONTENT -->
-<!-- SOURCE (web content): https://github.com/rges-pit/data-challenge-bnotebooks/blob/main/AAS%20Workshop/Session%20D%3A%20Data%20Challenge%20Q%26A/ABOUT.md -->
+<!-- SOURCE (web content): https://github.com/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20D%3A%20Data%20Challenge%20Q%26A/ABOUT.md -->
 
 <div style="display: flex; justify-content: center; gap: 10px; margin: 1em 0; align-items: center; flex-wrap: wrap;">
   <!-- Sign up button (enable this when RMDC26 launches) -->
