@@ -9,7 +9,7 @@
 ## Repository Management
 - [x] workflow auto PRs to `rges-pit.github.io`
 - [x] workflow restyling and copying scripts to make notebooks sync accross sources
-- [ ] make repo constributing guide mimic RRN style guide, so as to minimize nexus post-processing
+- [ ] make repo constributing guide compliment RRN style guide, so as to minimize nexus post-processing
 - [ ] add nexus instruction to contributing guide
 - [ ] add automation specific instruction to the contributing guide
 - [x] Zenodo link
@@ -47,7 +47,7 @@
 - [-] edit the tools notebook to match the Colab/RRN freindly style
 - [ ] add Citations sections in all notebooks (is this already done?)
 - [x] delete the `roman_notebooks` PR + fork
-- [ ] test that the notebooks run using the provided yaml
+- [ ] test that the notebooks run using the provided yaml on the nexus data-challenge image
 - [ ] tag long cells to avoid in quick tests
 
 ## Microlensing Tools Notebook
@@ -70,5 +70,5 @@
 - [x] remove mention of workshop sign-up
 - [ ] update with real data links
 - [x] change PR from fork to PR from branch
-- [ ] add source-file comments in to website artifacts
+- [x] add source-file comments in to website artifacts
 - [x] delete website fork (dc-copy)
