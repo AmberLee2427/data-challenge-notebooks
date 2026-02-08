@@ -17,13 +17,8 @@ notebooks:
     nexus_support: true
     website_render: "full_embed"
     rrn_target: "notebooks/a_rmdc26_workflow.ipynb"
-    rrn_transforms:
-      - clear_outputs
-      - record_metadata
-      - remove_colab_only
-      - warn_required_sections
     notes: >
-      Nexus-only notebook; depends on rmdc26 S3 buckets and rges-pit-dc kernel.
+      Nexus-only notebook; depends on rmdc26 data and server image.
       Needs explicit instructions at the end for cloning data-challenge-notebooks
       when users require the full workshop set locally.
 
