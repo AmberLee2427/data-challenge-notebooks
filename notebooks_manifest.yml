@@ -1,4 +1,4 @@
-version: 2026-11-20
+version: 2026-02-09
 description: >
   Canonical list of notebooks in data-challenge-notebooks with intended audiences,
   distribution targets, and transformation requirements for syncing to the website
@@ -104,4 +104,24 @@ notebooks:
       and likely stays local-only. Without significant changes, it isn't likely to be useful 
       to embed on the website as a data-challenge resource. Provide clone instructions via the 
       workflow notebook.
+
+  - id: microlens-submit-cli-tutorial
+    title: "CLI Tutorial: A Step-by-Step Guide"
+    source_path: "Extras/cli_tutorial.rst"
+    session: "Extras"
+    audiences:
+      - "Data challenge teams"
+      - "Self-paced learners"
+    colab_support: false
+    ci_support: false
+    nexus_support: true
+    website_render: "preexisting_content"
+    rrn_target: "notebooks/x_microlens-submit_cli_tutorial.ipynb"
+    upstream_url: "https://raw.githubusercontent.com/AmberLee2427/microlens-submit/refs/heads/main/docs/cli_tutorial.rst"
+    rrn_transforms:
+      - sync
+      - convert_rst_to_notebook
+    notes: >
+      microlens-submit CLI tutorial in RST format; requires transformation to notebook format 
+      for Nexus, which does not format RST files.
 

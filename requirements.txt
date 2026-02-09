@@ -36,3 +36,5 @@ s3fs
 pathos
 lxml
 tqdm
+docutils
+markdownify

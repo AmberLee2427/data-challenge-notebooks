@@ -55,16 +55,6 @@ class NotebookTransformer:
                 continue
 
             source_path = REPO_ROOT / entry["source_path"]
-            if not source_path.exists():
-                raise FileNotFoundError(f"Source notebook not found: {source_path}")
-
-            dest_path = RRN_BUILD_DIR / f"{notebook_id}.ipynb"
-            if dest_path.exists() and not force:
-                if dest_path.stat().st_mtime > source_path.stat().st_mtime:
-                    # Dest newer than source; skip unless forcing rebuild.
-                    continue
-
-            notebook_data = self._load_notebook(source_path)
             transforms = entry.get("rrn_transforms") or [
                 "clear_outputs",
                 "record_metadata",
@@ -72,11 +62,29 @@ class NotebookTransformer:
                 "warn_required_sections",
             ]
 
+            if "sync" in transforms:
+                self._sync_source(entry)
+
+            dest_path = RRN_BUILD_DIR / f"{notebook_id}.ipynb"
+            if dest_path.exists() and not force:
+                if source_path.exists() and dest_path.stat().st_mtime > source_path.stat().st_mtime:
+                    # Dest newer than source; skip unless forcing rebuild.
+                    continue
+
+            if "convert_rst_to_notebook" in transforms:
+                notebook_data = self._new_notebook()
+            else:
+                if not source_path.exists():
+                    raise FileNotFoundError(f"Source notebook not found: {source_path}")
+                notebook_data = self._load_notebook(source_path)
+
             if "tag_ci_skip_nexus_only" not in transforms:
                 # Always tag Nexus-only env activation cells so CI can skip them.
                 # Keep this behavior independent of per-notebook rrn_transforms.
                 transforms = ["tag_ci_skip_nexus_only", *transforms]
             for transform in transforms:
+                if transform == "sync":
+                    continue
                 self._apply_transform(transform, notebook_data, entry)
 
             self._write_notebook(dest_path, notebook_data)
@@ -193,8 +201,81 @@ class NotebookTransformer:
             self._insert_rrn_footer(notebook)
         elif transform == "warn_required_sections":
             self._warn_required_sections(notebook, entry)
+        elif transform == "convert_rst_to_notebook":
+            self._convert_rst_to_notebook(notebook, entry)
         else:
             raise ValueError(f"Unknown transform '{transform}'")
+
+    @staticmethod
+    def _new_notebook() -> Dict[str, Any]:
+        return {
+            "cells": [],
+            "metadata": {},
+            "nbformat": 4,
+            "nbformat_minor": 5,
+        }
+
+    def _sync_source(self, entry: Dict[str, Any]) -> None:
+        upstream_url = entry.get("upstream_url")
+        source_path = entry.get("source_path")
+        if not upstream_url or not source_path:
+            raise ValueError("Sync requires both 'upstream_url' and 'source_path'.")
+
+        dest_path = REPO_ROOT / source_path
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+
+        from urllib.request import urlopen
+
+        with urlopen(upstream_url, timeout=30) as response:
+            payload = response.read()
+        dest_path.write_bytes(payload)
+        print(f"[sync] {upstream_url} -> {dest_path}")
+
+    def _convert_rst_to_notebook(self, notebook: Dict[str, Any], entry: Dict[str, Any]) -> None:
+        source_path = REPO_ROOT / entry["source_path"]
+        if not source_path.exists():
+            raise FileNotFoundError(f"Source RST not found: {source_path}")
+
+        rst_text = source_path.read_text(encoding="utf-8")
+        html_body: str | None = None
+
+        try:
+            from docutils.core import publish_parts
+
+            parts = publish_parts(source=rst_text, writer_name="html")
+            html_body = parts.get("html_body")
+        except Exception:
+            html_body = None
+
+        if html_body:
+            # Drop syntax-highlighting spans for cleaner markdown conversion.
+            html_body = re.sub(r"</?span[^>]*>", "", html_body)
+
+            try:
+                from markdownify import markdownify as html_to_md
+
+                markdown_text = html_to_md(html_body, heading_style="ATX")
+                cell_source = [markdown_text]
+            except Exception:
+                cell_source = [html_body]
+        else:
+            cell_source = [
+                "# Notebook Content\n\n",
+                "> **Note:** RST conversion requires `docutils`. Showing raw content below.\n\n",
+                "```text\n",
+                rst_text,
+                "\n```\n",
+            ]
+
+        notebook.clear()
+        notebook.update(self._new_notebook())
+        notebook["cells"].append(
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": cell_source,
+            }
+        )
 
     @staticmethod
     def _clear_outputs(notebook: Dict[str, Any]) -> None:
