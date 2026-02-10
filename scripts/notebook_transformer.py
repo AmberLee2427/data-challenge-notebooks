@@ -90,7 +90,152 @@ class NotebookTransformer:
             self._write_notebook(dest_path, notebook_data)
             written.append(dest_path)
 
+        for entry in self.manifest.get("scripts", []):
+            notebook_id = entry["id"]
+            if include_ids and notebook_id not in include_ids:
+                continue
+            if not entry.get("nexus_support", False):
+                continue
+            written.append(self._process_script_entry(entry, force))
+
+        for entry in self.manifest.get("other", []):
+            notebook_id = entry["id"]
+            if include_ids and notebook_id not in include_ids:
+                continue
+            if not entry.get("nexus_support", False):
+                continue
+            written.append(self._process_other_entry(entry, force))
+
         return written
+
+    def _process_script_entry(self, entry: Dict[str, Any], force: bool) -> Path:
+        notebook_id = entry["id"]
+        source_path = REPO_ROOT / entry["source_path"]
+        if not source_path.exists():
+            raise FileNotFoundError(f"Source script not found: {source_path}")
+
+        dest_path = RRN_BUILD_DIR / f"{notebook_id}.ipynb"
+        if dest_path.exists() and not force:
+            if dest_path.stat().st_mtime > source_path.stat().st_mtime:
+                return dest_path
+
+        script_content = source_path.read_text(encoding="utf-8")
+        notebook = self._new_notebook()
+        
+        # Create a single code cell with the script content
+        notebook["cells"].append({
+            "cell_type": "code",
+            "execution_count": None,
+            "metadata": {},
+            "outputs": [],
+            "source": script_content.splitlines(keepends=True)
+        })
+
+        transforms = entry.get("rrn_transforms", [])
+        for transform in transforms:
+             self._apply_transform(transform, notebook, entry)
+
+        self._write_notebook(dest_path, notebook)
+        return dest_path
+
+
+    def _process_other_entry(self, entry: Dict[str, Any], force: bool) -> Path:
+        notebook_id = entry["id"]
+        source_path = REPO_ROOT / entry["source_path"]
+        if not source_path.exists():
+            raise FileNotFoundError(f"Source file not found: {source_path}")
+
+        # Use source suffix for the build artifact
+        dest_filename = f"{notebook_id}{source_path.suffix}"
+        if entry.get("rrn_target"):
+            dest_filename = Path(entry["rrn_target"]).name
+
+        dest_path = RRN_BUILD_DIR / dest_filename
+
+        if dest_path.exists() and not force:
+            if dest_path.stat().st_mtime > source_path.stat().st_mtime:
+                return dest_path
+
+        # If it's a markdown file and has transforms, process it as text
+        transforms = entry.get("rrn_transforms", [])
+        if source_path.suffix.lower() == ".md" and transforms:
+            content = source_path.read_text(encoding="utf-8")
+            for transform in transforms:
+                content = self._apply_text_transform(transform, content, entry)
+            dest_path.write_text(content, encoding="utf-8")
+        else:
+            import shutil
+            shutil.copy2(source_path, dest_path)
+            
+        return dest_path
+
+    def _apply_text_transform(self, transform: str, content: str, entry: Dict[str, Any]) -> str:
+        if transform == "build_like_website":
+            return self._inject_web_content(content)
+        elif transform == "footer" or transform == "insert_rrn_footer":
+            return self._insert_rrn_footer_text(content)
+        elif transform == "clear_outputs": # Not applicable to text
+             return content
+        elif transform == "record_metadata": # Not applicable to text
+             return content
+        elif transform == "remove_colab_only": # Not applicable to text
+             return content
+        elif transform == "replace_purple_hr": # Could apply
+             return content.replace('<hr style="border:2px solid #a859e4">', '***')
+        elif transform == "warn_required_sections": # Not applicable to text
+             return content
+        else:
+            print(f"[warn] Transform '{transform}' not supported for text files", file=sys.stderr)
+            return content
+
+    def _inject_web_content(self, content: str) -> str:
+        """Inject content from a source URL defined in a comment."""
+        source_match = re.search(r"<!-- SOURCE \(web content\): (.*?) -->", content)
+        if not source_match:
+            return content
+
+        source_url = source_match.group(1).strip()
+        # Resolve URL to local path if possible
+        repo_prefix = "https://github.com/rges-pit/data-challenge-notebooks/blob/main/"
+        if source_url.startswith(repo_prefix):
+            rel_path = source_url[len(repo_prefix):]
+            from urllib.parse import unquote
+            rel_path = unquote(rel_path)
+            source_path = REPO_ROOT / rel_path
+            
+            if not source_path.exists():
+                print(f"[warn] Web content source not found: {source_path}", file=sys.stderr)
+                return content
+                
+            source_text = source_path.read_text(encoding="utf-8")
+            
+            # Extract content between markers
+            web_pattern = re.compile(r"<!-- BEGIN WEB CONTENT -->.*?<!-- END WEB CONTENT -->", re.DOTALL)
+            match = web_pattern.search(source_text)
+            if match:
+                extracted = match.group(0)
+                # Replace in target
+                if web_pattern.search(content):
+                    return web_pattern.sub(lambda m: extracted, content)
+                else:
+                    print("[warn] Target missing '<!-- BEGIN/END WEB CONTENT -->' markers", file=sys.stderr)
+                    return content
+            else:
+                 print(f"[warn] Source {source_path} missing '<!-- BEGIN/END WEB CONTENT -->' markers", file=sys.stderr)
+                 return content
+        else:
+             print(f"[warn] Web content source URL not supported: {source_url}", file=sys.stderr)
+             return content
+
+    def _insert_rrn_footer_text(self, content: str) -> str:
+        replacement = self._rrn_footer_content
+        if not replacement:
+            return content
+            
+        if "<!-- Footer Start -->" in content:
+            return FOOTER_PATTERN.sub(replacement, content)
+        else:
+            return content + "\n\n" + replacement
 
     def build_ci(
         self,
@@ -197,7 +342,7 @@ class NotebookTransformer:
             self._tag_ci_skip_nexus_only(notebook)
         elif transform == "remove_nexus_only_cells":
             self._remove_nexus_only_cells(notebook)
-        elif transform == "insert_rrn_footer":
+        elif transform == "insert_rrn_footer" or transform == "footer":
             self._insert_rrn_footer(notebook)
         elif transform == "warn_required_sections":
             self._warn_required_sections(notebook, entry)
@@ -555,6 +700,7 @@ class NotebookTransformer:
         if not replacement:
             return
 
+        footer_found = False
         for cell in notebook.get("cells", []):
             if cell.get("cell_type") != "markdown":
                 continue
@@ -565,14 +711,22 @@ class NotebookTransformer:
             else:
                 text = str(source)
 
-            if "<!-- Footer Start -->" not in text:
-                continue
-
-            new_text = FOOTER_PATTERN.sub(replacement, text)
-            if isinstance(source, list):
-                cell["source"] = new_text.splitlines(keepends=True)
-            else:
-                cell["source"] = new_text
+            if "<!-- Footer Start -->" in text:
+                footer_found = True
+                new_text = FOOTER_PATTERN.sub(replacement, text)
+                if isinstance(source, list):
+                    cell["source"] = new_text.splitlines(keepends=True)
+                else:
+                    cell["source"] = new_text
+                # Assuming only one footer per notebook
+                break
+        
+        if not footer_found:
+            notebook.setdefault("cells", []).append({
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": replacement.splitlines(keepends=True)
+            })
 
     _REQUIRED_SECTION_KEYWORDS: Dict[str, List[str]] = {
         "Learning Goals": ["learning goal"],

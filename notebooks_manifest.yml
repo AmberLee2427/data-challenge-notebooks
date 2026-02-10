@@ -40,6 +40,7 @@ notebooks:
       - remove_colab_only
       - replace_purple_hr
       - warn_required_sections
+      - footer
     notes: >
       Requires cleanup for Colab (wget data + pip install block). For Nexus,
       must verify dependencies are available in rges-pit-dc.
@@ -62,6 +63,7 @@ notebooks:
       - remove_colab_only
       - replace_purple_hr
       - warn_required_sections
+      - footer
     notes: >
       Heavy compute + custom dependencies (`microlens_emcee`, local data files).
       Likely better to keep Nexus-out; append instructions for cloning repo if not ported.
@@ -84,6 +86,7 @@ notebooks:
       - remove_colab_only
       - replace_purple_hr
       - warn_required_sections
+      - footer
     notes: >
       Already structured as a Colab resource; ensure references to the minicourse are removed
       and style matches CONTRIBUTING.md. For Nexus, may only need documentation (few dependencies).
@@ -121,7 +124,77 @@ notebooks:
     rrn_transforms:
       - sync
       - convert_rst_to_notebook
+      - footer
     notes: >
       microlens-submit CLI tutorial in RST format; requires transformation to notebook format 
       for Nexus, which does not format RST files.
 
+  - id: nbi-roman-simulations
+    title: "Neural Posterior Estimation for Roman Microlensing"
+    source_path: "Extras/NBI_Roman_Simulations.ipynb"
+    session: "Extras"
+    audiences:
+      - "Data challenge teams"
+      - "Self-paced learners"
+    colab_support: "ready"
+    nexus_support: true
+    website_render: "full_embed"
+    rrn_target: "notebooks/x_nbi_roman_simulations.ipynb"
+    rrn_transforms:
+      - clear_outputs
+      - record_metadata
+      - remove_colab_only
+      - replace_purple_hr
+      - warn_required_sections
+      - footer
+    notes: >
+      Example notebook demonstrating use of NBI for fast inference on Roman microlensing simulations.
+      Already Colab-ready; ensure dependencies are compatible with rges-pit-dc for Nexus
+
+scripts:
+  - id: microlens-emcee
+    source_path: "AAS Workshop/Session C: Binary Lens/microlens_emcee.py"
+    session: "AAS Session C"
+    audiences:
+      - "Data challenge teams"
+      - "Self-paced learners"
+    colab_support: "ready"
+    nexus_support: true
+    website_render: "preexisting_content"
+    rrn_target: "notebooks/microlens_emcee.ipynb"
+    notes: >
+      Python script providing an MCMC sampling framework for microlensing parameter estimation.
+      Transform into a notebook format for Nexus, ensuring examples and documentation are preserved.
+  
+other:
+  - id: env
+    source_path: "env.yml"
+    audiences:
+      - "Data challenge teams"
+      - "Self-paced learners"
+      - "Roman Research Nexus participants"
+    colab_support: false
+    nexus_support: true
+    website_render: "preexisting_content"
+    rrn_target: "environment.yml"
+    notes: >
+      Conda environment file listing dependencies for the workshop notebooks. Essential for Nexus setup;
+      ensure it is kept up to date with any changes to notebook dependencies and that instructions for use are clear.
+
+  - id: splash-page
+    source_path: "RRN/Intro.md"
+    audiences:
+      - "Data challenge teams"
+      - "Self-paced learners"
+      - "Roman Research Nexus participants"
+    colab_support: "not_applicable"
+    nexus_support: true
+    website_render: "preexisting_content"
+    rrn_target: "index.md"
+    rrn_transforms:
+      - build_like_website
+      - footer
+    notes: >
+      Markdown file serving as the splash page for the data challenge website. Contains introductory information,
+      links to notebooks, and instructions for participants. Ensure it is regularly updated with relevant information
+      and that links to notebooks are accurate.
