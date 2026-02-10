@@ -22,7 +22,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install transformer deps
-        run: pip install pyyaml
+        run: pip install pyyaml docutils markdownify
 
       - name: Rebuild site markdown
         run: python scripts/page_transformer.py
@@ -140,7 +140,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install transformer deps
-        run: pip install pyyaml
+        run: pip install pyyaml docutils markdownify
 
       - name: Rebuild Nexus notebooks
         run: python scripts/notebook_transformer.py --force

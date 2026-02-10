@@ -1,41 +1,4 @@
-<!-- START PREAMBLE
----
-permalink: /data-challenge/aas-workshop/1-nexus/
-title: "Introduction to the Roman Research Nexus (The Nexus)"
-sidebar:
-  nav: "workshop"
----
-END PREAMBLE -->
-
-<div align="center">
-    <a href="https://github.com/rges-pit">
-        <img src="https://github.com/rges-pit/data-challenge-notebooks/blob/main/rges-pit_logo.png?raw=true" alt="logo" width="300"/>
-    </a>
-</div>
-
-# Session A: Nexus
-> *9:00 am - 10:30 am*
-
-<!-- BEGIN SESSION A OVERVIEW -->
-
-In this session, you will learn how to access the Nexus, create Nexus accounts, activate kernels, install packages, access data, create your submission, and get other technical help.
-
-In this session we will be covering:
-
-* Creating Nexus accounts
-* How to access the Nexus
-* Nexus notebook content:
-    * Creating Teams
-    * Microlensing open source software
-    * Accessing data and creating data challenge submissions
-* Installing packages and other technical help
-* Using the Nexus with VSCode
-
-For discussion, information, troubleshooting, and updates about the Nexus, see the `#nexus` channel and the channel canvas.
-
-<!-- END SESSION A OVERVIEW -->
-
-[//]: # (Just a thought, If we have a jupyter kernel open can we run a notebook that's local but access the nexus buckets etc? How does that work?)
+# Welcome to Roman Research Nexus (RGES-PIT Image)
 
 <!-- BEGIN WEB CONTENT -->
 
@@ -587,4 +550,14 @@ function downloadNotebook(url, filename) {
 > Click `File -> Hub Control Panel` 
 
 <!-- END WEB CONTENT -->
-<!-- COPY TO: "bin/data_challenge_nexus_help.md", "RRN/intro.md -->
+
+<!-- Footer Start -->
+
+[Top of Page](#top)
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+	<img src="https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/refs/heads/main/rges-pit_logo.png" alt="RGES-PIT Logo" width="150"/>
+	<img style="margin-top: 40px;" src="https://raw.githubusercontent.com/spacetelescope/roman_notebooks/refs/heads/main/stsci_logo2.png" alt="Space Telescope Logo" width="200px"/>
+</div>
+
+<!-- Footer End -->

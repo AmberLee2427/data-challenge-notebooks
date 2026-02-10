@@ -56,13 +56,19 @@ def export_rrn_notebooks(
     env_source: Path | None = None,
     env_target_name: str = "environment.yml",
     requirements_source: Path | None = None,
-    write_requirements: bool = True,
+    write_requirements: bool = False,
     write_refdata: bool = True,
     copy_ci_runner: bool = False,
     ci_runner_source: Path | None = None,
 ) -> Tuple[list[Path], Optional[Path]]:
     exported: list[Path] = []
-    notebooks: Iterable[dict] = manifest.get("notebooks", [])
+    
+    # Collect all items destined for Nexus
+    items_to_export = []
+    for section in ["notebooks", "scripts", "other"]:
+        for entry in manifest.get(section, []):
+            if entry.get("nexus_support", False):
+                items_to_export.append((section, entry))
 
     destination.mkdir(parents=True, exist_ok=True)
 
@@ -74,15 +80,15 @@ def export_rrn_notebooks(
     # Determine which notebook directories we will touch (for safe cleaning and
     # for requirements.txt placement).
     notebook_dirs: set[Path] = set()
-    for entry in notebooks:
-        if not entry.get("nexus_support", False):
-            continue
+    for _, entry in items_to_export:
         target = entry.get("rrn_target")
         nb_id = entry.get("id")
         if not nb_id or not target:
             continue
+        # Only cleanup/manage directories for actual content, skip root files
         target_path = destination / Path(target)
-        notebook_dirs.add(target_path.parent)
+        if len(target_path.relative_to(destination).parts) > 1:
+            notebook_dirs.add(target_path.parent)
 
     if clean:
         # Delete only the notebook directories we manage, never the repo root.
@@ -90,15 +96,25 @@ def export_rrn_notebooks(
             if nb_dir.exists():
                 shutil.rmtree(nb_dir)
 
-    for entry in notebooks:
-        if not entry.get("nexus_support", False):
-            continue
+    for section, entry in items_to_export:
         nb_id = entry.get("id")
         target = entry.get("rrn_target")
-        if not nb_id or not target:
+        source_rel_path = entry.get("source_path")
+        if not nb_id or not target or not source_rel_path:
             continue
 
-        source_path = build_dir / f"{nb_id}.ipynb"
+        # Determine source artifact name in build dir
+        if section in ["notebooks", "scripts"]:
+            artifact_name = f"{nb_id}.ipynb"
+        else:
+            # For 'other', checking if the transformer used the target name
+            if entry.get("rrn_target"):
+                 artifact_name = Path(entry["rrn_target"]).name
+            else:
+                 suffix = Path(source_rel_path).suffix
+                 artifact_name = f"{nb_id}{suffix}"
+
+        source_path = build_dir / artifact_name
         if not source_path.exists():
             print(f"[warn] missing build artifact: {source_path}", file=sys.stderr)
             continue
@@ -110,6 +126,8 @@ def export_rrn_notebooks(
         exported.append(target_path)
 
     # Optional: write a single top-level environment.yml.
+    # Note: If 'env' is in 'other', it might be redundant here if env_source is passed.
+    # We prefer the explicit arg if provided, otherwise 'other' handles it.
     if env_source and env_source.exists():
         env_target = destination / env_target_name
         shutil.copy2(env_source, env_target)
@@ -170,9 +188,9 @@ def main() -> None:
         help="Path to a requirements.txt to copy into each notebook directory (default: requirements.txt).",
     )
     parser.add_argument(
-        "--no-requirements",
+        "--write-requirements",
         action="store_true",
-        help="Do not write per-directory requirements.txt files into the destination.",
+        help="Write per-directory requirements.txt files into the destination (default: False).",
     )
     parser.add_argument(
         "--no-refdata",
@@ -226,7 +244,7 @@ def main() -> None:
         env_source=env_source,
         env_target_name=args.env_target_name,
         requirements_source=requirements_source,
-        write_requirements=not args.no_requirements,
+        write_requirements=args.write_requirements,
         write_refdata=not args.no_refdata,
         copy_ci_runner=args.copy_ci_runner,
         ci_runner_source=ci_runner_source,

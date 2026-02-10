@@ -66,7 +66,7 @@ This page is a persistent resource to assist you with the AAS Workshop content a
 
     <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20B:%20Single%20Lens%20%26%20Pipelines/Single_Lens_Pipeline.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
- - [`AAS Workshop/Session C: Binary Lens/Fitting_Binary_Lenses.ipynb`](AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb) – a binary-lens modeling notebook that demonstrates multiple fitting strategies and exercise blocks.
+- [`AAS Workshop/Session C: Binary Lens/Fitting_Binary_Lenses.ipynb`](AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb) – a binary-lens modeling notebook that demonstrates multiple fitting strategies and exercise blocks.
 
     <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/AAS%20Workshop/Session%20C:%20Binary%20Lens/Fitting_Binary_Lenses.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 

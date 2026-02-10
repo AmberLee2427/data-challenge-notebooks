@@ -47,7 +47,8 @@
 - [-] edit the tools notebook to match the Colab/RRN freindly style
 - [ ] add Citations sections in all notebooks (is this already done?)
 - [x] delete the `roman_notebooks` PR + fork
-- [ ] test that the notebooks run using the provided yaml on the nexus data-challenge image
+- [ ] test that the notebooks run using the provided yaml on the nexus data-challenge image (In progress)
+- [ ] make nexus notebooks PR changes in data challenge notebooks
 - [ ] tag long cells to avoid in quick tests
 
 ## Microlensing Tools Notebook

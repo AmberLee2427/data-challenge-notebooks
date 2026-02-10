@@ -55,16 +55,6 @@ class NotebookTransformer:
                 continue
 
             source_path = REPO_ROOT / entry["source_path"]
-            if not source_path.exists():
-                raise FileNotFoundError(f"Source notebook not found: {source_path}")
-
-            dest_path = RRN_BUILD_DIR / f"{notebook_id}.ipynb"
-            if dest_path.exists() and not force:
-                if dest_path.stat().st_mtime > source_path.stat().st_mtime:
-                    # Dest newer than source; skip unless forcing rebuild.
-                    continue
-
-            notebook_data = self._load_notebook(source_path)
             transforms = entry.get("rrn_transforms") or [
                 "clear_outputs",
                 "record_metadata",
@@ -72,17 +62,192 @@ class NotebookTransformer:
                 "warn_required_sections",
             ]
 
+            if "sync" in transforms:
+                self._sync_source(entry)
+
+            dest_path = RRN_BUILD_DIR / f"{notebook_id}.ipynb"
+            if dest_path.exists() and not force:
+                if source_path.exists() and dest_path.stat().st_mtime > source_path.stat().st_mtime:
+                    # Dest newer than source; skip unless forcing rebuild.
+                    continue
+
+            if "convert_rst_to_notebook" in transforms:
+                notebook_data = self._new_notebook()
+            else:
+                if not source_path.exists():
+                    raise FileNotFoundError(f"Source notebook not found: {source_path}")
+                notebook_data = self._load_notebook(source_path)
+
             if "tag_ci_skip_nexus_only" not in transforms:
                 # Always tag Nexus-only env activation cells so CI can skip them.
                 # Keep this behavior independent of per-notebook rrn_transforms.
                 transforms = ["tag_ci_skip_nexus_only", *transforms]
             for transform in transforms:
+                if transform == "sync":
+                    continue
                 self._apply_transform(transform, notebook_data, entry)
 
             self._write_notebook(dest_path, notebook_data)
             written.append(dest_path)
 
+        for entry in self.manifest.get("scripts", []):
+            notebook_id = entry["id"]
+            if include_ids and notebook_id not in include_ids:
+                continue
+            if not entry.get("nexus_support", False):
+                continue
+            written.append(self._process_script_entry(entry, force))
+
+        for entry in self.manifest.get("other", []):
+            notebook_id = entry["id"]
+            if include_ids and notebook_id not in include_ids:
+                continue
+            if not entry.get("nexus_support", False):
+                continue
+            written.append(self._process_other_entry(entry, force))
+
         return written
+
+    def _process_script_entry(self, entry: Dict[str, Any], force: bool) -> Path:
+        notebook_id = entry["id"]
+        source_path = REPO_ROOT / entry["source_path"]
+        if not source_path.exists():
+            raise FileNotFoundError(f"Source script not found: {source_path}")
+
+        # Determine target filename from rrn_target or default to .ipynb
+        dest_filename = f"{notebook_id}.ipynb"
+        if entry.get("rrn_target"):
+             dest_filename = Path(entry["rrn_target"]).name
+
+        dest_path = RRN_BUILD_DIR / dest_filename
+        if dest_path.exists() and not force:
+            if dest_path.stat().st_mtime > source_path.stat().st_mtime:
+                return dest_path
+
+        # Check if the target is intended to stay as a script/plaintext
+        if dest_path.suffix.lower() != ".ipynb":
+            import shutil
+            shutil.copy2(source_path, dest_path)
+            return dest_path
+
+        # Else, wrap in notebook structure
+        script_content = source_path.read_text(encoding="utf-8")
+        notebook = self._new_notebook()
+        
+        # Create a single code cell with the script content
+        notebook["cells"].append({
+            "cell_type": "code",
+            "execution_count": None,
+            "metadata": {},
+            "outputs": [],
+            "source": script_content.splitlines(keepends=True)
+        })
+
+        transforms = entry.get("rrn_transforms", [])
+        for transform in transforms:
+             self._apply_transform(transform, notebook, entry)
+
+        self._write_notebook(dest_path, notebook)
+        return dest_path
+
+
+    def _process_other_entry(self, entry: Dict[str, Any], force: bool) -> Path:
+        notebook_id = entry["id"]
+        source_path = REPO_ROOT / entry["source_path"]
+        if not source_path.exists():
+            raise FileNotFoundError(f"Source file not found: {source_path}")
+
+        # Use source suffix for the build artifact
+        dest_filename = f"{notebook_id}{source_path.suffix}"
+        if entry.get("rrn_target"):
+            dest_filename = Path(entry["rrn_target"]).name
+
+        dest_path = RRN_BUILD_DIR / dest_filename
+
+        if dest_path.exists() and not force:
+            if dest_path.stat().st_mtime > source_path.stat().st_mtime:
+                return dest_path
+
+        # If it's a markdown file and has transforms, process it as text
+        transforms = entry.get("rrn_transforms", [])
+        if source_path.suffix.lower() == ".md" and transforms:
+            content = source_path.read_text(encoding="utf-8")
+            for transform in transforms:
+                content = self._apply_text_transform(transform, content, entry)
+            dest_path.write_text(content, encoding="utf-8")
+        else:
+            import shutil
+            shutil.copy2(source_path, dest_path)
+            
+        return dest_path
+
+    def _apply_text_transform(self, transform: str, content: str, entry: Dict[str, Any]) -> str:
+        if transform == "build_like_website":
+            return self._inject_web_content(content)
+        elif transform == "footer" or transform == "insert_rrn_footer":
+            return self._insert_rrn_footer_text(content)
+        elif transform == "clear_outputs": # Not applicable to text
+             return content
+        elif transform == "record_metadata": # Not applicable to text
+             return content
+        elif transform == "remove_colab_only": # Not applicable to text
+             return content
+        elif transform == "replace_purple_hr": # Could apply
+             return content.replace('<hr style="border:2px solid #a859e4">', '***')
+        elif transform == "warn_required_sections": # Not applicable to text
+             return content
+        else:
+            print(f"[warn] Transform '{transform}' not supported for text files", file=sys.stderr)
+            return content
+
+    def _inject_web_content(self, content: str) -> str:
+        """Inject content from a source URL defined in a comment."""
+        source_match = re.search(r"<!-- SOURCE \(web content\): (.*?) -->", content)
+        if not source_match:
+            return content
+
+        source_url = source_match.group(1).strip()
+        # Resolve URL to local path if possible
+        repo_prefix = "https://github.com/rges-pit/data-challenge-notebooks/blob/main/"
+        if source_url.startswith(repo_prefix):
+            rel_path = source_url[len(repo_prefix):]
+            from urllib.parse import unquote
+            rel_path = unquote(rel_path)
+            source_path = REPO_ROOT / rel_path
+            
+            if not source_path.exists():
+                print(f"[warn] Web content source not found: {source_path}", file=sys.stderr)
+                return content
+                
+            source_text = source_path.read_text(encoding="utf-8")
+            
+            # Extract content between markers
+            web_pattern = re.compile(r"<!-- BEGIN WEB CONTENT -->.*?<!-- END WEB CONTENT -->", re.DOTALL)
+            match = web_pattern.search(source_text)
+            if match:
+                extracted = match.group(0)
+                # Replace in target
+                if web_pattern.search(content):
+                    return web_pattern.sub(lambda m: extracted, content)
+                else:
+                    print("[warn] Target missing '<!-- BEGIN/END WEB CONTENT -->' markers", file=sys.stderr)
+                    return content
+            else:
+                 print(f"[warn] Source {source_path} missing '<!-- BEGIN/END WEB CONTENT -->' markers", file=sys.stderr)
+                 return content
+        else:
+             print(f"[warn] Web content source URL not supported: {source_url}", file=sys.stderr)
+             return content
+
+    def _insert_rrn_footer_text(self, content: str) -> str:
+        replacement = self._rrn_footer_content
+        if not replacement:
+            return content
+            
+        if "<!-- Footer Start -->" in content:
+            return FOOTER_PATTERN.sub(replacement, content)
+        else:
+            return content + "\n\n" + replacement
 
     def build_ci(
         self,
@@ -189,12 +354,248 @@ class NotebookTransformer:
             self._tag_ci_skip_nexus_only(notebook)
         elif transform == "remove_nexus_only_cells":
             self._remove_nexus_only_cells(notebook)
-        elif transform == "insert_rrn_footer":
+        elif transform == "insert_rrn_footer" or transform == "footer":
             self._insert_rrn_footer(notebook)
         elif transform == "warn_required_sections":
             self._warn_required_sections(notebook, entry)
+        elif transform == "convert_rst_to_notebook":
+            self._convert_rst_to_notebook(notebook, entry)
         else:
             raise ValueError(f"Unknown transform '{transform}'")
+
+    @staticmethod
+    def _new_notebook() -> Dict[str, Any]:
+        return {
+            "cells": [],
+            "metadata": {},
+            "nbformat": 4,
+            "nbformat_minor": 5,
+        }
+
+    def _sync_source(self, entry: Dict[str, Any]) -> None:
+        upstream_url = entry.get("upstream_url")
+        source_path = entry.get("source_path")
+        if not upstream_url or not source_path:
+            raise ValueError("Sync requires both 'upstream_url' and 'source_path'.")
+
+        dest_path = REPO_ROOT / source_path
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+
+        from urllib.request import urlopen
+
+        with urlopen(upstream_url, timeout=30) as response:
+            payload = response.read()
+        dest_path.write_bytes(payload)
+        print(f"[sync] {upstream_url} -> {dest_path}")
+
+    def _convert_rst_to_notebook(self, notebook: Dict[str, Any], entry: Dict[str, Any]) -> None:
+        source_path = REPO_ROOT / entry["source_path"]
+        if not source_path.exists():
+            raise FileNotFoundError(f"Source RST not found: {source_path}")
+
+        rst_text = source_path.read_text(encoding="utf-8")
+        html_body: str | None = None
+
+        try:
+            from docutils.core import publish_parts
+
+            parts = publish_parts(source=rst_text, writer_name="html")
+            html_body = parts.get("html_body")
+        except Exception:
+            html_body = None
+
+        if html_body:
+            # Drop syntax-highlighting spans for cleaner markdown conversion.
+            html_body = re.sub(r"</?span[^>]*>", "", html_body)
+
+            try:
+                from markdownify import markdownify as html_to_md
+
+                markdown_text = html_to_md(
+                    html_body,
+                    heading_style="ATX",
+                    code_block_style="fenced",
+                )
+                markdown_text = self._clean_markdown(markdown_text)
+                cell_source = [markdown_text]
+            except Exception as e:
+                print(f"[error] Markdown conversion failed: {e}", file=sys.stderr)
+                cell_source = [html_body]
+        else:
+            cell_source = [
+                "# Notebook Content\n\n",
+                "> **Note:** RST conversion requires `docutils`. Showing raw content below.\n\n",
+                "```text\n",
+                rst_text,
+                "\n```\n",
+            ]
+
+        notebook.clear()
+        notebook.update(self._new_notebook())
+        notebook["cells"].append(
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": cell_source,
+            }
+        )
+
+    @staticmethod
+    def _clean_markdown(text: str) -> str:
+        lines = text.splitlines()
+        cleaned: List[str] = []
+        first_heading_seen = False
+        admonition_labels = {"note", "warning", "tip", "important"}
+
+        # State for code block handling
+        buffer: List[str] = []
+        in_block = False
+        block_indent = ""
+        block_char = ""
+        block_len = 0
+        block_info = ""
+
+        # Pattern for fence detection
+        fence_pattern = re.compile(r"^(\s*)(`{3,}|~{3,})(.*)$")
+
+        i = 0
+        skip_system_block = False
+        
+        while i < len(lines):
+            line = lines[i]
+            # Handle system messages (docutils artifacts)
+            if skip_system_block:
+                if line.strip() == "":
+                    skip_system_block = False
+                i += 1
+                continue
+            if line.strip().startswith("System Message:"):
+                skip_system_block = True
+                i += 1
+                continue
+
+            # Code Block Handling
+            match = fence_pattern.match(line)
+            is_fence = match is not None
+
+            if not in_block:
+                if is_fence:
+                    in_block = True
+                    block_indent = match.group(1)
+                    block_char = match.group(2)[0]
+                    block_len = len(match.group(2))
+                    block_info = match.group(3)
+                    buffer = []
+                    i += 1
+                    continue
+            else:
+                # Inside block
+                is_closing = False
+                if is_fence:
+                    # Check if it matches opening fence
+                    char = match.group(2)[0]
+                    length = len(match.group(2))
+                    # strict length match to handle nested fences that are longer
+                    if char == block_char and length == block_len:
+                        is_closing = True
+                
+                if is_closing:
+                    # Flush buffer
+                    in_block = False
+                    
+                    # Calculate safe fence length based on content
+                    required_len = block_len
+                    for bline in buffer:
+                        b_match = fence_pattern.match(bline)
+                        if b_match:
+                            b_len = len(b_match.group(2))
+                            if b_len >= required_len:
+                                required_len = b_len + 1
+                    
+                    delimiter = "~" * required_len
+                    cleaned.append(f"{block_indent}{delimiter}{block_info}")
+                    cleaned.extend(buffer)
+                    cleaned.append(f"{block_indent}{delimiter}")
+                    i += 1
+                    continue
+                else:
+                    # Buffer content, fixing the inner markdown heading issue if needed
+                    # We can retain the content exactly or fix specific issues
+                    if line.strip().startswith("## Fitting code snippet"):
+                        # Convert to comments or text
+                         buffer.append("# Fitting code snippet")
+                    else:
+                        buffer.append(line)
+                    i += 1
+                    continue
+
+            # Standard line processing (outside block)
+            stripped = line.strip()
+
+            # Normalize headings
+            if stripped.startswith("#"):
+                if stripped.startswith("# **") and stripped.endswith("**"):
+                    content = stripped.lstrip("#").strip()
+                    content = content.strip("*")
+                    heading = "# " + content
+                else:
+                    heading = stripped
+
+                if heading.startswith("# "):
+                    if first_heading_seen:
+                        heading = "## " + heading[2:]
+                    else:
+                        first_heading_seen = True
+                cleaned.append(heading)
+                i += 1
+                continue
+
+            # Convert admonitions
+            if stripped.lower() in admonition_labels:
+                label = stripped.capitalize()
+                cleaned.append(f"> **{label}:**")
+                i += 1
+                # Capture block content until empty line
+                while i < len(lines) and lines[i].strip() == "":
+                    i += 1
+                while i < len(lines) and lines[i].strip() != "":
+                    cleaned.append(f"> {lines[i]}")
+                    i += 1
+                cleaned.append("")
+                continue
+
+            # Fix hanging indents from RST
+            if line.startswith("   ") and not line.startswith("    "):
+                if not stripped.startswith(("-", "*")) and not re.match(r"\d+\.\s", stripped):
+                    line = " " + line
+
+            cleaned.append(line)
+            i += 1
+        
+        # Flush any remaining buffer if block wasn't closed (shouldn't happen with valid md)
+        if in_block:
+             delimiter = "~" * block_len
+             cleaned.append(f"{block_indent}{delimiter}{block_info}")
+             cleaned.extend(buffer)
+
+        filtered: List[str] = []
+        skip_block = False
+        for line in cleaned:
+            stripped = line.strip()
+            if skip_block:
+                if stripped == "":
+                    skip_block = False
+                continue
+            if "System Message:" in line:
+                skip_block = True
+                continue
+            if "Unexpected indentation." in line:
+                continue
+            if "Cannot analyze code. No Pygments lexer found for \"csv\"." in line:
+                continue
+            filtered.append(line)
+
+        return "\n".join(filtered).strip() + "\n"
 
     @staticmethod
     def _clear_outputs(notebook: Dict[str, Any]) -> None:
@@ -311,6 +712,7 @@ class NotebookTransformer:
         if not replacement:
             return
 
+        footer_found = False
         for cell in notebook.get("cells", []):
             if cell.get("cell_type") != "markdown":
                 continue
@@ -321,14 +723,22 @@ class NotebookTransformer:
             else:
                 text = str(source)
 
-            if "<!-- Footer Start -->" not in text:
-                continue
-
-            new_text = FOOTER_PATTERN.sub(replacement, text)
-            if isinstance(source, list):
-                cell["source"] = new_text.splitlines(keepends=True)
-            else:
-                cell["source"] = new_text
+            if "<!-- Footer Start -->" in text:
+                footer_found = True
+                new_text = FOOTER_PATTERN.sub(replacement, text)
+                if isinstance(source, list):
+                    cell["source"] = new_text.splitlines(keepends=True)
+                else:
+                    cell["source"] = new_text
+                # Assuming only one footer per notebook
+                break
+        
+        if not footer_found:
+            notebook.setdefault("cells", []).append({
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": replacement.splitlines(keepends=True)
+            })
 
     _REQUIRED_SECTION_KEYWORDS: Dict[str, List[str]] = {
         "Learning Goals": ["learning goal"],
