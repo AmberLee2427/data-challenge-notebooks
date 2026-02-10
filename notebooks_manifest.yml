@@ -161,10 +161,10 @@ scripts:
     colab_support: "ready"
     nexus_support: true
     website_render: "preexisting_content"
-    rrn_target: "notebooks/microlens_emcee.ipynb"
+    rrn_target: "notebooks/microlens_emcee.py"
     notes: >
       Python script providing an MCMC sampling framework for microlensing parameter estimation.
-      Transform into a notebook format for Nexus, ensuring examples and documentation are preserved.
+      Ensure examples and documentation are preserved.
   
 other:
   - id: env

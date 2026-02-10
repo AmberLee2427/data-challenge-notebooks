@@ -114,11 +114,23 @@ class NotebookTransformer:
         if not source_path.exists():
             raise FileNotFoundError(f"Source script not found: {source_path}")
 
-        dest_path = RRN_BUILD_DIR / f"{notebook_id}.ipynb"
+        # Determine target filename from rrn_target or default to .ipynb
+        dest_filename = f"{notebook_id}.ipynb"
+        if entry.get("rrn_target"):
+             dest_filename = Path(entry["rrn_target"]).name
+
+        dest_path = RRN_BUILD_DIR / dest_filename
         if dest_path.exists() and not force:
             if dest_path.stat().st_mtime > source_path.stat().st_mtime:
                 return dest_path
 
+        # Check if the target is intended to stay as a script/plaintext
+        if dest_path.suffix.lower() != ".ipynb":
+            import shutil
+            shutil.copy2(source_path, dest_path)
+            return dest_path
+
+        # Else, wrap in notebook structure
         script_content = source_path.read_text(encoding="utf-8")
         notebook = self._new_notebook()
         
