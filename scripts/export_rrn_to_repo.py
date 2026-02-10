@@ -104,8 +104,14 @@ def export_rrn_notebooks(
             continue
 
         # Determine source artifact name in build dir
-        if section in ["notebooks", "scripts"]:
+        if section == "notebooks":
             artifact_name = f"{nb_id}.ipynb"
+        elif section == "scripts":
+            # Match logic in notebook_transformer._process_script_entry
+            if entry.get("rrn_target"):
+                artifact_name = Path(entry["rrn_target"]).name
+            else:
+                artifact_name = f"{nb_id}.ipynb"
         else:
             # For 'other', checking if the transformer used the target name
             if entry.get("rrn_target"):
