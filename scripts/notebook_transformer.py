@@ -336,7 +336,7 @@ class NotebookTransformer:
     @staticmethod
     def _write_notebook(path: Path, data: Dict[str, Any]) -> None:
         with path.open("w", encoding="utf-8") as stream:
-            json.dump(data, stream, indent=1)
+            json.dump(data, stream, indent=1, ensure_ascii=False)
             stream.write("\n")
 
     def _apply_transform(
