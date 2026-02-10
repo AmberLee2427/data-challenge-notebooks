@@ -190,7 +190,7 @@ other:
     colab_support: "not_applicable"
     nexus_support: true
     website_render: "preexisting_content"
-    rrn_target: "index.md"
+    rrn_target: "intro.md"
     rrn_transforms:
       - build_like_website
       - footer
