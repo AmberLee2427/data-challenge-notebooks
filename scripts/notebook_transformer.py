@@ -254,9 +254,15 @@ class NotebookTransformer:
             try:
                 from markdownify import markdownify as html_to_md
 
-                markdown_text = html_to_md(html_body, heading_style="ATX")
+                markdown_text = html_to_md(
+                    html_body,
+                    heading_style="ATX",
+                    code_block_style="fenced",
+                )
+                markdown_text = self._clean_markdown(markdown_text)
                 cell_source = [markdown_text]
-            except Exception:
+            except Exception as e:
+                print(f"[error] Markdown conversion failed: {e}", file=sys.stderr)
                 cell_source = [html_body]
         else:
             cell_source = [
@@ -276,6 +282,163 @@ class NotebookTransformer:
                 "source": cell_source,
             }
         )
+
+    @staticmethod
+    def _clean_markdown(text: str) -> str:
+        lines = text.splitlines()
+        cleaned: List[str] = []
+        first_heading_seen = False
+        admonition_labels = {"note", "warning", "tip", "important"}
+
+        # State for code block handling
+        buffer: List[str] = []
+        in_block = False
+        block_indent = ""
+        block_char = ""
+        block_len = 0
+        block_info = ""
+
+        # Pattern for fence detection
+        fence_pattern = re.compile(r"^(\s*)(`{3,}|~{3,})(.*)$")
+
+        i = 0
+        skip_system_block = False
+        
+        while i < len(lines):
+            line = lines[i]
+            # Handle system messages (docutils artifacts)
+            if skip_system_block:
+                if line.strip() == "":
+                    skip_system_block = False
+                i += 1
+                continue
+            if line.strip().startswith("System Message:"):
+                skip_system_block = True
+                i += 1
+                continue
+
+            # Code Block Handling
+            match = fence_pattern.match(line)
+            is_fence = match is not None
+
+            if not in_block:
+                if is_fence:
+                    in_block = True
+                    block_indent = match.group(1)
+                    block_char = match.group(2)[0]
+                    block_len = len(match.group(2))
+                    block_info = match.group(3)
+                    buffer = []
+                    i += 1
+                    continue
+            else:
+                # Inside block
+                is_closing = False
+                if is_fence:
+                    # Check if it matches opening fence
+                    char = match.group(2)[0]
+                    length = len(match.group(2))
+                    # strict length match to handle nested fences that are longer
+                    if char == block_char and length == block_len:
+                        is_closing = True
+                
+                if is_closing:
+                    # Flush buffer
+                    in_block = False
+                    
+                    # Calculate safe fence length based on content
+                    required_len = block_len
+                    for bline in buffer:
+                        b_match = fence_pattern.match(bline)
+                        if b_match:
+                            b_len = len(b_match.group(2))
+                            if b_len >= required_len:
+                                required_len = b_len + 1
+                    
+                    delimiter = "~" * required_len
+                    cleaned.append(f"{block_indent}{delimiter}{block_info}")
+                    cleaned.extend(buffer)
+                    cleaned.append(f"{block_indent}{delimiter}")
+                    i += 1
+                    continue
+                else:
+                    # Buffer content, fixing the inner markdown heading issue if needed
+                    # We can retain the content exactly or fix specific issues
+                    if line.strip().startswith("## Fitting code snippet"):
+                        # Convert to comments or text
+                         buffer.append("# Fitting code snippet")
+                    else:
+                        buffer.append(line)
+                    i += 1
+                    continue
+
+            # Standard line processing (outside block)
+            stripped = line.strip()
+
+            # Normalize headings
+            if stripped.startswith("#"):
+                if stripped.startswith("# **") and stripped.endswith("**"):
+                    content = stripped.lstrip("#").strip()
+                    content = content.strip("*")
+                    heading = "# " + content
+                else:
+                    heading = stripped
+
+                if heading.startswith("# "):
+                    if first_heading_seen:
+                        heading = "## " + heading[2:]
+                    else:
+                        first_heading_seen = True
+                cleaned.append(heading)
+                i += 1
+                continue
+
+            # Convert admonitions
+            if stripped.lower() in admonition_labels:
+                label = stripped.capitalize()
+                cleaned.append(f"> **{label}:**")
+                i += 1
+                # Capture block content until empty line
+                while i < len(lines) and lines[i].strip() == "":
+                    i += 1
+                while i < len(lines) and lines[i].strip() != "":
+                    cleaned.append(f"> {lines[i]}")
+                    i += 1
+                cleaned.append("")
+                continue
+
+            # Fix hanging indents from RST
+            if line.startswith("   ") and not line.startswith("    "):
+                if not stripped.startswith(("-", "*")) and not re.match(r"\d+\.\s", stripped):
+                    line = " " + line
+
+            cleaned.append(line)
+            i += 1
+        
+        # Flush any remaining buffer if block wasn't closed (shouldn't happen with valid md)
+        if in_block:
+             delimiter = "~" * block_len
+             cleaned.append(f"{block_indent}{delimiter}{block_info}")
+             cleaned.extend(buffer)
+
+        filtered: List[str] = []
+        skip_block = False
+        for line in cleaned:
+            stripped = line.strip()
+            if skip_block:
+                if stripped == "":
+                    skip_block = False
+                continue
+            if "System Message:" in line:
+                skip_block = True
+                continue
+            if "Unexpected indentation." in line:
+                continue
+            if "Cannot analyze code. No Pygments lexer found for \"csv\"." in line:
+                continue
+            filtered.append(line)
+
+        return "\n".join(filtered).strip() + "\n"
 
     @staticmethod
     def _clear_outputs(notebook: Dict[str, Any]) -> None:
