@@ -152,7 +152,6 @@ jobs:
             --clean \
             --env-source env.yml \
             --env-target-name environment.yml \
-            --no-requirements \
             --copy-ci-runner \
             --ci-runner-source scripts/execute_notebooks_ci.py
 
