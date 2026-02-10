@@ -601,7 +601,9 @@ microlens-submit export <output.zip>
 
 ## Citation
 
-If you use **microlens-submit** in your research, please cite:
+### Citing **microlens-submit**
+
+If you use `microlens-submit` in your research, please cite:
 
 ```
 Malpas, A. (2025). microlens-submit. Zenodo. https://doi.org/10.5281/zenodo.17459752
@@ -621,23 +623,25 @@ Malpas, A. (2025). microlens-submit. Zenodo. https://doi.org/10.5281/zenodo.1745
 }
 ```
 
+### Citing Roman Microlensing Data Challenge 2026 Notebooks
+
 If you use our notebooks in your project, please cite:
 
 ```
-Malpas, A. (2025) et al. Roman Microlensing Data Challenge 2026 Notebooks. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXXX
+Malpas, A., Murlidhar, A., Vandorou, K., Kruszyńska, K., Crisp, A., & Vyas, M. (2026). Roman Microlensing Data Challenge 2026 Notebooks (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.18262183
 ```
 
 **BibTeX:**
 ```bibtex
-@software{malpas_2025_17468488,
-  author       = {Malpas, Amber},
+@software{malpas_2025_17806271,
+  author       = {Malpas, Amber and Murlidhar, Arjun and Vyas, Meet and Vandorou, Katie and Kruszyńska, Katarzyna and Crisp, Ali},
   title        = {Roman Microlensing Data Challenge 2026 Notebooks},
   month        = dec,
-  year         = 2025,
+  year         = 2026,
   publisher    = {Zenodo},
-  version      = {v0.16.3},
-  doi          = {10.5281/zenodo.17468488},
-  url          = {https://doi.org/10.5281/zenodo.XXXXXXXX},
+  version      = {v1.0.0},
+  doi          = {10.5281/zenodo.18262183},
+  url          = {https://doi.org/10.5281/zenodo.18262183}
 }
 ```
 

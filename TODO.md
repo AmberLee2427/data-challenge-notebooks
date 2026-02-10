@@ -32,7 +32,7 @@
   - `notebooks/*.ipynb`
 - [-] organize notebooks in directories where each dir has its own `requirements.txt`
 - [x] add optional top-level `environment.yml` (mamba spec for non-pip / low-level deps only)
-- [-] move any per-notebook helper `.py` into the same notebook directories
+- [x] move any per-notebook helper `.py` into the same notebook directories
    - they are downloaded in cells
 - [-] if using shared modules, create a top-level shared dir + symlink into each notebook dir that imports it
 - [x] update automation: publish/update the Nexus repo from `RRN/export_submodule/` (no PRs to `roman_notebooks`)
@@ -45,7 +45,7 @@
 - [x] ask STScI about review timelines
 - [x] ask STScI about notebook series instead of standalone per folder
 - [-] edit the tools notebook to match the Colab/RRN freindly style
-- [ ] add Citations sections in all notebooks (is this already done?)
+- [x] add Citations sections in all notebooks (is this already done?)
 - [x] delete the `roman_notebooks` PR + fork
 - [ ] test that the notebooks run using the provided yaml on the nexus data-challenge image (In progress)
 - [ ] make nexus notebooks PR changes in data challenge notebooks
@@ -54,7 +54,7 @@
 ## Microlensing Tools Notebook
 - [ ] table formatting
 - [ ] add BAGLE
-- [ ] nexus data streaming cell
+- [x] nexus data streaming cell
 - [ ] `df_bl` creation and processing
 - [ ] title formating
 - [ ] proof read

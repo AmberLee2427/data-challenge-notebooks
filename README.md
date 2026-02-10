@@ -47,6 +47,12 @@ The notebooks (and related environment files) included in this repo are:
 
     <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/Extras/Gould_Loeb_Planetary_Event.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+- [`Extras/NBI_Roman_Simulations.ipynb`](Extras/NBI_Roman_Simulations.ipynb) - a notebook estimating posteriors using nural bayesian inference and the `nbi` tool.
+
+    <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/Extras/NBI_Roman_Simulations.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+- [`Extra/cli_turorial.rst'] - A clone of the CLI tutorial from the [`microlens-submit` documentation](https://microlens-submit.readthedocs.io/en/latest/cli_tutorial.html). 
+
 - [`requirements.txt`](requirements.txt) and [`env.yml`](env.yml) – universal Python requirements for all notebooks.
 
     ```bash
@@ -119,7 +125,7 @@ The notebooks in this repository were originally authored by Amber Malpas, Arjun
 
 <!-- APA Citation Start -->>
 ```apa
-Malpas, A., Murlidhar, A., Vandorou, K., Kruszyńska, K., & Crisp, A. (2025). Roman Microlensing Data Challenge 2026 Notebooks (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.17806271
+Malpas, A., Murlidhar, A., Vyas, M., Vandorou, K., Kruszyńska, K., & Crisp, A. (2025). Roman Microlensing Data Challenge 2026 Notebooks (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.17806271
 ```
 <!-- APA Citation End -->>
 
@@ -128,9 +134,11 @@ Malpas, A., Murlidhar, A., Vandorou, K., Kruszyńska, K., & Crisp, A. (2025). Ro
 @software{malpas_2025_17806271,
   author       = {Malpas, Amber and
                   Murlidhar, Arjun and
+                  Meet, Vyas and
                   Vandorou, Katie and
-                  Kruszyńska, Katarzyna and
-                  Crisp, Ali},
+                  Crisp, Ali and
+                  Kruszyńska, Katarzyna
+                  },
   title        = {Roman Microlensing Data Challenge 2026 Notebooks},
   month        = dec,
   year         = 2025,
