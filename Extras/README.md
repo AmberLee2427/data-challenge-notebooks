@@ -12,13 +12,13 @@ Additional content for data challenge participants.
 
     <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/Extras/Gould_Loeb_Planetary_Event.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"/></a>
 
-- [`nbi_roman_simulations.ipynb`](nbi_roman_simulations.ipynb) – **Neural Posterior Estimation for Roman Microlensing**. A tutorial on Neural Bayesian Inference (NBI) for rapid parameter estimation of Roman microlensing events using simulation-based inference. This notebook demonstrates how to train amortized neural posterior estimators for fast, scalable Bayesian inference on synthetic PSPL light curves. Topics covered include:
+- [`NBI_Roman_Simulations.ipynb`](NBI_Roman_Simulations.ipynb) – **Neural Posterior Estimation for Roman Microlensing**. A tutorial on Neural Bayesian Inference (NBI) for rapid parameter estimation of Roman microlensing events using simulation-based inference. This notebook demonstrates how to train amortized neural posterior estimators for fast, scalable Bayesian inference on synthetic PSPL light curves. Topics covered include:
   - Configuring normalizing flows and ResNet-GRU featurizers
   - Training amortized neural posterior estimators
   - Performing rapid inference on new light curves
   - Understanding when to use NPE vs traditional MCMC
 
-    <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/Extras/nbi_roman_simulations.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"/></a>
+    <a href="https://colab.research.google.com/github/rges-pit/data-challenge-notebooks/blob/main/Extras/NBI_Roman_Simulations.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"/></a>
 
 
 ## Requirements
