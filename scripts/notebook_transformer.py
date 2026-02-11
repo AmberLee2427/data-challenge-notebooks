@@ -607,6 +607,15 @@ class NotebookTransformer:
     @staticmethod
     def _record_metadata(notebook: Dict[str, Any], entry: Dict[str, Any]) -> None:
         metadata = notebook.setdefault("metadata", {})
+        
+        # Enforce Nexus-compatible kernelspec if rges-pit-dc
+        kspec = metadata.get("kernelspec", {})
+        if kspec.get("name") == "rges-pit-dc" or kspec.get("display_name") == "rges-pit-dc":
+             kspec["name"] = "rges-pit-dc" # Ensure internal name matches
+             kspec["display_name"] = "RGES PIT Nexus"
+             kspec["version"] = "3.11.14" # As requested by Nexus PR
+             metadata["kernelspec"] = kspec
+
         sync_meta = metadata.setdefault("rges_sync", {})
         sync_meta["source_id"] = entry.get("id")
         sync_meta["session"] = entry.get("session")
