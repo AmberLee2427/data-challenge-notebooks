@@ -30,7 +30,7 @@ SESSION_PATTERN = re.compile(
     r".*?<!-- END SESSION (?P=label) OVERVIEW -->",
     re.DOTALL,
 )
-COPY_PATTERN = re.compile(r'<!--\s*COPY TO:\s*"([^"]+)"\s*-->\s*$')
+COPY_PATTERN = re.compile(r'<!--\s*COPY TO:\s*(.*?)\s*-->')
 
 
 def _read_text(path: Path) -> str:
@@ -93,33 +93,54 @@ def _extract_sessions(text: str) -> List[Tuple[str, str]]:
 
 def _process_source(path: Path) -> None:
     text = _read_text(path)
-    match = COPY_PATTERN.search(text.strip())
-    if not match:
+    
+    # 1. Parse targets from all COPY TO headers
+    targets = []
+    for match in COPY_PATTERN.finditer(text):
+        content = match.group(1)
+        # Look for quoted filenames first: "file1", "file2"
+        found = re.findall(r'"([^"]+)"', content)
+        if found:
+            targets.extend(found)
+        elif content.strip():
+            # Fallback: strict simple text if no quotes found
+            targets.append(content.strip())
+            
+    if not targets:
         return
 
-    target_rel = Path(match.group(1))
-    target_path = (REPO_ROOT / target_rel).resolve()
-
+    # 2. Extract content from source
     preamble = _extract_section(PREAMBLE_PATTERN, text)
     web_block = _extract_section(WEB_PATTERN, text)
     session_blocks = _extract_sessions(text)
 
-    target_text = _read_text(target_path)
-    if preamble:
-        preamble = _insert_comment_after(
-            preamble, "<!-- END PREAMBLE -->", _source_comment(path, "preamble")
-        )
-        target_text = _replace_pattern(target_text, PREAMBLE_PATTERN, preamble)
-    if web_block:
-        web_block = _insert_comment_after(
-            web_block,
-            "<!-- BEGIN WEB CONTENT -->",
-            _source_comment(path, "web content"),
-        )
-        target_text = _replace_pattern(target_text, WEB_PATTERN, web_block)
-    target_text = _apply_site_template(target_text)
-    _write_text(target_path, target_text)
+    # 3. Update each target file
+    for target_str in targets:
+        target_rel = Path(target_str)
+        target_path = (REPO_ROOT / target_rel).resolve()
+    
+        target_text = _read_text(target_path)
+        
+        if preamble:
+            # Note: We insert source comment into the preamble snippet
+            p_snippet = _insert_comment_after(
+                preamble, "<!-- END PREAMBLE -->", _source_comment(path, "preamble")
+            )
+            target_text = _replace_pattern(target_text, PREAMBLE_PATTERN, p_snippet)
+            
+        if web_block:
+            w_snippet = _insert_comment_after(
+                web_block,
+                "<!-- BEGIN WEB CONTENT -->",
+                _source_comment(path, "web content"),
+            )
+            target_text = _replace_pattern(target_text, WEB_PATTERN, w_snippet)
+            
+        target_text = _apply_site_template(target_text)
+        _write_text(target_path, target_text)
 
+    # 4. Update AAS Workshop Summary (Sessions)
+    # This writes to a fixed file, so we do it once per source
     if session_blocks:
         summary_text = _read_text(AAS_WORKSHOP_SUMMARY)
         for label, block in session_blocks:
@@ -133,6 +154,7 @@ def _process_source(path: Path) -> None:
             summary_text = _replace_tagged_block(summary_text, begin, end, block)
         summary_text = _apply_site_template(summary_text)
         _write_text(AAS_WORKSHOP_SUMMARY, summary_text)
+
 
 
 def _iter_sources(paths: Iterable[str]) -> List[Path]:
