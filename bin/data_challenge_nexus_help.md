@@ -41,11 +41,11 @@ At this time, we cannot guarantee prompt responses to any support requests.
 
 ## Creating Nexus accounts
 
-[Creating a MyST account](https://proper.stsci.edu/proper/authentication/auth){:target="_blank"} is required to log in to the Nexus. Click the “Sign Up for MyST” button above to navigate to the sign-up page.
+Creating a MyST account is required to log in to the Nexus. Click the “Sign Up for MyST” button above to navigate to the sign-up page.
 
 ## How to access the Nexus
 
-1. Go to the [Nexus login page](https://roman.science.stsci.edu/hub/){:target="_blank"} (see the “Log In to Nexus” button at the top of the page).
+1. Go to the Nexus login page (see the “Log In to Nexus” button at the top of the page).
 
 2. Sign in with your MyST account.
 
