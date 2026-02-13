@@ -35,15 +35,15 @@ For discussion, information, troubleshooting, and updates about the Nexus, see t
 
 <!-- END SESSION A OVERVIEW -->
 
-[//]: # (Just a thought, If we have a jupyter kernel open can we run a notebook that's local but access the nexus buckets etc? How does that work?)
+[//]: # (Just a thought, If we have a jupyter kernel open can we run a notebook that's local but access the Nexus buckets etc? How does that work?)
 
 <!-- BEGIN WEB CONTENT -->
 
 The Roman Research Nexus (aka “the Nexus”) is a JupyterHub service, provided by Space Telescope Science Institute (STScI), with public, shared compute resources, intended for Roman-related data analysis. The Nexus is a high-level processing environment for Roman science data that is in close network proximity to cloud data storage.
 
-Compute power is limited and use of resources expends tokens. Teams who are registered participants of the Roman Microlensing Data Challenge 2026 (RMDC26) or the Roman Galactic Exoplanet - Project Infrastructure Team (RGES-PIT) can chose the team they wish to open a server under and charge usage to. Please refrain from using Nexus resources for task unrelated to Roman data or your teams intended purpose.
+Compute power is limited and use of resources expends tokens. Teams who are registered participants of the Roman Microlensing Data Challenge 2026 (RMDC26) or the Roman Galactic Exoplanet - Project Infrastructure Team (RGES-PIT) can chose the team they wish to open a server under and charge usage to. Please refrain from using Nexus resources for tasks unrelated to Roman data or your team's intended purpose.
 
-If you encounter difficulties or questions while using the nexus, please contact the STScI help desk (see the button below).
+If you encounter difficulties or have questions while using the Nexus, please contact the STScI help desk (see the button below).
 
 <!-- Login, sign up, and help buttons -->
 <div style="text-align: center; margin: 2em 0; display: flex; justify-content: center; gap: 1em; flex-wrap: wrap;">
@@ -147,9 +147,9 @@ Servers
 Images
 
 Additional Information
-This site is currently under development and as such, you should have no expectations regarding service uptime, data preservation, etc. We anticipate greater reliability as we approach a wider community release. At this time, no data you upload or create within RRN is guaranteed to remain for any duration. Your usage of the nexus is monitored, so that we can improve the functionality and reliability of this service.
+This site is currently under development and as such, you should have no expectations regarding service uptime, data preservation, etc. We anticipate greater reliability as we approach a wider community release. At this time, no data you upload or create within RRN is guaranteed to remain for any duration. Your usage of the Nexus is monitored, so that we can improve the functionality and reliability of this service.
 
-If you encounter difficulties or questions while using the nexus, please contact the STScI help desk. As this platform is still in active development, we cannot guarantee prompt resolutions to any support requests.
+If you encounter difficulties or questions while using the Nexus, please contact the STScI help desk. As this platform is still in active development, we cannot guarantee prompt resolutions to any support requests.
 -->
   
 ## Named servers
@@ -168,7 +168,7 @@ You can stop a server instance using the `Hub Control Panel`, which is accessed 
 
 ## Teams
 
-Team on the Nexus have shared storage and token allocations, and can work together on collaborative servers.
+Teams on the Nexus have shared storage and token allocations, and can work together on collaborative servers.
 
 ### Creating teams 
 
@@ -202,7 +202,7 @@ kernel-export <environment-name> <output-file-name.yaml>
 kernel-delete <environment-name>
 ```
 
-These environments persist between sessions, whereas a conda environment may not. Alternatively, <python-version> may be replaced with a path to a YAML file, for conda-like environment creation. Using the provided YAML for this workshop, you can create a kernel with all the packages you need for running workshop notebook content:
+These environments persist between sessions, whereas a conda/mamba environment may not. Alternatively, <python-version> may be replaced with a path to a YAML file, for conda-like environment creation. Using the provided YAML for this workshop, you can create a kernel with all the packages you need for running workshop notebook content:
 
 ```bash
 kernel-create rges-pit-dc env.yml "rges-pit-dc"  # This may take a while to solve the environment and download and install the packages. We will have an image available in the future to avoid this tedious process.
@@ -211,113 +211,13 @@ kernel-create rges-pit-dc env.yml "rges-pit-dc"  # This may take a while to solv
 You can download the YAML [here](https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/refs/heads/main/env.yml) or clone the [data-challenge-notebooks](https://github.com/rges-pit/data-challenge-notebooks.git) repo, which includes the YAML and all the RGES-PIT-provided assistive notebooks to help you with this challenge:
 
 ```bash
-cd ~ # changes to the landing directory on the Nexus do not persist between updates
+cd ~ # changes made in the landing directory on the Nexus do not persist between updates
 git clone https://github.com/rges-pit/data-challenge-notebooks.git
 cd data-challenge-notebooks
 kernel-create rges-pit-dc env.yml "rges-pit-dc"
 ```
 
 For further instructions on Nexus setup and usage, see this [STScI page](https://roman-docs.stsci.edu/data-handbook/roman-research-nexus) or any of the helpful documentation pages in the landing directory on the Nexus. This content can also be found in the [`roman_notebooks` repo](https://github.com/spacetelescope/roman_notebooks) when you are not on the Nexus.
-
-<!-- nexus notebook info start -->
-
-<
-
-
-## Using the Nexus with local tools
-
-### VS Code (or Cursor)
-
-Here's a step-by-step guide to using the Nexus with VS Code, through Jupyter notebooks.
-
-1.  **Log in to the Nexus**  
-    See above.
-
-2.  **Create a named server (trust me — it’s easier)**  
-    See above.
-
-3.  **Open the terminal and Create an Environment**  
-    See above; `kernel-create <environment-name> [<python-version>] [<lab-display-name>]`.
-
-4.  **Reopen the Hub Control Panel**  
-    See above.
-
-5.  **Get your secret token:**
-    * Click on `Token`, which is in the navigation bar at the top of the page.
-    * Fill out the form:
-      - Note: Give it a name that reminds you what it’s for.
-      - Expiry: Shorter is more secure, but requires more maintenance.
-      - Permissions: leave blank (full permissions) or specify a subset — your choice.
-    * `Request a new API token`. 
-    * **Copy the token.** Treat it like a password.
-
-6.  **Build the URL:**
-    * Take your server's base URL (like `https://roman.science.stsci.edu`).
-    * Add your specific server path (like `/user/<user-name>/<server-name>/`). This is where having a sensibly named server is helpful. You can find this on the Token page in the `Hub Control Panel`, under “Authorized Applications” → “Application” → “Server at <your-server-path>”.
-    * Tack on `?token=` and then paste your secret token at the end. 
-
-    **TL;DR**  
-    `server-URL`: `https://roman.science.stsci.edu/user/<user-name>/<server-name>/?token=<token>`
-
-7.  **Connect VS Code to the kernel:**
-    * Ensure you have the Jupyter extension pack (by Microsoft) installed.
-    * In VS Code, with a notebook open, click `Select Kernel` or the current kernel name (if one is already selected). Then choose:
-      - "Select Another Kernel..."
-      - "Existing Jupyter Server..."
-      - "Enter the URL of the running Jupyter Server..."
-      - Paste your `server-URL` into the box and hit `Enter`.
-      - Select your created kernel/environment.
-        If your kernel doesn't show up, it is likely due to a missing IPython. Run `pip install ipython` in a terminal on the Nexus (with your environment activated) and try again.
-
-| Note: |
-| :- |
-| If you are using AI agents in your workflow, ensure you have selected one with notebook editing capabilities. E.g. Claude Sonnet with GitHub Copilot. |
-
-<!-- This is currently not working
-
-### Colab
-
-Requires set-up from hub end:
-
-```python
-# jupyterhub_config.py or a related config file
-        c.JupyterHub.tornado_settings = {
-            'headers': {
-                'Access-Control-Allow-Origin': 'https://colab.research.google.com',
-                'Access-Control-Allow-Credentials': 'true',
-            }
-        }
-```
-
-```bash
-jupyter notebook \
-    --NotebookApp.allow_origin='https://colab.research.google.com' \
-    --port=8888 \
-    --NotebookApp.port_retries=0 \
-    --NotebookApp.allow_credentials=True
-    --no-browser
-```
-
-Here's the step-by-step guide to using the Nexus with Colab.
-
-1.  **Follow steps 1-4 in the VSCode instructions**
-
-2.  **Create a Local `ssh` Tunnel**
-    In terminal on your local machine:
-    ```bash
-    sh -N -L localhost:8888:localhost:8888 <user-name>@roman.science.stsci.edu
-    ```
-    This will occupy your terminal.
-
-3.  **Connect colab to a local Runtime**
-
-    Click on the "Connect" button in the top right corner on an open Colab instance, then select "Connect to a local runtime."
-
-    In the dialog box, enter the URL for your remote JupyterHub instance, referencing the local port you forwarded in the SSH tunnel and including the API token.
-
-    URL: http://localhost:8888/user/<user-name>/<server-name>/?token=<token>
-
--->
 
 
 ## Microlensing Data Challenge Tools
@@ -351,7 +251,7 @@ The Nexus JupyterLab session comes preloaded with useful pages and notebooks. Th
 
 | Note: |
 | :- |
-| The notebooks in this directory are read-only, but the file system itself is not, so the reference notebooks can execute. You should not create and save notebooks in this directory. It is regularly replaced with the contents of its source repository, and any changes you make here will be lost. |
+| The notebooks in this directory are read-only, but the file system itself is not, so the reference notebooks can execute. You should not create or save notebooks in this directory. It is regularly replaced with the contents of its source repository, and any changes you make here will be lost. |
 
 In the notebook directory (`notebooks/microlensing-data-challenge/`) you will find the aforementioned notebooks and additional environment files ([`env.yaml`](https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/refs/heads/main/env.yml) and [`requirements.txt`](https://raw.githubusercontent.com/rges-pit/data-challenge-notebooks/refs/heads/main/requirements.txt)). Included in these environment files are the dependencies for the notebooks and packages we anticipate you may need for the data challenge.
 
@@ -556,7 +456,100 @@ Included here is a series of notebook meant to assist you in your data challenge
     </div>
 end buttons -->
 
+## Using the Nexus with local tools
 
+### VS Code (or Cursor)
+
+Here's a step-by-step guide to using the Nexus with VS Code, through Jupyter notebooks.
+
+1.  **Log in to the Nexus**  
+    See above.
+
+2.  **Create a named server (trust me — it’s easier)**  
+    See above.
+
+3.  **Open the terminal and Create an Environment**  
+    See above; `kernel-create <environment-name> [<python-version>] [<lab-display-name>]`. You can skip this step on the `RGES PIT Nexus` image as the `rges-pit-dc` kernel already exists.
+
+4.  **Reopen the Hub Control Panel**  
+    See above.
+
+5.  **Get your secret token:**
+    * Click on `Token`, which is in the navigation bar at the top of the page.
+    * Fill out the form:
+      - Note: Give it a name that reminds you what it’s for.
+      - Expiry: Shorter is more secure, but requires more maintenance.
+      - Permissions: leave blank (full permissions) or specify a subset — your choice.
+    * `Request a new API token`. 
+    * **Copy the token.** Treat it like a password.
+
+6.  **Build the URL:**
+    * Take your server's base URL (like `https://roman.science.stsci.edu`).
+    * Add your specific server path (like `/user/<user-name>/<server-name>/`). This is where having a sensibly named server is helpful. You can find this on the Token page in the `Hub Control Panel`, under “Authorized Applications” → “Application” → “Server at <your-server-path>”.
+    * Tack on `?token=` and then paste your secret token at the end. 
+
+    **TL;DR**  
+    `server-URL`: `https://roman.science.stsci.edu/user/<user-name>/<server-name>/?token=<token>`
+
+7.  **Connect VS Code to the kernel:**
+    * Ensure you have the Jupyter extension pack (by Microsoft) installed.
+    * In VS Code, with a notebook open, click `Select Kernel` or the current kernel name (if one is already selected). Then choose:
+      - "Select Another Kernel..."
+      - "Existing Jupyter Server..."
+      - "Enter the URL of the running Jupyter Server..."
+      - Paste your `server-URL` into the box and hit `Enter`.
+      - Select your created kernel/environment.
+        If your kernel doesn't show up, it is likely due to a missing IPython. Run `pip install ipython` in a terminal on the Nexus (with your environment activated) and try again.
+
+| Note: |
+| :- |
+| If you are using AI agents in your workflow, ensure you have selected one with notebook editing capabilities. E.g. Claude Sonnet with GitHub Copilot. |
+
+<!-- This is currently not working
+
+### Colab
+
+Requires set-up from hub end:
+
+```python
+# jupyterhub_config.py or a related config file
+        c.JupyterHub.tornado_settings = {
+            'headers': {
+                'Access-Control-Allow-Origin': 'https://colab.research.google.com',
+                'Access-Control-Allow-Credentials': 'true',
+            }
+        }
+```
+
+```bash
+jupyter notebook \
+    --NotebookApp.allow_origin='https://colab.research.google.com' \
+    --port=8888 \
+    --NotebookApp.port_retries=0 \
+    --NotebookApp.allow_credentials=True
+    --no-browser
+```
+
+Here's the step-by-step guide to using the Nexus with Colab.
+
+1.  **Follow steps 1-4 in the VSCode instructions**
+
+2.  **Create a Local `ssh` Tunnel**
+    In terminal on your local machine:
+    ```bash
+    sh -N -L localhost:8888:localhost:8888 <user-name>@roman.science.stsci.edu
+    ```
+    This will occupy your terminal.
+
+3.  **Connect colab to a local Runtime**
+
+    Click on the "Connect" button in the top right corner on an open Colab instance, then select "Connect to a local runtime."
+
+    In the dialog box, enter the URL for your remote JupyterHub instance, referencing the local port you forwarded in the SSH tunnel and including the API token.
+
+    URL: http://localhost:8888/user/<user-name>/<server-name>/?token=<token>
+
+-->
 
 ## FAQ
 
